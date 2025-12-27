@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2025-12-27
+
+### Added
+
+- Flemish command aliases for all CLI commands! 🇧🇪
+  - `plats loop` (= run) - Voer een programma uut
+  - `plats bouw` (= build) - Compileer na Python
+  - `plats toon` (= show-python) - Toon de Python code
+  - `plats versie` (= version) - Toon versie
+  - `plats haalp` (= help) - Already added in v0.1.5
+- Both English and Flemish commands documented in help output
+- Command alias translation system in CLI
+
+### Changed
+
+- Updated help messages to prominently show both language options
+- Flemish commands work exactly like their English counterparts
+
 ## [0.1.5] - 2025-12-27
 
 ### Added
@@ -91,7 +109,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Space literal: `spatie`
 - Operators: `plakt`, `derbij`, `deraf`, `keer`, `gedeeld`, `isgelijk`, `isniegelijk`, `isgroterdan`, `iskleinerdan`, `enook`, `ofwel`, `nie`
 
-[Unreleased]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.5...HEAD
+[Unreleased]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.6...HEAD
+[0.1.6]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.1...v0.1.3
