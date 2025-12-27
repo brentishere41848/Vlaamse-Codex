@@ -2,7 +2,7 @@
   "name": "vlaamscodex-platskript",
   "displayName": "Vlaams Codex – Platskript",
   "description": "Syntax highlighting and tools for Platskript (.plats), the Vlaams Codex language.",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "publisher": "PlatsVlaamseCodex",
   "license": "MIT",
   "repository": {
@@ -23,7 +23,15 @@
     "onCommand:vlaamscodex.showPython",
     "onCommand:vlaamscodex.buildPython",
     "onCommand:vlaamscodex.help",
-    "onCommand:vlaamscodex.version"
+    "onCommand:vlaamscodex.version",
+    "onCommand:vlaamscodex.checkFile",
+    "onCommand:vlaamscodex.repl",
+    "onCommand:vlaamscodex.fortune",
+    "onCommand:vlaamscodex.examplesList",
+    "onCommand:vlaamscodex.examplesShow",
+    "onCommand:vlaamscodex.examplesRun",
+    "onCommand:vlaamscodex.examplesSave",
+    "onCommand:vlaamscodex.initProject"
   ],
   "contributes": {
     "languages": [
@@ -71,6 +79,38 @@
       {
         "command": "vlaamscodex.version",
         "title": "VlaamsCodex: Show CLI Version"
+      },
+      {
+        "command": "vlaamscodex.checkFile",
+        "title": "VlaamsCodex: Check Plats File"
+      },
+      {
+        "command": "vlaamscodex.repl",
+        "title": "VlaamsCodex: Start Plats REPL"
+      },
+      {
+        "command": "vlaamscodex.fortune",
+        "title": "VlaamsCodex: Fortune"
+      },
+      {
+        "command": "vlaamscodex.examplesList",
+        "title": "VlaamsCodex: Examples (List)"
+      },
+      {
+        "command": "vlaamscodex.examplesShow",
+        "title": "VlaamsCodex: Examples (Show)"
+      },
+      {
+        "command": "vlaamscodex.examplesRun",
+        "title": "VlaamsCodex: Examples (Run)"
+      },
+      {
+        "command": "vlaamscodex.examplesSave",
+        "title": "VlaamsCodex: Examples (Save)"
+      },
+      {
+        "command": "vlaamscodex.initProject",
+        "title": "VlaamsCodex: Init Project"
       }
     ],
     "configuration": {

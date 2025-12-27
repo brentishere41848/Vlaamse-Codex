@@ -202,6 +202,81 @@ async function cmdVersion(channel: vscode.OutputChannel): Promise<void> {
   await runWithErrorHandling(channel, "Plats CLI Version", ["version"], getDefaultCwd());
 }
 
+async function cmdCheckFile(channel: vscode.OutputChannel): Promise<void> {
+  const editor = await ensureActivePlatsEditor();
+  if (editor.document.isDirty) await editor.document.save();
+
+  const filePath = editor.document.uri.fsPath;
+  const cwd = getWorkingDirectoryForFile(filePath);
+  await runWithErrorHandling(channel, `Check Plats File: ${path.basename(filePath)}`, ["check", filePath], cwd);
+}
+
+async function cmdRepl(): Promise<void> {
+  const platsPath = getPlatsPath();
+  const cwd = getDefaultCwd();
+
+  const terminal = vscode.window.createTerminal({
+    name: "VlaamsCodex REPL",
+    cwd,
+  });
+  terminal.show(true);
+  terminal.sendText(`${platsPath} repl`);
+}
+
+async function cmdFortune(channel: vscode.OutputChannel): Promise<void> {
+  await runWithErrorHandling(channel, "Plats Fortune", ["fortune"], getDefaultCwd());
+}
+
+async function cmdExamplesList(channel: vscode.OutputChannel): Promise<void> {
+  await runWithErrorHandling(channel, "Plats Examples (List)", ["examples"], getDefaultCwd());
+}
+
+async function promptExampleName(title: string): Promise<string | undefined> {
+  const name = await vscode.window.showInputBox({
+    title,
+    prompt: "Enter an example name (see 'VlaamsCodex: Examples (List)' for available examples).",
+    placeHolder: "example-name",
+  });
+  if (!name || name.trim().length === 0) return undefined;
+  return name.trim();
+}
+
+async function cmdExamplesShow(channel: vscode.OutputChannel): Promise<void> {
+  const name = await promptExampleName("Show Example");
+  if (!name) return;
+  await runWithErrorHandling(channel, `Plats Examples (Show): ${name}`, ["examples", "--show", name], getDefaultCwd());
+}
+
+async function cmdExamplesRun(channel: vscode.OutputChannel): Promise<void> {
+  const name = await promptExampleName("Run Example");
+  if (!name) return;
+  await runWithErrorHandling(channel, `Plats Examples (Run): ${name}`, ["examples", "--run", name], getDefaultCwd());
+}
+
+async function cmdExamplesSave(channel: vscode.OutputChannel): Promise<void> {
+  const name = await promptExampleName("Save Example");
+  if (!name) return;
+
+  channel.show(true);
+  appendChannelHeader(channel, `Plats Examples (Save): ${name}`);
+  channel.appendLine("Note: This command runs 'plats examples --save <NAME>' in the workspace folder.");
+
+  const cwd = getDefaultCwd();
+  await runWithErrorHandling(channel, `Plats Examples (Save): ${name}`, ["examples", "--save", name], cwd);
+}
+
+async function cmdInitProject(channel: vscode.OutputChannel): Promise<void> {
+  const name = await vscode.window.showInputBox({
+    title: "Init VlaamsCodex Project",
+    prompt: "Project name (optional). Leave empty to let the CLI choose defaults.",
+    placeHolder: "my-plats-project",
+  });
+  const args = ["init"];
+  if (name && name.trim().length > 0) args.push(name.trim());
+
+  await runWithErrorHandling(channel, "Plats Init Project", args, getDefaultCwd());
+}
+
 export function activate(context: vscode.ExtensionContext): void {
   const channel = vscode.window.createOutputChannel("VlaamsCodex");
 
@@ -213,10 +288,17 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand("vlaamscodex.buildPython", () => cmdBuildPython(channel)),
     vscode.commands.registerCommand("vlaamscodex.help", () => cmdHelp(channel)),
     vscode.commands.registerCommand("vlaamscodex.version", () => cmdVersion(channel)),
+    vscode.commands.registerCommand("vlaamscodex.checkFile", () => cmdCheckFile(channel)),
+    vscode.commands.registerCommand("vlaamscodex.repl", () => cmdRepl()),
+    vscode.commands.registerCommand("vlaamscodex.fortune", () => cmdFortune(channel)),
+    vscode.commands.registerCommand("vlaamscodex.examplesList", () => cmdExamplesList(channel)),
+    vscode.commands.registerCommand("vlaamscodex.examplesShow", () => cmdExamplesShow(channel)),
+    vscode.commands.registerCommand("vlaamscodex.examplesRun", () => cmdExamplesRun(channel)),
+    vscode.commands.registerCommand("vlaamscodex.examplesSave", () => cmdExamplesSave(channel)),
+    vscode.commands.registerCommand("vlaamscodex.initProject", () => cmdInitProject(channel)),
   );
 }
 
 export function deactivate(): void {
   // no-op
 }
-
