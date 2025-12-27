@@ -33,6 +33,55 @@ jobs:
           name: dist
           path: dist/
 
+  build-vscode-extension:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Set extension version from release tag
+        env:
+          TAG_NAME: ${{ github.event.release.tag_name }}
+        run: |
+          VERSION="${TAG_NAME#v}"
+          echo "EXT_VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - name: Update extension package.json version for packaging
+        working-directory: vscode-extension
+        run: |
+          node -e "const fs=require('fs'); const p='package.json'; const j=JSON.parse(fs.readFileSync(p,'utf8')); j.version=process.env.EXT_VERSION; fs.writeFileSync(p, JSON.stringify(j,null,2)+'\\n');"
+
+      - name: Install dependencies
+        working-directory: vscode-extension
+        run: npm ci
+
+      - name: Compile extension
+        working-directory: vscode-extension
+        run: npm run compile
+
+      - name: Package VSIX
+        working-directory: vscode-extension
+        run: npx --yes @vscode/vsce package
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: vscode-extension/*.vsix
+
+      - name: Publish to VS Code Marketplace (optional)
+        if: ${{ secrets.VSCE_PAT != '' }}
+        working-directory: vscode-extension
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          npx --yes @vscode/vsce publish --packagePath ./*.vsix --pat "$VSCE_PAT" --skip-duplicate
+
   publish-pypi:
     needs: build
     runs-on: ubuntu-latest
@@ -59,7 +108,7 @@ jobs:
         run: twine upload dist/* --skip-existing
 
   publish-github-release:
-    needs: build
+    needs: [build, build-vscode-extension]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -71,11 +120,18 @@ jobs:
           name: dist
           path: dist/
 
+      - name: Download VSIX artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: vsix
+          path: vsix/
+
       - name: Upload release assets
         uses: softprops/action-gh-release@v1
         with:
           files: |
             dist/*.whl
             dist/*.tar.gz
+            vsix/*.vsix
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
