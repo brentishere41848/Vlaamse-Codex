@@ -7,6 +7,88 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-12-28
+
+### Added - Multi-Vlaams Editie! 🇧🇪
+
+This is a major release that adds full Multi-Vlaams dialect support across all commands!
+
+#### New Commands
+
+- **Interactive REPL** (`plats repl`)
+  - Dialect aliases: `proboir` (West-Vlaams), `smos` (Antwerps), `efkes` (Limburgs), `praot` (Brussels)
+  - Multiline input support for functions
+  - History with readline
+  - `.help` commands inside REPL
+
+- **Examples Browser** (`plats examples`)
+  - Dialect aliases: `tuuntnekeer` (West-Vlaams), `toondada` (Antwerps), `loatskiejn` (Limburgs)
+  - 5 built-in example programs: hello, rekenen, funksies, begroeting, teller
+  - `--show`, `--run`, `--save`, `--list` options
+
+- **Syntax Checker** (`plats check`)
+  - Dialect aliases: `zijdezekers` (West-Vlaams), `istdagoe` (Antwerps), `kloptda` (Limburgs)
+  - Error messages in your chosen dialect!
+  - Line numbers with Flemish explanations
+
+- **Project Scaffolding** (`plats init`)
+  - Dialect aliases: `allehop` (West-Vlaams), `awel` (Antwerps), `allei` (Limburgs)
+  - Creates project structure with sample .plats file
+  - Generates LEESMIJ.md quick start guide
+
+- **Flemish Fortune** (`plats fortune`)
+  - Dialect aliases: `zegt` (West-Vlaams), `watteda` (Antwerps), `wiste` (Limburgs)
+  - 80+ Flemish proverbs and sayings
+  - Easter egg feature for fun!
+
+#### Dialect Support
+
+Full command aliases for 7 Flemish regions:
+- **West-Vlaams**: plansen, zacht (`voertuut`, `proboir`, `tuuntnekeer`, `zijdezekers`, `allehop`, `zegt`)
+- **Oost-Vlaams**: rap, direct (`doeme`, `komaan`, `ziedievoorbeelden`)
+- **Antwerps**: smos, ketjes (`doet`, `smos`, `toondada`, `istdagoe`, `awel`, `watteda`)
+- **Vlaams-Brabants**: zenansen (`doeme`, `efkees`)
+- **Limburgs**: zjweet, rustig (`gaon`, `efkes`, `loatskiejn`, `kloptda`, `allei`, `wiste`)
+- **Brussels**: zwansen, stoef (`doeda`, `praot`, `toontmansen`, `isdagoe`, `maakaan`, `spreuk`)
+- **Genks**: cité-taal (`jaowdoen`, `babbel`, `jaowkiek`, `istokin`, `pakaan`, `jaowzegt`)
+
+#### New Files
+
+- `src/vlaamscodex/repl.py` - Interactive REPL implementation
+- `src/vlaamscodex/examples.py` - Examples browser system
+- `src/vlaamscodex/checker.py` - Syntax checker with dialect errors
+- `src/vlaamscodex/init.py` - Project scaffolding
+- `src/vlaamscodex/fortune.py` - Flemish proverbs (80+)
+- `examples/rekenmachine.plats` - Calculator example
+- `examples/funksies.plats` - Functions example
+- `examples/begroeting.plats` - Greeting example
+- `examples/teller.plats` - Counter example
+
+### Changed
+
+- Updated CLI with 80+ dialect command aliases
+- Improved error messages with dialect-specific wording
+- Enhanced help output showing all dialect options
+
+### Stats
+
+- 🎯 **80+** dialect aliases across all commands
+- 📝 **5** built-in example programs
+- 🔮 **80+** Flemish proverbs
+- 🆕 **5** new modules
+
+## [0.1.7] - 2025-12-27
+
+### Added
+
+- VS Code extension CI/CD improvements
+- Build and attach VS Code extension on release
+
+### Changed
+
+- VS Code extension set to publisher PlatsVlaamseCodex
+- Removed 'parody' wording from extension
+
 ## [0.1.6] - 2025-12-27
 
 ### Added
@@ -109,10 +191,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Space literal: `spatie`
 - Operators: `plakt`, `derbij`, `deraf`, `keer`, `gedeeld`, `isgelijk`, `isniegelijk`, `isgroterdan`, `iskleinerdan`, `enook`, `ofwel`, `nie`
 
-[Unreleased]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.6...HEAD
-[0.1.6]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.5...v0.1.6
-[0.1.5]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.4...v0.1.5
-[0.1.4]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.3...v0.1.4
-[0.1.3]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.1...v0.1.3
-[0.1.1]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/anubissbe/Vlaamse-Codex/releases/tag/v0.1.0
+[Unreleased]: https://github.com/brentishere41848/Vlaamse-Codex/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/brentishere41848/Vlaamse-Codex/compare/v0.1.7...v0.2.0
+[0.1.7]: https://github.com/brentishere41848/Vlaamse-Codex/compare/v0.1.6...v0.1.7
+[0.1.6]: https://github.com/brentishere41848/Vlaamse-Codex/compare/v0.1.5...v0.1.6
+[0.1.5]: https://github.com/brentishere41848/Vlaamse-Codex/compare/v0.1.4...v0.1.5
+[0.1.4]: https://github.com/brentishere41848/Vlaamse-Codex/compare/v0.1.3...v0.1.4
+[0.1.3]: https://github.com/brentishere41848/Vlaamse-Codex/compare/v0.1.1...v0.1.3
+[0.1.1]: https://github.com/brentishere41848/Vlaamse-Codex/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/brentishere41848/Vlaamse-Codex/releases/tag/v0.1.0

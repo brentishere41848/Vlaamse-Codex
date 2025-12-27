@@ -1,105 +1,254 @@
 # VlaamsCodex / Platskript — User Guide
 
-VlaamsCodex is a parody “dialect language” toolchain for **Platskript** (`.plats`). It transpiles Platskript to Python and can run programs either explicitly via a CLI or implicitly via Python’s source encoding mechanism (“magic mode”).
+VlaamsCodex is a parody "dialect language" toolchain for **Platskript** (`.plats`). It transpiles Platskript to Python and can run programs either explicitly via a CLI or implicitly via Python's source encoding mechanism ("magic mode").
+
+**NEW in v0.2.0**: Full Multi-Vlaams dialect support with 80+ command aliases from all Flemish regions!
 
 ## Installation
 
-### Recommended: pipx (installs the `plats` CLI)
+### Recommended: pip
 
 ```bash
-python -m pip install --user pipx
-python -m pipx ensurepath
+pip install vlaamscodex
+```
+
+### Alternative: pipx (isolated)
+
+```bash
 pipx install vlaamscodex
 ```
 
-### Virtualenv: pip (common for development)
+### From source (development)
 
 ```bash
-python -m venv .venv
-. .venv/bin/activate
-python -m pip install -U pip
-python -m pip install vlaamscodex
+git clone https://github.com/brentishere41848/Vlaamse-Codex.git
+cd Vlaamse-Codex
+pip install -e ".[dev]"
 ```
 
-### From source (editable)
+---
+
+## Quick Start
 
 ```bash
-python -m venv .venv
-. .venv/bin/activate
-python -m pip install -U pip
-python -m pip install -e .
+# Run your first program
+plats run examples/hello.plats
+
+# Or use magic mode
+python examples/hello.plats
+
+# Start the interactive REPL
+plats repl
+
+# Browse examples
+plats examples --run hello
 ```
 
-## Running Platskript
+---
 
-### Option A: CLI (always works)
+## CLI Commands
+
+### Running Programs
 
 ```bash
-plats run path/to/program.plats
+plats run script.plats      # Run a Platskript file
+plats loop script.plats     # Flemish alias
 ```
 
-Other useful commands:
+**Multi-Vlaams aliases:**
+| Dialect | Command |
+|---------|---------|
+| West-Vlaams | `voertuut` |
+| Antwerps | `doet` |
+| Limburgs | `gaon` |
+| Brussels | `doeda` |
+
+### Interactive REPL
 
 ```bash
-plats show-python path/to/program.plats
-plats build path/to/program.plats --out program.py
+plats repl                  # Start interactive session
 ```
 
-### Option B: “Magic mode” (`python file.plats`)
+**Multi-Vlaams aliases:**
+| Dialect | Command | Meaning |
+|---------|---------|---------|
+| West-Vlaams | `proboir` | proberen |
+| Antwerps | `smos` | praten/uitproberen |
+| Limburgs | `efkes` | eventjes |
+| Brussels | `praot` | praten |
 
-Platskript files start with a Python encoding declaration:
+### Browse Examples
+
+```bash
+plats examples              # List all examples
+plats examples --show hello # View code
+plats examples --run hello  # Run example
+plats examples --save hello # Save to file
+```
+
+**Multi-Vlaams aliases:**
+| Dialect | Command | Meaning |
+|---------|---------|---------|
+| West-Vlaams | `tuuntnekeer` | toon eens |
+| Antwerps | `toondada` | toon da da |
+| Limburgs | `loatskiejn` | laat 's kijken |
+| Genks | `jaowkiek` | jaow, kijk |
+
+### Syntax Checker
+
+```bash
+plats check script.plats    # Validate syntax
+```
+
+Error messages come in your dialect:
+```
+Manneke, gij zijt 'amen' vergeten op lijn 5!  (Antwerps)
+Jansen, ge zijt 'amen' vergeten op lijn 5!    (West-Vlaams)
+```
+
+**Multi-Vlaams aliases:**
+| Dialect | Command | Meaning |
+|---------|---------|---------|
+| West-Vlaams | `zijdezekers` | zijt ge zeker? |
+| Antwerps | `istdagoe` | is da goe? |
+| Limburgs | `kloptda` | klopt da? |
+
+### Create a New Project
+
+```bash
+plats init myproject        # Create project structure
+```
+
+Creates:
+```
+myproject/
+├── hallo.plats             # Sample program
+└── LEESMIJ.md              # Quick start guide
+```
+
+**Multi-Vlaams aliases:**
+| Dialect | Command | Meaning |
+|---------|---------|---------|
+| West-Vlaams | `allehop` | hier gaan we! |
+| Antwerps | `awel` | kom, we beginnen |
+| Limburgs | `allei` | vooruit dan |
+
+### Flemish Fortune (Easter Egg!)
+
+```bash
+plats fortune               # Random Flemish proverb
+```
+
+**Multi-Vlaams aliases:**
+| Dialect | Command | Meaning |
+|---------|---------|---------|
+| West-Vlaams | `zegt` | zen moeder zegt... |
+| Antwerps | `watteda` | wat is da? |
+| Limburgs | `wiste` | wist ge dat? |
+
+### Build & Show Python
+
+```bash
+plats build script.plats --out output.py    # Compile to Python
+plats show-python script.plats              # Display generated Python
+```
+
+### Help
+
+```bash
+plats help                  # English help
+plats haalp                 # Flemish help
+```
+
+---
+
+## Magic Mode
+
+Platskript files with the encoding header can run directly with Python:
 
 ```text
 # coding: vlaamsplats
+plan doe
+  klap tekst hallo amen
+gedaan
 ```
-
-After installing `vlaamscodex`, you can run:
 
 ```bash
-python path/to/program.plats
+python script.plats  # Works after installing VlaamsCodex!
 ```
+
+### How it works
+
+1. Python reads the first line and detects `# coding: vlaamsplats` (PEP 263).
+2. At startup, Python's `site` module processes `.pth` files.
+3. The installed `vlaamscodex_autoload.pth` registers the `vlaamsplats` codec.
+4. The codec transpiles Platskript to Python, which Python then executes.
+
+---
 
 ## Language (v0.1)
 
 Programs are blocks: `plan doe ... gedaan`. Statements end with `amen`.
 
-Supported statements:
-- `zet <var> op <expr> amen`
-- `klap <expr> amen`
-- `maak funksie <name> met <params...> doe ... gedaan`
-- `roep <name> met <args...> amen`
-- `geeftterug <expr> amen`
+### Statements
 
-Expressions:
-- `tekst <words...>` → string literal (words joined with spaces)
-- `getal <digits>` → number literal
-- `da <name>` → variable reference
-- `spatie` → `" "`
-- `plakt` → string concatenation (Python `+`)
+| Syntax | Description |
+|--------|-------------|
+| `zet <var> op <expr> amen` | Variable assignment |
+| `klap <expr> amen` | Print expression |
+| `maak funksie <name> met <params...> doe ... gedaan` | Function definition |
+| `roep <name> met <args...> amen` | Function call |
+| `geeftterug <expr> amen` | Return statement |
+
+### Expressions
+
+| Syntax | Description |
+|--------|-------------|
+| `tekst <words...>` | String literal |
+| `getal <digits>` | Numeric literal |
+| `da <name>` | Variable reference |
+| `spatie` | Space character `" "` |
+| `plakt` | String concatenation |
+
+### Operators
+
+| Platskript | Python | Description |
+|------------|--------|-------------|
+| `derbij` | `+` | Addition |
+| `deraf` | `-` | Subtraction |
+| `keer` | `*` | Multiplication |
+| `gedeeld` | `/` | Division |
+| `isgelijk` | `==` | Equals |
+| `isniegelijk` | `!=` | Not equals |
+| `isgroterdan` | `>` | Greater than |
+| `iskleinerdan` | `<` | Less than |
 
 See `docs/04_language_spec.md` for the canonical spec.
 
-## How it works (high level)
+---
 
-1. Python reads the first line of a source file to detect an encoding (PEP 263).
-2. For `.plats`, the first line is `# coding: vlaamsplats`.
-3. At interpreter startup, Python’s `site` module processes `.pth` files in site-packages.
-4. The installed `vlaamscodex_autoload.pth` runs `import vlaamscodex.codec as _vc; _vc.register()`.
-5. The `vlaamsplats` codec compiles Platskript text into valid Python source text, and Python executes that compiled source.
+## Troubleshooting
 
-For a deep dive, see `docs/02_how_python_runs_it.md`.
+### Magic mode fails
 
-## Limitations & troubleshooting
+- `python -S` disables `site`, so `.pth` hooks do not run.
+- `python -I` (isolated mode) also restricts site/user-site.
+- **Solution**: Use `plats run script.plats` instead.
 
-- `python -S` disables `site`, so `.pth` hooks do not run → magic mode may fail.
-- `python -I` (isolated mode) also restricts site/user-site → magic mode may fail.
-- If magic mode fails, use `plats run program.plats` (no startup hooks required).
+### Common errors
 
-Common error messages:
-- `SyntaxError: encoding problem: vlaamsplats` → codec not registered (install package into that environment; avoid `-S`/`-I`).
-- `No such file or directory` → the `.plats` file path is wrong.
+| Error | Cause | Solution |
+|-------|-------|----------|
+| `SyntaxError: encoding problem: vlaamsplats` | Codec not registered | Install package; avoid `-S`/`-I` |
+| `No such file or directory` | Wrong file path | Check the path |
+| `'amen' vergeten` | Missing statement terminator | Add `amen` at end of statement |
 
-## Security note
+---
+
+## Security Note
 
 Treat `.plats` as code. Do not execute untrusted `.plats` files automatically.
 
+---
+
+**'t Es simpel, 't es plansen!**
