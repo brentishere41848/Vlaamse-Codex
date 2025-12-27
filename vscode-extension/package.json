@@ -2,7 +2,7 @@
   "name": "vlaamscodex-platskript",
   "displayName": "VlaamsCodex – Platskript",
   "description": "Syntax highlighting and tools for Platskript (.plats), the VlaamsCodex parody language.",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "publisher": "brent",
   "license": "MIT",
   "repository": {
@@ -22,7 +22,9 @@
   "activationEvents": [
     "onLanguage:platskript",
     "onCommand:vlaamscodex.runFile",
-    "onCommand:vlaamscodex.runSelection"
+    "onCommand:vlaamscodex.runSelection",
+    "onCommand:vlaamscodex.showPython",
+    "onCommand:vlaamscodex.buildPython"
   ],
   "contributes": {
     "languages": [
@@ -59,6 +61,14 @@
       {
         "command": "vlaamscodex.runSelection",
         "title": "VlaamsCodex: Run Selection as Plats"
+      },
+      {
+        "command": "vlaamscodex.showPython",
+        "title": "VlaamsCodex: Show Generated Python"
+      },
+      {
+        "command": "vlaamscodex.buildPython",
+        "title": "VlaamsCodex: Build Plats to Python File"
       }
     ],
     "configuration": {

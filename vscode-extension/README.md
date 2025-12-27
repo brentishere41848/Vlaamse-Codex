@@ -10,6 +10,8 @@ Syntax highlighting, snippets, and run commands for **Platskript** (`.plats`), t
 - Commands:
   - **VlaamsCodex: Run Plats File** (`vlaamscodex.runFile`)
   - **VlaamsCodex: Run Selection as Plats** (`vlaamscodex.runSelection`)
+  - **VlaamsCodex: Show Generated Python** (`vlaamscodex.showPython`)
+  - **VlaamsCodex: Build Plats to Python File** (`vlaamscodex.buildPython`)
 - Output is streamed to a dedicated Output Channel: **VlaamsCodex**
 
 ## Requirements
@@ -52,6 +54,22 @@ plats run <current-file>
 The extension writes the selection to a temporary `.plats` file and runs it with `plats run ...`.
 If the selection is not a full program, the extension wraps it in a minimal `plan doe ... gedaan` program.
 
+### Show generated Python
+
+Run **VlaamsCodex: Show Generated Python** to execute:
+
+```text
+plats show-python <current-file>
+```
+
+### Build to a Python file
+
+Run **VlaamsCodex: Build Plats to Python File** to execute:
+
+```text
+plats build <current-file> --out <selected-output-path>
+```
+
 ## Install from VSIX
 
 1. Build a `.vsix` package (see Development below).
@@ -85,4 +103,3 @@ To run in the Extension Development Host:
 ## License
 
 MIT. See `LICENSE`.
-
