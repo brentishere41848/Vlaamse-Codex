@@ -1,0 +1,84 @@
+{
+  "name": "vlaamscodex-platskript",
+  "displayName": "VlaamsCodex – Platskript",
+  "description": "Syntax highlighting and tools for Platskript (.plats), the VlaamsCodex parody language.",
+  "version": "0.1.0",
+  "publisher": "brent",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brentishere41848/Vlaamse-Codex.git",
+    "directory": "vscode-extension"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "icon": "media/icon.png",
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:platskript",
+    "onCommand:vlaamscodex.runFile",
+    "onCommand:vlaamscodex.runSelection"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "platskript",
+        "aliases": [
+          "Platskript",
+          "VlaamsCodex Platskript"
+        ],
+        "extensions": [
+          ".plats"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "platskript",
+        "scopeName": "source.platskript",
+        "path": "./syntaxes/platskript.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "platskript",
+        "path": "./snippets/platskript.code-snippets"
+      }
+    ],
+    "commands": [
+      {
+        "command": "vlaamscodex.runFile",
+        "title": "VlaamsCodex: Run Plats File"
+      },
+      {
+        "command": "vlaamscodex.runSelection",
+        "title": "VlaamsCodex: Run Selection as Plats"
+      }
+    ],
+    "configuration": {
+      "title": "VlaamsCodex",
+      "properties": {
+        "vlaamscodex.platsPath": {
+          "type": "string",
+          "default": "plats",
+          "description": "Path to the 'plats' executable (VlaamsCodex CLI)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -watch -p ."
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "Program skeleton": {
+    "prefix": "plats-program",
+    "description": "Program skeleton (plan doe ... gedaan)",
+    "body": [
+      "# coding: vlaamsplats",
+      "plan doe",
+      "  $0",
+      "gedaan"
+    ]
+  },
+  "Print (klap)": {
+    "prefix": "klap",
+    "description": "Print an expression (klap ... amen)",
+    "body": ["klap ${1:tekst hallo} amen"]
+  },
+  "Hello world": {
+    "prefix": "plats-hello",
+    "description": "Hello world example",
+    "body": [
+      "# coding: vlaamsplats",
+      "plan doe",
+      "  klap tekst gdag plakt spatie plakt tekst aan plakt spatie plakt tekst weeireld amen",
+      "gedaan"
+    ]
+  },
+  "Function": {
+    "prefix": "plats-func",
+    "description": "Function definition + call",
+    "body": [
+      "maak funksie ${1:naam} met ${2:param} doe",
+      "  ${0:klap da ${2:param} amen}",
+      "gedaan",
+      "",
+      "roep ${1:naam} met ${3:da ${2:param}} amen"
+    ]
+  },
+  "If / Else": {
+    "prefix": "plats-if",
+    "description": "If/else skeleton (as ... dan ... anders ...)",
+    "body": [
+      "as ${1:da voorwaarde} dan",
+      "  ${0:klap tekst ok amen}",
+      "anders",
+      "  klap tekst nope amen",
+      "amen"
+    ]
+  },
+  "Loop (zolange)": {
+    "prefix": "plats-while",
+    "description": "While loop skeleton (zolange ... doe ... gedaan)",
+    "body": [
+      "zolange ${1:da voorwaarde} doe",
+      "  ${0:klap tekst bezig amen}",
+      "gedaan"
+    ]
+  },
+  "Loop (veur)": {
+    "prefix": "plats-for",
+    "description": "For loop skeleton (veur ... van ... tot ... doe ... gedaan)",
+    "body": [
+      "veur ${1:i} van ${2:getal 0} tot ${3:getal 10} doe",
+      "  ${0:klap da ${1:i} amen}",
+      "gedaan"
+    ]
+  }
+}
+

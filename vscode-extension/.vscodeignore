@@ -1,0 +1,18 @@
+**/.vscode/**
+**/node_modules/**
+src/**
+tsconfig.json
+*.map
+*.ts
+
+# Keep compiled output + extension assets
+!out/**
+!media/**
+!syntaxes/**
+!snippets/**
+!language-configuration.json
+!README.md
+!CHANGELOG.md
+!LICENSE
+!package.json
+

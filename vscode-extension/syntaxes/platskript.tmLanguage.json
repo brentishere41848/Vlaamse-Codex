@@ -1,0 +1,66 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Platskript",
+  "scopeName": "source.platskript",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#variables" },
+    { "include": "#keywords" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.platskript",
+          "match": "^\\s*#.*$"
+        },
+        {
+          "name": "comment.line.platskript",
+          "match": "^\\s*zegnekeer\\b.*$"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.other.platskript",
+          "begin": "\\btekst\\b\\s+",
+          "beginCaptures": {
+            "0": { "name": "keyword.other.platskript" }
+          },
+          "end": "\\s+\\bamen\\b",
+          "endCaptures": {
+            "0": { "name": "keyword.other.platskript" }
+          }
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.platskript",
+          "match": "\\bgetal\\s+(-?\\d+(?:\\.\\d+)?)\\b"
+        }
+      ]
+    },
+    "variables": {
+      "patterns": [
+        {
+          "name": "variable.other.platskript",
+          "match": "\\bda\\s+([A-Za-z_][A-Za-z0-9_]*)\\b"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.platskript",
+          "match": "\\b(plan|doe|gedaan|amen|zet|op|maak|funksie|met|roep|klap|geeftterug|as|dan|anders|zolange|veur|van|tot|en|tekst|getal|da|spatie|plakt|isgelijk|isniegelijk|isgroterdan|iskleinerdan|enook|ofwel|nie|derbij|deraf|keer|gedeeld|zegnekeer)\\b"
+        }
+      ]
+    }
+  }
+}
+
