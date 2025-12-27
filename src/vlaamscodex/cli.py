@@ -15,7 +15,7 @@ from pathlib import Path
 
 from .compiler import compile_plats
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
 
 
 def _read_plats(path: Path) -> str:
@@ -95,6 +95,65 @@ def cmd_version() -> int:
     return 0
 
 
+def cmd_haalp() -> int:
+    print(f"""
+VlaamsCodex v{__version__} - Platskansen Vertoaler
+===================================================
+
+Een vertoaler vo Platskript (.plats), ne parodie programmeertaal
+die Vlaamse dialectwoorden gebruukt en compileert na Python.
+
+COMMANDO'S:
+  plats run <bestand.plats>                 Voer een Platskript programma uut
+  plats build <bestand.plats> --out <file>  Compileer na Python broncode
+  plats show-python <bestand.plats>         Toon de gegenereerde Python code
+  plats help                                Toon hulp in 't Engels
+  plats haalp                               Toon hulp in 't Vlaams
+  plats version                             Toon versie informatie
+
+MAGISCHE MODUS:
+  python <bestand.plats>                    Direct uitvoeren me Python!
+
+VOORBEELDEN:
+  plats run hallo.plats                     Voer een programma uut
+  plats show-python hallo.plats             Bekijk de Python output
+  plats build hallo.plats --out uit.py      Compileer na .py bestand
+  python hallo.plats                        Magische modus
+
+SNE STARTEN:
+  1. Mokt een bestand 'hallo.plats':
+
+     # coding: vlaamsplats
+     plan doe
+       klap tekst gdag weeireld amen
+     gedaan
+
+  2. Voer 't uut:
+     plats run hallo.plats
+
+  Of direct:
+     python hallo.plats
+
+PLATSKRIPT TAALE:
+  plan doe ... gedaan     Begin en einde van 't programma
+  zet X op Y amen         Variabele toewijzing
+  klap X amen             Print na 't scherm
+  maak funksie ... doe    Maak een funksie
+  roep X met Y amen       Roep een funksie aan
+  geeftterug X amen       Geef een waarde terug
+  tekst woorden           String literal
+  getal 123               Nummer literal
+  da variabele            Variabele referentie
+  plakt                   String concatenatie
+  spatie                  Spatie karakter
+
+Mier info: https://github.com/anubissbe/Vlaamse-Codex
+
+'t Es simpel, 't es plansen, 't es Vlaams! 🇧🇪
+""")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     # Handle 'help' and 'version' before argparse
     if argv is None:
@@ -103,6 +162,8 @@ def main(argv: list[str] | None = None) -> int:
     if len(argv) == 1:
         if argv[0] in ("help", "-h", "--help"):
             return cmd_help()
+        if argv[0] == "haalp":
+            return cmd_haalp()
         if argv[0] in ("version", "-v", "--version", "-V"):
             return cmd_version()
 
@@ -126,6 +187,7 @@ def main(argv: list[str] | None = None) -> int:
     p_show.add_argument("path", type=Path, help="Path to .plats file")
 
     sub.add_parser("help", help="Show detailed help")
+    sub.add_parser("haalp", help="Toon hulp in 't Vlaams")
     sub.add_parser("version", help="Show version")
 
     args = p.parse_args(argv)
@@ -138,6 +200,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_show_python(args.path)
     if args.cmd == "help":
         return cmd_help()
+    if args.cmd == "haalp":
+        return cmd_haalp()
     if args.cmd == "version":
         return cmd_version()
 

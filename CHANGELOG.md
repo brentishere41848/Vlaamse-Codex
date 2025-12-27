@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.5] - 2025-12-27
+
+### Added
+
+- `plats haalp` command - Help in Flemish dialect! 🇧🇪
+- Language reference included in Flemish help output
+- Fun tagline: "'t Es simpel, 't es plansen, 't es Vlaams!"
+
 ## [0.1.4] - 2025-12-27
 
 ### Added
@@ -83,7 +91,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Space literal: `spatie`
 - Operators: `plakt`, `derbij`, `deraf`, `keer`, `gedeeld`, `isgelijk`, `isniegelijk`, `isgroterdan`, `iskleinerdan`, `enook`, `ofwel`, `nie`
 
-[Unreleased]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.4...HEAD
+[Unreleased]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.5...HEAD
+[0.1.5]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.1...v0.1.3
 [0.1.1]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.0...v0.1.1
