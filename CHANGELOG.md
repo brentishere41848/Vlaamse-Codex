@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2025-12-27
+
+### Added
+
+- GitHub Packages support with release assets
+- Improved CI/CD workflow with parallel jobs
+- Build artifacts attached to GitHub releases
+
+### Changed
+
+- Publish workflow now uploads wheel and sdist to releases
+
 ## [0.1.0] - 2024-12-27
 
 ### Added
@@ -37,5 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Space literal: `spatie`
 - Operators: `plakt`, `derbij`, `deraf`, `keer`, `gedeeld`, `isgelijk`, `isniegelijk`, `isgroterdan`, `iskleinerdan`, `enook`, `ofwel`, `nie`
 
-[Unreleased]: https://github.com/vlaamscodex/vlaamscodex/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/vlaamscodex/vlaamscodex/releases/tag/v0.1.0
+[Unreleased]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/anubissbe/Vlaamse-Codex/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/anubissbe/Vlaamse-Codex/releases/tag/v0.1.0
