@@ -2,8 +2,8 @@
   "name": "vlaamscodex-platskript",
   "displayName": "VlaamsCodex – Platskript",
   "description": "Syntax highlighting and tools for Platskript (.plats), the VlaamsCodex parody language.",
-  "version": "0.1.7",
-  "publisher": "brent",
+  "version": "0.1.8",
+  "publisher": "PlatsVlaamseCodex",
   "license": "MIT",
   "repository": {
     "type": "git",
