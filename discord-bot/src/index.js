@@ -18,6 +18,7 @@ dotenv.config({ path: path.join(PROJECT_ROOT, ".env") });
 
 const STATE_PATH = path.join(__dirname, "state.json");
 const FIXED_CHANGELOG_CHANNEL_ID = "1454574317873397771";
+const FIXED_LINKS_CHANNEL_ID = "1454579611848544550";
 const X_LINK = "https://x.com/vlaamscodex";
 
 const FIXED_LINKS = [
@@ -307,7 +308,7 @@ async function deployGuildCommandsOnStart() {
 }
 
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds],
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
   allowedMentions: { parse: [] }
 });
 
@@ -332,6 +333,24 @@ async function resolveChangelogChannel() {
   return channel;
 }
 
+async function resolveLinksChannel() {
+  const channelId = FIXED_LINKS_CHANNEL_ID;
+  if (!channelId) throw new Error("Geen links channel ID geconfigureerd.");
+
+  let channel = null;
+  try {
+    channel = await client.channels.fetch(channelId);
+  } catch (error) {
+    throw new Error(`Kon links-kanaal ${channelId} niet ophalen: ${String(error?.message || error)}`);
+  }
+
+  if (!channel) throw new Error(`Links-kanaal niet gevonden: ${channelId}`);
+  if (!channel.isTextBased?.() || typeof channel.send !== "function") {
+    throw new Error(`Links-kanaal is niet text-based of niet postbaar: ${channelId}`);
+  }
+  return channel;
+}
+
 async function postToChangelog(content, { allowEveryone }) {
   let channel = null;
   try {
@@ -349,6 +368,24 @@ async function postToChangelog(content, { allowEveryone }) {
     return true;
   } catch (error) {
     console.error("Discord send fout:", error);
+    return false;
+  }
+}
+
+async function postToLinksChannel(content) {
+  let channel = null;
+  try {
+    channel = await resolveLinksChannel();
+  } catch (error) {
+    console.error("Links-kanaal fout:", error);
+    return false;
+  }
+
+  try {
+    await channel.send({ content, allowedMentions: { parse: [] } });
+    return true;
+  } catch (error) {
+    console.error("Discord send fout (links-kanaal):", error);
     return false;
   }
 }
@@ -451,7 +488,7 @@ client.on("interactionCreate", async (interaction) => {
 
     if (interaction.commandName === "ping") {
       await interaction.reply({
-        content: "Awel ja, ik leef nog. Wa is’t er? Zedde gij mij aan ’t testen ofwa? 😄",
+        content: "Pong!",
         ephemeral: true,
         allowedMentions: { parse: [] }
       });
@@ -465,7 +502,12 @@ client.on("interactionCreate", async (interaction) => {
     }
 
     if (interaction.commandName === "stuurlinks") {
-      await interaction.reply({ content: formatStuurlinksMessage(), ephemeral: true, allowedMentions: { parse: [] } });
+      const posted = await postToLinksChannel(formatStuurlinksMessage());
+      await interaction.reply({
+        content: posted ? `Links gestuurd naar <#${FIXED_LINKS_CHANNEL_ID}>.` : "Kon de links niet sturen (zie logs).",
+        ephemeral: true,
+        allowedMentions: { parse: [] }
+      });
       return;
     }
 
@@ -585,6 +627,30 @@ client.on("interactionCreate", async (interaction) => {
     } else {
       await interaction.reply(payload).catch(() => {});
     }
+  }
+});
+
+client.on("messageCreate", async (message) => {
+  try {
+    if (!message?.guild) return;
+    if (!client.user) return;
+    if (message.author?.bot) return;
+
+    const mentioned = message.mentions?.has?.(client.user);
+    if (!mentioned) return;
+
+    const replies = [
+      "Awel, wa moete gij? Zeg et ne keer, ik luister.",
+      "Wa is’t, ket? Zedde verdwaald in ’t kanaal ofwa?",
+      "Amai ja, daar zijde gij. Wa peist ge dat ik hier zit te doen? Zeg et ne keer.",
+      "Zeg, wa scheelt er? Ik sta paraat, allé vooruit.",
+      "Oei oei, mij geroepen? Allez, spuw et maar uit."
+    ];
+    const pick = replies[Math.floor(Math.random() * replies.length)] || replies[0];
+
+    await message.reply({ content: pick, allowedMentions: { parse: [] } });
+  } catch (error) {
+    console.error("messageCreate fout:", error);
   }
 });
 
