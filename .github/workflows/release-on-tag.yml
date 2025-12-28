@@ -12,12 +12,27 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Build release body from CHANGELOG
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          VERSION="${TAG_NAME#v}"
+          awk -v ver="$VERSION" '
+            BEGIN{in=0}
+            {
+              if ($0 ~ "^## \\[" ver "\\]") {in=1}
+              else if (in && $0 ~ "^## \\[") {exit}
+              if (in) print
+            }
+          ' CHANGELOG.md > release-body.md
+
       - name: Create release from tag
         uses: softprops/action-gh-release@v1
         with:
-          generate_release_notes: true
+          body_path: release-body.md
           draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-

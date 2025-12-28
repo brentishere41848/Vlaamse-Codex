@@ -1,0 +1,61 @@
+name: Sync Latest Release Body
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update latest release body from CHANGELOG
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+
+            function escapeRegExp(s) {
+              return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            }
+
+            function extractChangelogSection(changelog, version) {
+              const headerRe = new RegExp(`^## \\[${escapeRegExp(version)}\\][^\\n]*$`, "m");
+              const startMatch = changelog.match(headerRe);
+              if (!startMatch || startMatch.index == null) return null;
+
+              const start = startMatch.index;
+              const afterStart = changelog.slice(start + startMatch[0].length);
+              const nextHeaderRe = /^## \[/m;
+              const next = afterStart.match(nextHeaderRe);
+              const end = next && next.index != null ? start + startMatch[0].length + next.index : changelog.length;
+              return changelog.slice(start, end).trim();
+            }
+
+            const { owner, repo } = context.repo;
+            const latest = await github.rest.repos.getLatestRelease({ owner, repo });
+            const tag = latest.data.tag_name || "";
+            const version = tag.startsWith("v") ? tag.slice(1) : tag;
+
+            const changelog = fs.readFileSync("CHANGELOG.md", "utf8");
+            const body = extractChangelogSection(changelog, version);
+            if (!body) {
+              core.setFailed(`Kon geen CHANGELOG sectie vinden voor versie ${version} (tag: ${tag}).`);
+              return;
+            }
+
+            await github.rest.repos.updateRelease({
+              owner,
+              repo,
+              release_id: latest.data.id,
+              name: tag,
+              body
+            });
+
+            core.info(`Release ${tag} bijgewerkt met CHANGELOG sectie ${version}.`);
+

@@ -9,9 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.3] - 2025-12-28
 
+### Added
+
+- `discord-bot/`: Discord bot (discord.js v14, ESM) die GitHub Releases monitort (polling) en automatisch announcements post.
+- GitHub workflow: create GitHub Release bij tag push (`v*.*.*`).
+- GitHub workflow: sync “latest release” body vanuit `CHANGELOG.md`.
+
 ### Changed
 
-- Version bump.
+- README: “NEW in v0.2.3”.
+- `.gitignore`: `.env` en bot state worden genegeerd.
 
 ## [0.2.2] - 2025-12-28
 
