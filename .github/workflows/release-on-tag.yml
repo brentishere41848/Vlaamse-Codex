@@ -31,9 +31,9 @@ jobs:
           changelog = open("CHANGELOG.md", "r", encoding="utf-8").read().splitlines()
 
           start = None
-          header_re = re.compile(rf"^## \\[{re.escape(version)}\\]\\b")
+          needle = f"## [{version}]"
           for i, line in enumerate(changelog):
-            if header_re.match(line):
+            if line.startswith(needle):
               start = i
               break
 
