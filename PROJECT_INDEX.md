@@ -2,7 +2,7 @@
 
 > **Generated**: 2024-12-28 | **Version**: 0.2.0 | **Python**: >=3.10 | **Docs**: 39 files
 
-A transpiler toolchain for **Platskript** (`.plats`), a parody programming language using Flemish dialect keywords that compiles to Python.
+A transpiler toolchain for **Platskript** (`.plats`), a programming language using Flemish dialect keywords that compiles to Python.
 
 ---
 

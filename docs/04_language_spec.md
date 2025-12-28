@@ -120,7 +120,7 @@ gedaan
 
 ## Notes for a production version
 
-If you want this to scale beyond a parody demo, define:
+If you want this to scale beyond a demo, define:
 
 - Proper quoting/escaping for strings (e.g., `tekst begin ... tekst einde` or triple-token quoting)
 - Lists and maps with explicit delimiters (still in words)

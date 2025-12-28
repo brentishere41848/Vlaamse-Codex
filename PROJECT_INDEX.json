@@ -2,7 +2,7 @@
   "project": {
     "name": "VlaamsCodex",
     "version": "0.2.0",
-    "description": "A transpiler toolchain for Platskript, a parody programming language using Flemish dialect keywords that compiles to Python",
+    "description": "A transpiler toolchain for Platskript, a programming language using Flemish dialect keywords that compiles to Python",
     "python_requires": ">=3.10",
     "license": "MIT",
     "repository": "https://github.com/anubissbe/Vlaamse-Codex"

@@ -298,7 +298,7 @@ def cmd_help() -> int:
 VlaamsCodex v{__version__} - Platskript Transpiler - MULTI-VLAAMS EDITIE! 🇧🇪
 =============================================================================
 
-A transpiler for Platskript (.plats), a parody programming language
+A transpiler for Platskript (.plats), a programming language
 that uses Flemish dialect keywords and compiles to Python.
 
 COMMANDS (English):
@@ -432,7 +432,7 @@ def cmd_haalp() -> int:
 VlaamsCodex v{__version__} - Platskansen Vertoaler - MULTI-VLAAMS! 🇧🇪
 ======================================================================
 
-Een vertoaler vo Platskript (.plats), ne parodie programmeertaal
+Een vertoaler vo Platskript (.plats), ne programmeertaal
 die Vlaamse dialectwoorden gebruukt en compileert na Python.
 
 MULTI-VLAAMS DIALECTEN! 🇧🇪

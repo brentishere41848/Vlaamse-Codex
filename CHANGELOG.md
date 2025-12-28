@@ -37,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Project messaging: “parody/parodie” wording verwijderd (docs/website/metadata) — VlaamsCodex is serieus bedoeld.
+- Project messaging: niet-serieuze wording verwijderd (docs/website/metadata) — VlaamsCodex is serieus bedoeld.
 - CI: fixed `publish.yml` conditional zodat de workflow weer geldig is.
 
 ## [0.2.3] - 2025-12-28
@@ -146,7 +146,7 @@ Full command aliases for 7 Flemish regions:
 ### Changed
 
 - VS Code extension set to publisher PlatsVlaamseCodex
-- Removed 'parody' wording from extension
+- Removed non-serious wording from extension
 
 ## [0.1.6] - 2025-12-27
 

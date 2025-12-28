@@ -1,6 +1,6 @@
 # 05 — Security & Safety Notes
 
-Even if this is a parody project, the moment you can execute `.plats` files you have a real code execution system.
+Even if this is an educational/toy project, the moment you can execute `.plats` files you have a real code execution system.
 
 ## Treat `.plats` as code, not as data
 

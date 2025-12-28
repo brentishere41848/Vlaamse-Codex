@@ -11,7 +11,7 @@ The VlaamsCodex transpiler is intentionally **simple** ("toy compiler"):
 - **Pattern matching**: Sequential if/elif checks
 - **Readable over optimal**: Educational clarity over performance
 
-This makes it easy to understand and extend, suitable for a parody language.
+This makes it easy to understand and extend, suitable for a small/educational language.
 
 ## Compilation Pipeline
 

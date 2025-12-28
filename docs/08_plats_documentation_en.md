@@ -1,6 +1,6 @@
 # 📖 Documentation — How Plats works (English, Vlaams style)
 
-Plats (VlaamsCodex) is a tiny parody language.
+Plats (VlaamsCodex) is a tiny language.
 You tell the computer what to do,
 like you’re talking to a person.
 
@@ -249,4 +249,3 @@ If you see:
 `.plats` is code.
 Treat it like running a `.py` file:
 don’t auto-run untrusted scripts.
-

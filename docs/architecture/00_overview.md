@@ -148,7 +148,7 @@ Vlaamse-Codex/
 
 ### 1. Token-Based Transpilation (not AST)
 
-The Platskript compiler uses simple token parsing rather than a full AST. This is intentional for a parody language—keeps complexity low while being sufficient for the feature set.
+The Platskript compiler uses simple token parsing rather than a full AST. This is intentional for a small/educational language—keeps complexity low while being sufficient for the feature set.
 
 ### 2. Codec-Based Magic Mode
 

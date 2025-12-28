@@ -14,7 +14,7 @@
 
 ## What is VlaamsCodex?
 
-VlaamsCodex is a fun, parody programming language that uses **Flemish dialect keywords**. It transpiles to Python and runs anywhere Python runs.
+VlaamsCodex is a programming language that uses **Flemish dialect keywords**. It transpiles to Python and runs anywhere Python runs.
 
 ```platskript
 # coding: vlaamsplats
