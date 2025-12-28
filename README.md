@@ -298,10 +298,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Sponsor
 
-This project is proudly sponsored by **[Euraika](https://euraika.io)**.
+This project is proudly sponsored by **[Euraika](https://euraika.net)**.
 
 <p align="center">
-  <a href="https://euraika.io">
+  <a href="https://euraika.net">
     <img src="assets/poweredbyeuraika.png" alt="Powered by Euraika" width="200">
   </a>
 </p>
