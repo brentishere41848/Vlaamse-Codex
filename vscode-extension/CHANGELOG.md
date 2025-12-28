@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3
+
+- Version bump.
+
 ## 0.2.2
 
 - Added "Debug Plats File" (compiles to line-preserving Python and launches the Python debugger).
