@@ -11,7 +11,8 @@
             examples: 'Examples',
             community: 'Community',
             getStarted: 'Get Started',
-            heroDescription: 'A parody programming language using Flemish dialect keywords that compiles to Python. Write in West-Vlaams, Antwerps, Limburgs, and more - then execute seamlessly!',
+            heroDescription: 'A programming language with Flemish dialect keywords that compiles to Python. Write in West-Vlaams, Antwerps, Limburgs, and more — then run it seamlessly.',
+            tagline: "'t Es simpel, 't es plansen, 't es Vlaams!",
             dialects: 'Dialects',
             commands: 'Commands',
             free: 'Free',
@@ -38,7 +39,6 @@
             startLearning: 'Start Learning',
             quickStart: 'Quick Start',
             quickStartSubtitle: 'Get started with Vlaams Codex in seconds',
-            install: 'Install',
             runFirstProgram: 'Run Your First Program',
             orUseMagicMode: 'Or Use Magic Mode',
             installationOptions: 'Installation Options',
@@ -46,6 +46,7 @@
             perfectForEndUsers: 'Perfect for end users. Keeps dependencies isolated.',
             standardInstallation: 'Standard installation. Works with existing Python setup.',
             forContributors: 'For contributors. Includes test suite and development tools.',
+            npmInstallDescription: 'Install for Node.js projects. Available now!',
             multiVlaamsCommands: 'Multi-Vlaams Dialect Commands',
             multiVlaamsSubtitle: 'Every command works in 7 Flemish dialects! Use whichever feels most natural.',
             viewAllDialects: 'View All Dialects →',
@@ -54,71 +55,72 @@
             viewAllExamples: 'View All Examples →',
             joinCommunity: 'Join Community',
             joinCommunitySubtitle: 'Connect with other Vlaams Codex developers',
-            github: 'Star\'s repository, report issues, and contribute code',
+            github: 'Star the repository, report issues, and contribute code',
             issueTracker: 'Report bugs, request features, and discuss improvements',
             contributing: 'Submit pull requests and help improve Vlaams Codex',
+            twitter: 'Follow updates and join the conversation',
             documentation: 'Documentation',
-            resources: 'Resources',
-            community: 'Community'
+            resources: 'Resources'
         },
         vl: {
-            features: 'Features',
-            install: 'Installeer',
+            features: 'Kenmerken',
+            install: 'Installeren',
             docs: 'Docs',
-            learn: 'Leer',
+            learn: 'Leren',
             playground: 'Speelterrein',
             examples: 'Voorbeelden',
-            community: 'Gemeenschap',
-            getStarted: 'Start Nu',
-            heroDescription: "'n Parodie programmeertaal me Vlaamse dialek sleutelwoorden die compileert na Python. Schrijf in West-Vlaams, Antwerps, Limburgs, en meer - en voer 't uut!",
-            dialects: 'Dialekten',
-            commands: 'Commando\'s',
+            community: 'Community',
+            getStarted: 'Start nu',
+            heroDescription: "Een programmeertaal met Vlaamse dialect-keywords die compileert naar Python. Schrijf in West-Vlaams, Antwerps, Limburgs en meer — en voer ’t direct uit.",
+            tagline: "'t Es simpel, 't es plansen, 't es Vlaams!",
+            dialects: 'Dialecten',
+            commands: 'Commando’s',
             free: 'Gratis',
             whyVlaamsCodex: 'Waarom Vlaams Codex?',
-            whyVlaamsCodexSubtitle: 'Ervar het programmeren in uw eigen Vlaamse dialek me krachtige features',
-            multiVlaamsDialects: 'Multi-Vlaams Dialekten',
-            multiVlaamsDescription: 'Schrijf code in 7 Vlaamse dialekten met 80+ commando-aliassen. West-Vlaams, Antwerps, Limburgs, Brussels, Genks, en meer!',
-            exploreDialects: 'Verken Dialekten →',
+            whyVlaamsCodexSubtitle: 'Programmeer in uw eigen Vlaamse dialect met krachtige features',
+            multiVlaamsDialects: 'Multi-Vlaams dialecten',
+            multiVlaamsDescription: 'Schrijf code in 7 Vlaamse dialecten met 80+ commando-aliassen: West-Vlaams, Antwerps, Limburgs, Brussels, Genks en meer.',
+            exploreDialects: 'Verken dialecten →',
             magicMode: 'Magic Mode',
-            magicModeDescription: 'Voer .plats bestanden direct uut me Python via custom encoding. Geen compilatie nodig - het werkt gewoon!',
-            learnHow: 'Leer Hoe →',
+            magicModeDescription: 'Voer .plats-bestanden rechtstreeks uit met Python via custom encoding. Geen compilatie nodig — ’t werkt gewoon.',
+            learnHow: 'Leer hoe →',
             interactiveRepl: 'Interactieve REPL',
-            interactiveReplDescription: 'Probeer Platskript in real-tijd me interactieve REPL. Test uw code direct me live feedback.',
+            interactiveReplDescription: 'Probeer Platskript live met een interactieve REPL. Test uw code direct met feedback.',
             startRepl: 'Start REPL →',
-            pythonIntegration: 'Python Integratie',
-            pythonIntegrationDescription: 'Naadloze transpilatie na Python. Gebruik elke Python bibliotheek en framework me Platskript syntax.',
-            viewSpec: 'Bekijk Spec →',
-            vscodeExtension: 'VS Code Uitbreiding',
-            vscodeExtensionDescription: 'Volledige syntax highlighting, IntelliSense, en code snippets voor de beste ontwikkelaarservaring.',
-            installExtension: 'Installeer Uitbreiding →',
-            easyInstallation: 'Makkelijke Installatie',
-            easyInstallationDescription: 'Installatie met één regel via pip. Ondersteunt pipx voor geïsoleerde omgevingen en ontwikkelingsmodus voor bijdragers.',
-            installNow: 'Installeer Nu →',
-            startLearning: 'Start Leren',
-            quickStart: 'Snel Start',
-            quickStartSubtitle: 'Begin in seconden me Vlaams Codex',
-            install: 'Installeer',
-            runFirstProgram: 'Run uw eerste programma',
-            orUseMagicMode: 'Of Gebruik Magic Mode',
-            installationOptions: 'Installatie Opties',
+            pythonIntegration: 'Python-integratie',
+            pythonIntegrationDescription: 'Naadloze transpillatie naar Python. Gebruik elke Python-bibliotheek en elk framework met Platskript-syntax.',
+            viewSpec: 'Bekijk spec →',
+            vscodeExtension: 'VS Code-extensie',
+            vscodeExtensionDescription: 'Volledige syntax highlighting, IntelliSense en snippets voor de beste developer experience.',
+            installExtension: 'Installeer extensie →',
+            easyInstallation: 'Makkelijke installatie',
+            easyInstallationDescription: 'Installatie met één regel via pip. Ondersteunt pipx voor geïsoleerde omgevingen en development mode voor bijdragers.',
+            installNow: 'Installeer nu →',
+            startLearning: 'Begin te leren',
+            quickStart: 'Snelstart',
+            quickStartSubtitle: 'Begin in seconden met Vlaams Codex',
+            runFirstProgram: 'Voer uw eerste programma uit',
+            orUseMagicMode: 'Of gebruik Magic Mode',
+            installationOptions: 'Installatie-opties',
             recommended: 'Aanbevolen',
-            perfectForEndUsers: 'Perfect voor eindgebruikers. Houdt afhankelijkheden geïsoleerd.',
-            standardInstallation: 'Standaard installatie. Werkt me bestaande Python setup.',
-            forContributors: 'Voor bijdragers. Inclusief testsuite en ontwikkelingstools.',
-            multiVlaamsCommands: 'Multi-Vlaams Dialect Commando\'s',
-            multiVlaamsSubtitle: 'Elk commando werkt in 7 Vlaamse dialekten! Gebruik wat voor u het beste voelt.',
-            viewAllDialects: 'Bekijk Alle Dialekten →',
-            exploreExamples: 'Verken Voorbeelden',
-            exploreExamplesSubtitle: 'Leer door te doen me kant-en-klare voorbeelden',
-            viewAllExamples: 'Bekijk Alle Voorbeelden →',
-            joinCommunity: 'Sluit Aan',
-            joinCommunitySubtitle: 'Verbind me andere Vlaams Codex ontwikkelaars',
-            github: 'GitHub repository, rapporteer issues, en draag code bij',
-            issueTracker: 'Rapporteer bugs, request features, en bespreek verbeteringen',
+            perfectForEndUsers: 'Perfect voor eindgebruikers. Houdt afhankelijkheden netjes geïsoleerd.',
+            standardInstallation: 'Standaardinstallatie. Werkt met een bestaande Python-setup.',
+            forContributors: 'Voor bijdragers. Inclusief testsuite en ontwikkeltools.',
+            npmInstallDescription: 'Installeren voor Node.js-projecten. Nu beschikbaar!',
+            multiVlaamsCommands: 'Multi-Vlaams dialectcommando’s',
+            multiVlaamsSubtitle: 'Elk commando werkt in 7 Vlaamse dialecten. Gebruik wat het beste aanvoelt.',
+            viewAllDialects: 'Bekijk alle dialecten →',
+            exploreExamples: 'Verken voorbeelden',
+            exploreExamplesSubtitle: 'Leer door te doen met kant-en-klare voorbeelden',
+            viewAllExamples: 'Bekijk alle voorbeelden →',
+            joinCommunity: 'Sluit aan',
+            joinCommunitySubtitle: 'Verbind met andere Vlaams Codex developers',
+            github: 'Geef de repo een ster, meld issues en draag code bij',
+            issueTracker: 'Meld bugs, vraag features aan en bespreek verbeteringen',
             contributing: 'Dien pull requests in en help Vlaams Codex verbeteren',
+            twitter: 'Volg de updates en babbel mee',
             documentation: 'Documentatie',
-            resources: 'Bronnen',
-            community: 'Gemeenschap'
+            resources: 'Bronnen'
         }
     };
 
@@ -156,19 +158,23 @@
             window.VlaamsCodex.showLoadingScreen(() => {
                 document.querySelectorAll('[data-lang]').forEach(element => {
                     const key = element.getAttribute('data-lang');
-                    if (trans[key]) {
+                    if (Object.prototype.hasOwnProperty.call(trans, key)) {
                         if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                             element.placeholder = trans[key];
                         } else {
                             element.textContent = trans[key];
                         }
+                    } else if (key) {
+                        console.warn(`[i18n] Missing key "${key}" for language "${language}"`);
                     }
                 });
 
                 document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
                     const key = element.getAttribute('data-lang-placeholder');
-                    if (trans[key]) {
+                    if (Object.prototype.hasOwnProperty.call(trans, key)) {
                         element.setAttribute('placeholder', trans[key]);
+                    } else if (key) {
+                        console.warn(`[i18n] Missing placeholder key "${key}" for language "${language}"`);
                     }
                 });
 
@@ -182,19 +188,23 @@
         } else {
             document.querySelectorAll('[data-lang]').forEach(element => {
                 const key = element.getAttribute('data-lang');
-                if (trans[key]) {
+                if (Object.prototype.hasOwnProperty.call(trans, key)) {
                     if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                         element.placeholder = trans[key];
                     } else {
                         element.textContent = trans[key];
                     }
+                } else if (key) {
+                    console.warn(`[i18n] Missing key "${key}" for language "${language}"`);
                 }
             });
 
             document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
                 const key = element.getAttribute('data-lang-placeholder');
-                if (trans[key]) {
+                if (Object.prototype.hasOwnProperty.call(trans, key)) {
                     element.setAttribute('placeholder', trans[key]);
+                } else if (key) {
+                    console.warn(`[i18n] Missing placeholder key "${key}" for language "${language}"`);
                 }
             });
 
