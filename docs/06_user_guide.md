@@ -1,6 +1,6 @@
 # VlaamsCodex / Platskript — User Guide
 
-VlaamsCodex is a parody "dialect language" toolchain for **Platskript** (`.plats`). It transpiles Platskript to Python and can run programs either explicitly via a CLI or implicitly via Python's source encoding mechanism ("magic mode").
+VlaamsCodex is a "dialect language" toolchain for **Platskript** (`.plats`). It transpiles Platskript to Python and can run programs either explicitly via a CLI or implicitly via Python's source encoding mechanism ("magic mode").
 
 **NEW in v0.2.0**: Full Multi-Vlaams dialect support with 80+ command aliases from all Flemish regions!
 

@@ -7,7 +7,7 @@
 
 > **'t Es simpel, 't es plansen, 't es Vlaams!**
 
-A transpiler toolchain for **Platskript** (`.plats`), a parody programming language that uses Flemish dialect keywords. VlaamsCodex compiles Platskript source code to Python and executes it.
+A transpiler toolchain for **Platskript** (`.plats`), a programming language that uses Flemish dialect keywords. VlaamsCodex compiles Platskript source code to Python and executes it.
 
 **NEW in v0.2.4**: Full Multi-Vlaams dialect support with 80+ command aliases from all Flemish regions!
 

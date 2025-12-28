@@ -1,6 +1,6 @@
 # Vlaams Codex Website
 
-Professional website for Vlaams Codex - a parody programming language using Flemish dialect keywords.
+Professional website for Vlaams Codex - a programming language using Flemish dialect keywords.
 
 ## 🌐 Live Demo
 

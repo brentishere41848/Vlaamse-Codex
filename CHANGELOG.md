@@ -121,7 +121,7 @@ Full command aliases for 7 Flemish regions:
 ### Changed
 
 - VS Code extension set to publisher PlatsVlaamseCodex
-- Removed 'parody' wording from extension
+- Removed misleading wording from extension
 
 ## [0.1.6] - 2025-12-27
 

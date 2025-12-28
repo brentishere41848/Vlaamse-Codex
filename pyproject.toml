@@ -6,7 +6,7 @@ backend-path = ["."]
 [project]
 name = "vlaamscodex"
 version = "0.2.4"
-description = "A transpiler toolchain for Platskript, a parody programming language using Multi-Vlaams dialect keywords that compiles to Python"
+description = "A transpiler toolchain for Platskript, a programming language using Multi-Vlaams dialect keywords that compiles to Python"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
@@ -22,7 +22,6 @@ keywords = [
     "flemish",
     "dutch",
     "dialect",
-    "parody",
     "programming-language",
     "dsl",
     "python",

@@ -2,7 +2,7 @@
 
 ## What you are building
 
-You are building a parody “dialect language” called **Platskript**:
+You are building a “dialect language” called **Platskript**:
 
 - Users write source code using Flemish/dialect words instead of mainstream programming syntax.
 - The canonical source file extension is **`.plats`**.
@@ -62,7 +62,7 @@ Define a grammar and rules for:
 - variables (`da name`)
 - operators (`plakt`, etc.)
 
-Even for a parody, a clear spec prevents “prompt drift”.
+Even for a serious project, a clear spec prevents “prompt drift”.
 
 ### 2) Parser / compiler front-end
 Turn Plats text into an AST (abstract syntax tree). The toy compiler in this ZIP does a lightweight parse; a production version should use a real parser generator (e.g., Lark/ANTLR) or a structured recursive-descent parser.
