@@ -18,6 +18,7 @@ chocolatey/tools/venv/
 
 .DS_Store
 Thumbs.db
+*:Zone.Identifier
 
 # AI assistant guidance files (local only)
 AGENTS.md

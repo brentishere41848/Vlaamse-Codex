@@ -113,6 +113,42 @@
         "title": "VlaamsCodex: Init Project"
       }
     ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "vlaamscodex.runFile",
+          "when": "editorLangId == 'platskript'",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vlaamscodex.showPython",
+          "when": "editorLangId == 'platskript'",
+          "group": "navigation@2"
+        },
+        {
+          "command": "vlaamscodex.checkFile",
+          "when": "editorLangId == 'platskript'",
+          "group": "navigation@3"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "vlaamscodex.runFile",
+          "when": "resourceExtname == '.plats'",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vlaamscodex.showPython",
+          "when": "resourceExtname == '.plats'",
+          "group": "navigation@2"
+        },
+        {
+          "command": "vlaamscodex.checkFile",
+          "when": "resourceExtname == '.plats'",
+          "group": "navigation@3"
+        }
+      ]
+    },
     "configuration": {
       "title": "VlaamsCodex",
       "properties": {
@@ -120,17 +156,34 @@
           "type": "string",
           "default": "plats",
           "description": "Path to the 'plats' executable (VlaamsCodex CLI)."
+        },
+        "vlaamscodex.pythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "Optional path to a Python 3.10+ executable. Used as fallback to run: python -m vlaamscodex.cli ..."
+        },
+        "vlaamscodex.runInTerminal": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run commands in an integrated terminal instead of the Output panel."
+        },
+        "vlaamscodex.autoBootstrap": {
+          "type": "boolean",
+          "default": false,
+          "description": "If enabled, the extension can create a private virtualenv and install vlaamscodex automatically when no CLI is found."
         }
       }
     }
   },
   "scripts": {
     "compile": "tsc -p .",
-    "watch": "tsc -watch -p ."
+    "watch": "tsc -watch -p .",
+    "package": "vsce package"
   },
   "devDependencies": {
     "@types/node": "^20.11.19",
     "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.6.2",
     "typescript": "^5.3.3"
   }
 }
