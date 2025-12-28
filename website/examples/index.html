@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vlaams Codex Examples Gallery - Learn Platskript with ready-to-run examples.">
+    <title>Examples - Vlaams Codex</title>
+    
+    <link rel="canonical" href="https://vlaamscodex.dev/examples/">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../icon.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    
+    <style>
+        .examples-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .example-card-extended {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .example-card-extended:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+        
+        .example-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .example-icon-large {
+            font-size: 3rem;
+        }
+        
+        .example-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .example-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .example-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        
+        .example-code-preview {
+            background: var(--bg-dark);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: #E5E7EB;
+            overflow-x: auto;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .example-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .filter-section {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+        }
+        
+        .filter-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <a href="/" class="logo">
+                    <img src="../icon.png" alt="Vlaams Codex Logo" class="logo-img">
+                    <span class="logo-text">Vlaams Codex</span>
+                </a>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-menu">
+                    <li><a href="/#features">Features</a></li>
+                    <li><a href="/#installation">Install</a></li>
+                    <li><a href="../docs/">Docs</a></li>
+                    <li><a href="index.html" class="active">Examples</a></li>
+                    <li><a href="/#community">Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-right">
+                <div class="language-switcher">
+                    <select id="languageSelect">
+                        <option value="en">English</option>
+                        <option value="vl">🇧🇪 Vlaams</option>
+                    </select>
+                </div>
+                <a href="/#installation" class="cta-button">Get Started</a>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container" style="padding-top: 6rem;">
+        <div class="section-header">
+            <h1 class="section-title">Examples Gallery</h1>
+            <p class="section-subtitle">Learn Platskript by doing with ready-to-run examples</p>
+        </div>
+        
+        <div class="filter-section">
+            <h3 style="margin-bottom: 1rem; font-size: 1.125rem;">Filter by Category:</h3>
+            <div class="filter-grid">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="basics">Basics</button>
+                <button class="filter-btn" data-filter="functions">Functions</button>
+                <button class="filter-btn" data-filter="algorithms">Algorithms</button>
+                <button class="filter-btn" data-filter="interactive">Interactive</button>
+            </div>
+        </div>
+        
+        <div class="examples-gallery">
+            <div class="example-card-extended" data-category="basics">
+                <div class="example-header">
+                    <span class="example-icon-large">👋</span>
+                    <div>
+                        <h2 class="example-title">Hello World</h2>
+                        <div class="example-tags">
+                            <span class="tag">basics</span>
+                            <span class="tag">beginner</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="example-description">
+                    The classic "gdag aan weeireld" example - the perfect way to start your Platskript journey.
+                </p>
+                <div class="example-code-preview">
+                    <pre><code># coding: vlaamsplats
+plan doe
+  zet naam op tekst weeireld amen
+
+  maak funksie groet met wie doe
+    klap tekst gdag plakt spatie plakt tekst aan plakt spatie plakt da wie amen
+  gedaan
+
+  roep groet met da naam amen
+gedaan</code></pre>
+                </div>
+                <div class="example-actions">
+                    <button class="btn primary" onclick="runExample('hello')">Run in Playground</button>
+                    <button class="btn secondary" onclick="viewCode('hello')">View Full Code</button>
+                </div>
+            </div>
+            
+            <div class="example-card-extended" data-category="basics">
+                <div class="example-header">
+                    <span class="example-icon-large">🧮</span>
+                    <div>
+                        <h2 class="example-title">Calculator</h2>
+                        <div class="example-tags">
+                            <span class="tag">basics</span>
+                            <span class="tag">math</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="example-description">
+                    Basic arithmetic operations demonstrating Platskript's mathematical capabilities.
+                </p>
+                <div class="example-code-preview">
+                    <pre><code># coding: vlaamsplats
+plan doe
+  zet x op getal 10 amen
+  zet y op getal 5 amen
+
+  zet som op da x derbij da y amen
+  klap da som amen
+
+  zet verschil op da x deraf da y amen
+  klap da verschil amen
+
+  zet product op da x keer da y amen
+  klap da product amen
+gedaan</code></pre>
+                </div>
+                <div class="example-actions">
+                    <button class="btn primary" onclick="runExample('calculator')">Run in Playground</button>
+                    <button class="btn secondary" onclick="viewCode('calculator')">View Full Code</button>
+                </div>
+            </div>
+            
+            <div class="example-card-extended" data-category="functions">
+                <div class="example-header">
+                    <span class="example-icon-large">📞</span>
+                    <div>
+                        <h2 class="example-title">Functions</h2>
+                        <div class="example-tags">
+                            <span class="tag">functions</span>
+                            <span class="tag">intermediate</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="example-description">
+                    Learn how to define and use functions in Platskript with parameters and return values.
+                </p>
+                <div class="example-code-preview">
+                    <pre><code># coding: vlaamsplats
+plan doe
+  maak funksie voeg_samen met een twee doe
+    zet result op da een plakt da twee amen
+    geeftterug da result amen
+  gedaan
+
+  zet bericht op roep voeg_samen met da tekst hallo plakt da tekst weeireld amen amen
+  klap da bericht amen
+gedaan</code></pre>
+                </div>
+                <div class="example-actions">
+                    <button class="btn primary" onclick="runExample('functions')">Run in Playground</button>
+                    <button class="btn secondary" onclick="viewCode('functions')">View Full Code</button>
+                </div>
+            </div>
+            
+            <div class="example-card-extended" data-category="algorithms">
+                <div class="example-header">
+                    <span class="example-icon-large">🔢</span>
+                    <div>
+                        <h2 class="example-title">Fibonacci</h2>
+                        <div class="example-tags">
+                            <span class="tag">algorithms</span>
+                            <span class="tag">advanced</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="example-description">
+                    Recursive implementation of the Fibonacci sequence - a classic algorithm example.
+                </p>
+                <div class="example-code-preview">
+                    <pre><code># coding: vlaamsplats
+plan doe
+  maak funksie fibonacci met n doe
+    maak als da n isgelijk da getal 0 of da n isgelijk da getal 1 doe
+      geeftterug da n amen
+    gedaan
+
+    zet een op roep fibonacci met da n deraf da getal 1 amen
+    zet twee op roep fibonacci met da n deraf da getal 2 amen
+    zet result op da een derbij da twee amen
+    geeftterug da result amen
+  gedaan
+
+  zet i op getal 0 amen
+  maak zolang da i iskleinerdan da getal 10 doe
+    klap roep fibonacci met da i amen
+    zet i op da i derbij da getal 1 amen
+  gedaan
+gedaan</code></pre>
+                </div>
+                <div class="example-actions">
+                    <button class="btn primary" onclick="runExample('fibonacci')">Run in Playground</button>
+                    <button class="btn secondary" onclick="viewCode('fibonacci')">View Full Code</button>
+                </div>
+            </div>
+            
+            <div class="example-card-extended" data-category="interactive">
+                <div class="example-header">
+                    <span class="example-icon-large">🎲</span>
+                    <div>
+                        <h2 class="example-title">Fortune Teller</h2>
+                        <div class="example-tags">
+                            <span class="tag">interactive</span>
+                            <span class="tag">fun</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="example-description">
+                    A fun example that displays random Flemish proverbs and sayings.
+                </p>
+                <div class="example-code-preview">
+                    <pre><code># coding: vlaamsplats
+plan doe
+  maak funksie toon_fortune doe
+    klap tekst Beter een vogel in de hand dan tien op het dak, jong! amen
+  gedaan
+
+  roep toon_fortune amen
+gedaan</code></pre>
+                </div>
+                <div class="example-actions">
+                    <button class="btn primary" onclick="runExample('fortune')">Run in Playground</button>
+                    <button class="btn secondary" onclick="viewCode('fortune')">View Full Code</button>
+                </div>
+            </div>
+            
+            <div class="example-card-extended" data-category="basics">
+                <div class="example-header">
+                    <span class="example-icon-large">🔤</span>
+                    <div>
+                        <h2 class="example-title">String Manipulation</h2>
+                        <div class="example-tags">
+                            <span class="tag">basics</span>
+                            <span class="tag">strings</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="example-description">
+                    Learn how to work with strings, use concatenation, and manipulate text in Platskript.
+                </p>
+                <div class="example-code-preview">
+                    <pre><code># coding: vlaamsplats
+plan doe
+  zet deel1 op tekst Vlaams amen
+  zet deel2 op tekst Codex amen
+  zet volledig op da deel1 plakt spatie plakt da deel2 amen
+
+  klap da volledig amen
+  klap tekst De lengte is: plakt da getal 13 amen
+gedaan</code></pre>
+                </div>
+                <div class="example-actions">
+                    <button class="btn primary" onclick="runExample('strings')">Run in Playground</button>
+                    <button class="btn secondary" onclick="viewCode('strings')">View Full Code</button>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 3rem; text-align: center; padding: 2rem; background: var(--bg-secondary); border-radius: var(--radius-lg);">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Ready to Try?</h3>
+            <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+                Install Vlaams Codex and start writing your own Platskript programs!
+            </p>
+            <a href="/#installation" class="btn primary" style="font-size: 1.125rem; padding: 1rem 2rem;">
+                Get Started Now →
+            </a>
+        </div>
+    </main>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/language-switcher.js"></script>
+    <script>
+        function runExample(name) {
+            alert('This would open the interactive playground with the ' + name + ' example. (Playground coming soon!)');
+        }
+        
+        function viewCode(name) {
+            window.open('/examples/code-blocks/' + name + '.html', '_blank');
+        }
+        
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+                
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.querySelectorAll('.example-card-extended').forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

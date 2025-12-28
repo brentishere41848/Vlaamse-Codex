@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete guide to Multi-Vlaams dialects in Vlaams Codex - 7 Flemish dialects with 80+ command aliases.">
+    <title>Multi-Vlaams Dialects - Vlaams Codex</title>
+    
+    <link rel="canonical" href="https://vlaamscodex.dev/docs/multi-vlaams.html">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../icon.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    
+    <style>
+        .docs-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        
+        .docs-sidebar {
+            position: sticky;
+            top: 6rem;
+            height: calc(100vh - 8rem);
+            overflow-y: auto;
+        }
+        
+        .docs-nav {
+            list-style: none;
+        }
+        
+        .docs-nav li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .docs-nav a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            transition: var(--transition);
+        }
+        
+        .docs-nav a:hover,
+        .docs-nav a.active {
+            background: var(--bg-secondary);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .docs-content {
+            max-width: 900px;
+        }
+        
+        .docs-content h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .docs-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .docs-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+        
+        .docs-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .docs-content code {
+            background: var(--bg-secondary);
+            padding: 0.125rem 0.375rem;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--primary-color);
+        }
+        
+        .docs-content pre {
+            background: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.8;
+            color: #E5E7EB;
+        }
+        
+        .docs-content pre code {
+            background: transparent;
+            padding: 0;
+            color: #E5E7EB;
+        }
+        
+        .docs-content ul,
+        .docs-content ol {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        .docs-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .docs-content a {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .docs-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .docs-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .docs-breadcrumb a {
+            color: var(--primary-color);
+        }
+        
+        .docs-breadcrumb-separator {
+            color: var(--text-light);
+        }
+        
+        .dialect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .dialect-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .dialect-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+            transform: translateY(-0.25rem);
+        }
+        
+        .dialect-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .dialect-emoji {
+            font-size: 2rem;
+        }
+        
+        .dialect-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .dialect-aliases {
+            margin-top: 1rem;
+        }
+        
+        .dialect-aliases h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .alias-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .alias-tag {
+            background: var(--bg-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .full-commands-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            margin: 2rem 0;
+            font-size: 0.875rem;
+        }
+        
+        .full-commands-table th {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 700;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .full-commands-table td {
+            padding: 0.875rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        
+        .full-commands-table tr:hover {
+            background: var(--bg-secondary);
+        }
+        
+        .full-commands-table code {
+            background: var(--bg-dark);
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            color: #E5E7EB;
+        }
+        
+        .callout {
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border-left: 4px solid;
+            margin: 2rem 0;
+            background: var(--bg-secondary);
+        }
+        
+        .callout.info {
+            border-color: #3B82F6;
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .callout-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+        }
+        
+        .feature-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-item h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .feature-item p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0;
+        }
+        
+        @media (max-width: 1024px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .docs-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .docs-sidebar {
+                position: static;
+                height: auto;
+                overflow: visible;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <a href="/" class="logo">
+                    <img src="../icon.png" alt="Vlaams Codex Logo" class="logo-img">
+                    <span class="logo-text">Vlaams Codex</span>
+                </a>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-menu">
+                    <li><a href="/#features">Features</a></li>
+                    <li><a href="/#installation">Install</a></li>
+                    <li><a href="index.html" class="active">Docs</a></li>
+                    <li><a href="/examples/">Examples</a></li>
+                    <li><a href="/#community">Community</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-right">
+                <div class="language-switcher">
+                    <select id="languageSelect">
+                        <option value="en">English</option>
+                        <option value="vl">🇧🇪 Vlaams</option>
+                    </select>
+                </div>
+                <a href="/#installation" class="cta-button">Get Started</a>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container" style="padding-top: 6rem;">
+        <div class="docs-breadcrumb">
+            <a href="/">Home</a>
+            <span class="docs-breadcrumb-separator">/</span>
+            <a href="index.html">Documentation</a>
+            <span class="docs-breadcrumb-separator">/</span>
+            <span>Multi-Vlaams Dialects</span>
+        </div>
+        
+        <div class="docs-layout">
+            <aside class="docs-sidebar">
+                <nav>
+                    <ul class="docs-nav">
+                        <li><a href="#getting-started">Getting Started</a></li>
+                        <li><a href="#supported-dialects">Supported Dialects</a></li>
+                        <li><a href="#command-reference">Command Reference</a></li>
+                        <li><a href="#error-messages">Error Messages</a></li>
+                        <li><a href="#why-multi-vlaams">Why Multi-Vlaams?</a></li>
+                    </ul>
+                </nav>
+            </aside>
+            
+            <div class="docs-content">
+                <h1>Multi-Vlaams Dialects</h1>
+                <p>
+                    Vlaams Codex v0.2.0 introduces full support for <strong>7 Flemish dialects</strong> with 
+                    <strong>80+ command aliases</strong>. Every command works in all dialects - use whichever feels 
+                    most natural to you!
+                </p>
+                
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-number">7</div>
+                        <h3>Dialects Supported</h3>
+                        <p>From Standard to Genks, use the dialect you know best</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">80+</div>
+                        <h3>Command Aliases</h3>
+                        <p>Every command has multiple aliases across dialects</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-number">∞</div>
+                        <h3>Natural Feel</h3>
+                        <p>Error messages also come in your chosen dialect</p>
+                    </div>
+                </div>
+                
+                <div class="callout info">
+                    <div class="callout-title">💡 Quick Tip</div>
+                    <p>
+                        You can mix dialects! Use Standard for some commands and Antwerps for others - 
+                        Vlaams Codex understands them all.
+                    </p>
+                </div>
+                
+                <section id="getting-started">
+                    <h2>Getting Started with Dialects</h2>
+                    <p>
+                        No special setup needed! Once you install Vlaams Codex, all dialects are automatically 
+                        available. Simply use the dialect command you prefer.
+                    </p>
+                    
+                    <p>
+                        For example, to run a program, you can use any of these:
+                    </p>
+                    
+                    <pre><code># Standard
+plats run script.plats
+
+# West-Vlaams
+plats voertuut script.plats
+
+# Antwerps
+plats doet script.plats
+
+# Limburgs
+plats gaon script.plats
+
+# Brussels
+plats doeda script.plats</code></pre>
+                </section>
+                
+                <section id="supported-dialects">
+                    <h2>Supported Dialects</h2>
+                    <p>
+                        Here are all 7 dialects available in Vlaams Codex v0.2.0:
+                    </p>
+                    
+                    <div class="dialect-grid">
+                        <div class="dialect-card">
+                            <div class="dialect-header">
+                                <span class="dialect-emoji">🏛️️</span>
+                                <span class="dialect-name">Standard</span>
+                            </div>
+                            <p style="margin-bottom: 0.5rem;">The base dialect using formal Flemish</p>
+                            <div class="dialect-aliases">
+                                <h4>Key Commands:</h4>
+                                <div class="alias-list">
+                                    <span class="alias-tag">run</span>
+                                    <span class="alias-tag">repl</span>
+                                    <span class="alias-tag">build</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dialect-card">
+                            <div class="dialect-header">
+                                <span class="dialect-emoji">🌊</span>
+                                <span class="dialect-name">West-Vlaams</span>
+                            </div>
+                            <p style="margin-bottom: 0.5rem;">The classic West Flemish dialect</p>
+                            <div class="dialect-aliases">
+                                <h4>Key Commands:</h4>
+                                <div class="alias-list">
+                                    <span class="alias-tag">voertuut</span>
+                                    <span class="alias-tag">proboir</span>
+                                    <span class="alias-tag">allehop</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dialect-card">
+                            <div class="dialect-header">
+                                <span class="dialect-emoji">💎</span>
+                                <span class="dialect-name">Antwerps</span>
+                            </div>
+                            <p style="margin-bottom: 0.5rem;">Antwerp city dialect</p>
+                            <div class="dialect-aliases">
+                                <h4>Key Commands:</h4>
+                                <div class="alias-list">
+                                    <span class="alias-tag">doet</span>
+                                    <span class="alias-tag">smos</span>
+                                    <span class="alias-tag">awel</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dialect-card">
+                            <div class="dialect-header">
+                                <span class="dialect-emoji">⛰️</span>
+                                <span class="dialect-name">Limburgs</span>
+                            </div>
+                            <p style="margin-bottom: 0.5rem;">Limburg province dialect</p>
+                            <div class="dialect-aliases">
+                                <h4>Key Commands:</h4>
+                                <div class="alias-list">
+                                    <span class="alias-tag">gaon</span>
+                                    <span class="alias-tag">efkes</span>
+                                    <span class="alias-tag">allei</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dialect-card">
+                            <div class="dialect-header">
+                                <span class="dialect-emoji">🏙️</span>
+                                <span class="dialect-name">Brussels</span>
+                            </div>
+                            <p style="margin-bottom: 0.5rem;">Brussels dialect</p>
+                            <div class="dialect-aliases">
+                                <h4>Key Commands:</h4>
+                                <div class="alias-list">
+                                    <span class="alias-tag">doeda</span>
+                                    <span class="alias-tag">praot</span>
+                                    <span class="alias-tag">maakaan</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dialect-card">
+                            <div class="dialect-header">
+                                <span class="dialect-emoji">⛏️</span>
+                                <span class="dialect-name">Genks</span>
+                            </div>
+                            <p style="margin-bottom: 0.5rem;">Genk city dialect</p>
+                            <div class="dialect-aliases">
+                                <h4>Key Commands:</h4>
+                                <div class="alias-list">
+                                    <span class="alias-tag">jaowdoen</span>
+                                    <span class="alias-tag">babbel</span>
+                                    <span class="alias-tag">pakaan</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dialect-card">
+                            <div class="dialect-header">
+                                <span class="dialect-emoji">⭐</span>
+                                <span class="dialect-name">Standard+</span>
+                            </div>
+                            <p style="margin-bottom: 0.5rem;">Extended standard with extra aliases</p>
+                            <div class="dialect-aliases">
+                                <h4>Key Commands:</h4>
+                                <div class="alias-list">
+                                    <span class="alias-tag">loop</span>
+                                    <span class="alias-tag">bouw</span>
+                                    <span class="alias-tag">haalp</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="command-reference">
+                    <h2>Complete Command Reference</h2>
+                    <p>
+                        Every command is available in all 7 dialects. Here's the complete reference:
+                    </p>
+                    
+                    <table class="full-commands-table">
+                        <thead>
+                            <tr>
+                                <th>Command</th>
+                                <th>Standard</th>
+                                <th>West-Vlaams</th>
+                                <th>Antwerps</th>
+                                <th>Limburgs</th>
+                                <th>Brussels</th>
+                                <th>Genks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Run Program</strong></td>
+                                <td><code>run</code></td>
+                                <td><code>voertuut</code></td>
+                                <td><code>doet</code></td>
+                                <td><code>gaon</code></td>
+                                <td><code>doeda</code></td>
+                                <td><code>jaowdoen</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Interactive REPL</strong></td>
+                                <td><code>repl</code></td>
+                                <td><code>proboir</code></td>
+                                <td><code>smos</code></td>
+                                <td><code>efkes</code></td>
+                                <td><code>praot</code></td>
+                                <td><code>babbel</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Browse Examples</strong></td>
+                                <td><code>examples</code></td>
+                                <td><code>tuuntnekeer</code></td>
+                                <td><code>toondada</code></td>
+                                <td><code>loatskien</code></td>
+                                <td><code>toontmansen</code></td>
+                                <td><code>jaowkiek</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Check Syntax</strong></td>
+                                <td><code>check</code></td>
+                                <td><code>zijdezekers</code></td>
+                                <td><code>istdagoe</code></td>
+                                <td><code>kloptda</code></td>
+                                <td><code>isdagoe</code></td>
+                                <td><code>istokin</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Create Project</strong></td>
+                                <td><code>init</code></td>
+                                <td><code>allehop</code></td>
+                                <td><code>awel</code></td>
+                                <td><code>allei</code></td>
+                                <td><code>maakaan</code></td>
+                                <td><code>pakaan</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fortune (Easter Egg)</strong></td>
+                                <td><code>fortune</code></td>
+                                <td><code>zegt</code></td>
+                                <td><code>watteda</code></td>
+                                <td><code>wiste</code></td>
+                                <td><code>spreuk</code></td>
+                                <td><code>jaowzegt</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Build</strong></td>
+                                <td><code>build</code></td>
+                                <td><code>moakt</code></td>
+                                <td><code>bouwt</code></td>
+                                <td><code>maakt</code></td>
+                                <td><code>fabrikeert</code></td>
+                                <td><code>bouwt</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Help</strong></td>
+                                <td><code>help</code></td>
+                                <td><code>haalp</code></td>
+                                <td><code>helptemij</code></td>
+                                <td><code>helpt</code></td>
+                                <td><code>aidez</code></td>
+                                <td><code>hulp</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                
+                <section id="error-messages">
+                    <h2>Error Messages in Dialects</h2>
+                    <p>
+                        Error messages also come in your chosen dialect, making debugging more natural and 
+                        fun!
+                    </p>
+                    
+                    <p>
+                        Examples of the same error in different dialects:
+                    </p>
+                    
+                    <pre><code># Antwerps
+Manneke, gij zijt 'amen' vergeten op lijn 5!
+
+# West-Vlaams
+Jansen, ge zijt 'amen' vergeten op lijn 5!
+
+# Limburgs
+Jongen, ge hebt 'amen' vergete op lijn 5!
+
+# Brussels
+Jongens, gij zijt 'amen' vergeten op lijn 5!</code></pre>
+                    
+                    <div class="callout info">
+                        <div class="callout-title">💡 Note</div>
+                        <p>
+                            The error dialect is determined by the command you use. If you run 
+                            <code>plats smos</code> (Antwerps REPL), you'll get Antwerps 
+                            error messages.
+                        </p>
+                    </div>
+                </section>
+                
+                <section id="why-multi-vlaams">
+                    <h2>Why Multi-Vlaams?</h2>
+                    <p>
+                        Flanders has rich linguistic diversity with distinct dialects across regions. Multi-Vlaams 
+                        celebrates this diversity by:
+                    </p>
+                    
+                    <ul>
+                        <li>
+                            <strong>Inclusivity</strong> - Developers from different regions can code in their 
+                            native dialect
+                        </li>
+                        <li>
+                            <strong>Accessibility</strong> - Lower barrier to entry for Flemish speakers 
+                            from different regions
+                        </li>
+                        <li>
+                            <strong>Fun Factor</strong> - Programming should be enjoyable, and using 
+                            your natural dialect makes it more engaging
+                        </li>
+                        <li>
+                            <strong>Cultural Preservation</strong> - Helps preserve and document Flemish 
+                            dialects in a modern context
+                        </li>
+                        <li>
+                            <strong>Educational Value</strong> - Learn about different Flemish 
+                            dialects while programming
+                        </li>
+                    </ul>
+                    
+                    <div class="callout info">
+                        <div class="callout-title">🎯 Fun Fact</div>
+                        <p>
+                            The Multi-Vlaams feature was inspired by real conversations with Flemish developers 
+                            who wanted to "spreken like wij spreken" (speak like we speak) while coding.
+                        </p>
+                    </div>
+                </section>
+                
+                <div style="margin-top: 3rem; padding: 2rem; background: var(--bg-secondary); border-radius: var(--radius-lg); text-align: center;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-primary);">
+                        Ready to Code in Your Dialect?
+                    </h3>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+                        Install Vlaams Codex and start programming in your native Flemish dialect!
+                    </p>
+                    <a href="/#installation" class="btn primary" style="font-size: 1.125rem; padding: 1rem 2rem;">
+                        Get Started Now →
+                    </a>
+                </div>
+                
+                <div style="margin-top: 3rem;">
+                    <h3>Related Documentation</h3>
+                    <ul style="margin-top: 1rem;">
+                        <li><a href="index.html#cli-reference">CLI Reference</a> - Complete command documentation</li>
+                        <li><a href="index.html#language-spec">Language Specification</a> - Platskript syntax guide</li>
+                        <li><a href="index.html#installation">Installation</a> - How to install Vlaams Codex</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/language-switcher.js"></script>
+</body>
+</html>
