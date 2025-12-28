@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `discord-bot/`: support tickets (dropdown panel + ticket-kanalen onder categorie) + `/stuurlinks` post naar vast kanaal.
 - Bot mention replies: `@botnaam` geeft plat-Vlaamse reactie.
 
+### Changed
+
+- Project messaging: “parody/parodie” wording verwijderd (docs/website/metadata) — VlaamsCodex is serieus bedoeld.
+- CI: fixed `publish.yml` conditional zodat de workflow weer geldig is.
+
 ## [0.2.3] - 2025-12-28
 
 ### Added
