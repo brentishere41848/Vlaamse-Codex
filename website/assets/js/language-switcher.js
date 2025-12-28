@@ -60,7 +60,15 @@
             contributing: 'Submit pull requests and help improve Vlaams Codex',
             twitter: 'Follow updates and join the conversation',
             documentation: 'Documentation',
-            resources: 'Resources'
+            resources: 'Resources',
+            playgroundHint: 'Play your first Platskript code in the browser!',
+            playgroundEditorTitle: 'Code Editor',
+            playgroundRun: 'Run Code',
+            playgroundCopy: 'Copy',
+            playgroundClear: 'Clear Output',
+            playgroundOutputTitle: 'Output',
+            playgroundOutputBadge: 'Live Preview',
+            playgroundEmptyOutput: 'Output will appear here...'
         },
         vl: {
             features: 'Kenmerken',
@@ -120,7 +128,15 @@
             contributing: 'Dien pull requests in en help Vlaams Codex verbeteren',
             twitter: 'Volg de updates en babbel mee',
             documentation: 'Documentatie',
-            resources: 'Bronnen'
+            resources: 'Bronnen',
+            playgroundHint: 'Probeer uw eerste Platskript-code in de browser!',
+            playgroundEditorTitle: 'Code editor',
+            playgroundRun: 'Run code',
+            playgroundCopy: 'Kopieer',
+            playgroundClear: 'Wis output',
+            playgroundOutputTitle: 'Output',
+            playgroundOutputBadge: 'Live preview',
+            playgroundEmptyOutput: 'Output komt hier te staan...'
         }
     };
 

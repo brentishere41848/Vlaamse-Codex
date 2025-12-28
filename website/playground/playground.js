@@ -5,6 +5,139 @@ const VLAAMSCODEX_VERSION = '0.2.5';
 const VLAAMSCODEX_WHEEL_PATH = `../assets/py/vlaamscodex-${VLAAMSCODEX_VERSION}-py3-none-any.whl`;
 const VLAAMSCODEX_WHEEL_CACHE_BUST = '2025-12-28-05';
 
+const I18N = {
+    en: {
+        runtimePrefix: 'Runtime',
+        status: {
+            idle: 'idle',
+            running: 'running',
+            ready: 'ready',
+            error: 'error',
+            loadingPyodide: 'loading pyodide',
+            loadingMicropip: 'loading micropip',
+            installing: (version) => `installing vlaamscodex ${version}`,
+        },
+        hintDefault: 'Play your first Platskript code in the browser!',
+        hintLoadedExample: (example) => `Loaded example: ${example}`,
+        outputEmpty: 'Output will appear here...',
+        outputLoading: 'Loading...',
+        outputNoCode: 'Please enter some code to run.',
+        outputNoOutput: '(no output)',
+        copy: 'Copy',
+        copied: 'Copied!',
+        copyFailed: 'Copy failed',
+        errorLoadingExample: 'Error loading example:',
+        errorWhatsWrong: "What's wrong:",
+        errorHowToFix: 'How to fix it:',
+        errorOriginal: 'Original error:',
+        errorPatterns: [
+            {
+                pattern: /missing 'amen' statement terminator/i,
+                title: 'Missing amen',
+                description: 'You forgot to add "amen" at the end of a statement.',
+                suggestions: ['Add "amen" at the end of each statement', 'Check that every line ends with "amen"'],
+            },
+            {
+                pattern: /onbekend.*identifier|is.*niet.*gedefinieerd/i,
+                title: 'Unknown Variable',
+                description: 'You are trying to use a variable that has not been defined yet.',
+                suggestions: ['Check the variable spelling', 'Define the variable before using it', 'Make sure you use "zet" to define it first'],
+            },
+            {
+                pattern: /syntax.*fout|verwacht/i,
+                title: 'Syntax Error',
+                description: 'The code structure is not correct.',
+                suggestions: ['Check for missing quotes around text', 'Make sure all brackets are closed', 'Check that keywords are spelled correctly'],
+            },
+            {
+                pattern: /can only concatenate str.*to str/i,
+                title: 'Type Error',
+                description: 'You tried to combine text with a number without converting it to text first.',
+                suggestions: ['Convert numbers to text before plakt', 'Double-check your variables are the expected type'],
+            },
+            {
+                pattern: /Cannot read properties of undefined.*includes/i,
+                title: 'Execution Error',
+                description: 'There was an issue running the code. Please check if all brackets and quotes are properly closed.',
+                suggestions: ['Make sure all quotes are closed', 'Check that "plan doe" and "gedaan" are present', 'Try a simpler example first'],
+            },
+            {
+                pattern: /funksie|function/i,
+                title: 'Function Error',
+                description: 'Problem with function definition or call.',
+                suggestions: ['Functions start with "maak funksie"', 'Use "roep" to call functions', 'Check parameter syntax'],
+            },
+        ],
+        errorDefaultTitle: 'Compiler Error',
+        errorDefaultSuggestions: ['Check your code syntax', 'Review the error message', 'Try simplifying your code'],
+    },
+    vl: {
+        runtimePrefix: 'Runtime',
+        status: {
+            idle: 'idle',
+            running: 'bezig',
+            ready: 'klaar',
+            error: 'fout',
+            loadingPyodide: 'pyodide aan ’t laden',
+            loadingMicropip: 'micropip aan ’t laden',
+            installing: (version) => `vlaamscodex ${version} aan ’t installeren`,
+        },
+        hintDefault: 'Probeer uw eerste Platskript-code in de browser!',
+        hintLoadedExample: (example) => `Voorbeeld ingeladen: ${example}`,
+        outputEmpty: 'Output komt hier te staan...',
+        outputLoading: 'Bezig met laden...',
+        outputNoCode: 'Zet eerst wa code in de editor om te runnen.',
+        outputNoOutput: '(geen output)',
+        copy: 'Kopieer',
+        copied: 'Gekopieerd!',
+        copyFailed: 'Kopiëren mislukt',
+        errorLoadingExample: 'Fout bij het laden van het voorbeeld:',
+        errorWhatsWrong: 'Wa scheelt er:',
+        errorHowToFix: 'Hoe fixte da:',
+        errorOriginal: 'Originele fout:',
+        errorPatterns: [
+            {
+                pattern: /missing 'amen' statement terminator/i,
+                title: 'Amen vergeten',
+                description: 'Ge zijt "amen" vergeten op het einde van een statement.',
+                suggestions: ['Zet "amen" op het einde van elke statement', 'Check of elke lijn eindigt met "amen"'],
+            },
+            {
+                pattern: /onbekend.*identifier|is.*niet.*gedefinieerd/i,
+                title: 'Onbekende variabele',
+                description: 'Ge gebruikt een variabele die nog nie is aangemaakt.',
+                suggestions: ['Check de spelling', 'Zet de variabele eerst met "zet"', 'Check of ge "da <naam>" gebruikt waar het moet'],
+            },
+            {
+                pattern: /syntax.*fout|verwacht/i,
+                title: 'Syntaxfout',
+                description: 'De structuur van uw code klopt nie.',
+                suggestions: ['Check of ge quotes rond tekst hebt', 'Check of alle haakskes gesloten zijn', 'Check de sleutelwoorden op typfouten'],
+            },
+            {
+                pattern: /can only concatenate str.*to str/i,
+                title: 'Typefout',
+                description: 'Ge probeert tekst en een getal te plakken zonder eerst naar tekst om te zetten.',
+                suggestions: ['Zet getallen om naar tekst voor plakt', 'Check of uw variabelen het juiste type hebben'],
+            },
+            {
+                pattern: /Cannot read properties of undefined.*includes/i,
+                title: 'Uitvoerfout',
+                description: 'Er ging iets mis bij het uitvoeren. Check of al uw haakskes en quotes proper gesloten zijn.',
+                suggestions: ['Check of alle quotes dicht zijn', 'Check of "plan doe" en "gedaan" erbij staan', 'Probeer eerst een simpeler stuk code'],
+            },
+            {
+                pattern: /funksie|function/i,
+                title: 'Functiefout',
+                description: 'Er is een probleem met uw functie-definitie of oproep.',
+                suggestions: ['Functies starten met "maak funksie"', 'Gebruik "roep" om een functie op te roepen', 'Check uw parametersyntax'],
+            },
+        ],
+        errorDefaultTitle: 'Compilerfout',
+        errorDefaultSuggestions: ['Check uw code syntax', 'Lees de foutmelding', 'Maak uw voorbeeld kleiner en probeer opnieuw'],
+    },
+};
+
 const elements = {
     editor: document.getElementById('editor'),
     output: document.getElementById('output'),
@@ -99,18 +232,37 @@ gedaan
 `],
 ]);
 
-function setStatus(text) {
-    if (elements.runtimeStatus) elements.runtimeStatus.textContent = `Runtime: ${text}`;
+function getLanguage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlLanguage = urlParams.get('lang');
+    if (urlLanguage && (urlLanguage === 'en' || urlLanguage === 'vl')) return urlLanguage;
+    const saved = localStorage.getItem('language');
+    if (saved && (saved === 'en' || saved === 'vl')) return saved;
+    return 'en';
 }
 
-function appendOutput(text) {
-    if (!elements.output) return;
-    elements.output.textContent += text;
+function i18n() {
+    return I18N[getLanguage()] || I18N.en;
 }
 
-function setOutput(text) {
+function setStatus(statusKey, arg) {
+    if (!elements.runtimeStatus) return;
+    const tr = i18n();
+    const prefix = tr.runtimePrefix;
+    let statusText = statusKey;
+    if (statusKey === 'installing') statusText = tr.status.installing(arg);
+    else if (tr.status[statusKey]) statusText = tr.status[statusKey];
+    elements.runtimeStatus.textContent = `${prefix}: ${statusText}`;
+}
+
+function setOutputText(text) {
     if (!elements.output) return;
     elements.output.textContent = text;
+}
+
+function setOutputHtml(html) {
+    if (!elements.output) return;
+    elements.output.innerHTML = html;
 }
 
 function getQuery() {
@@ -126,87 +278,58 @@ function getExampleCode(example) {
     return code;
 }
 
-async function initFromQuery() {
-    const { example } = getQuery();
-    if (!example) {
-        setStatus('idle');
-        return;
-    }
-
-    try {
-        if (elements.editorTitle) elements.editorTitle.textContent = `Code (${example})`;
-        if (elements.hintLine) elements.hintLine.textContent = `Loaded example: ${example}`;
-        const code = getExampleCode(example);
-        if (elements.editor) elements.editor.value = code;
-        elements.output.innerHTML = '<span class="empty-output">Loading...</span>';
-        await handleRun();
-    } catch (e) {
-        setStatus('error');
-        const errorInfo = parseCompilerError(e);
-        const suggestionHtml = errorInfo.suggestions.map(s => `<li class="suggestion-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><path d="M17.66 11.34A8 8 0 0 0 0 9.83 14.17L12 14a8 8 0 0 0 0-9.83-14.17l7.66 0.17V11.34z"></path></svg> ${s}</li>`).join('');
-        elements.output.innerHTML = `<div class="error-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="error-icon"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg><span class="error-title" style="color: #EF4444; font-weight: 700; font-size: 1.125rem;">${errorInfo.title}</span></div><div class="error-description" style="background: #FFF7ED; padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;"><strong style="color: #2C3E50; display: block; margin-bottom: 0.5rem;">Error loading example:</strong><p style="margin: 0; color: #6B7280;">${errorInfo.description}</p></div><div class="error-details" style="background: #1F2937; padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1rem;"><strong style="color: #9CA3AF; display: block; margin-bottom: 0.5rem;">Original error:</strong><code class="error-code" style="color: #E5E7EB; font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.6; display: block; margin-top: 0.5rem;">${errorInfo.rawMessage}</code></div>`;
-    }
-}
-
 function parseCompilerError(error) {
-    const errorMsg = error.message || error.toString();
+    const tr = i18n();
+    const errorMsg = error?.message || error?.toString?.() || String(error);
 
-    const errorPatterns = [
-        {
-            pattern: /Cannot read properties of undefined.*includes/i,
-            title: 'Execution Error',
-            description: 'There was an issue running the code. Please check if all brackets and quotes are properly closed.',
-            suggestions: ['Make sure all quotes are closed', 'Check that "plan doe" and "gedaan" are present', 'Try a simpler example first']
-        },
-        {
-            pattern: /amen.*vergeten/i,
-            title: 'Missing amen',
-            description: 'You forgot to add "amen" at the end of a statement.',
-            suggestions: ['Add "amen" at the end of each statement', 'Check that every line ends with "amen"']
-        },
-        {
-            pattern: /onbekend.*identifier|is.*niet.*gedefinieerd/i,
-            title: 'Unknown Variable',
-            description: 'You are trying to use a variable that has not been defined yet.',
-            suggestions: ['Check the variable spelling', 'Define the variable before using it', 'Make sure you use "zet" to define it first']
-        },
-        {
-            pattern: /syntax.*fout|verwacht/i,
-            title: 'Syntax Error',
-            description: 'The code structure is not correct.',
-            suggestions: ['Check for missing quotes around text', 'Make sure all brackets are closed', 'Check that keywords are spelled correctly']
-        },
-        {
-            pattern: /klap|print/i,
-            title: 'Print Statement Error',
-            description: 'Issue with printing output.',
-            suggestions: ['Use "klap tekst" to print', 'Make sure text is enclosed in "tekst" keyword']
-        },
-        {
-            pattern: /funksie|function/i,
-            title: 'Function Error',
-            description: 'Problem with function definition or call.',
-            suggestions: ['Functions start with "maak funksie"', 'Use "roep" to call functions', 'Check parameter syntax']
-        }
-    ];
-
-    for (const pattern of errorPatterns) {
-        if (pattern.pattern.test(errorMsg)) {
+    for (const p of tr.errorPatterns) {
+        if (p.pattern.test(errorMsg)) {
             return {
-                title: pattern.title,
-                description: pattern.description,
-                suggestions: pattern.suggestions,
-                rawMessage: errorMsg
+                title: p.title,
+                description: p.description,
+                suggestions: p.suggestions,
+                rawMessage: errorMsg,
             };
         }
     }
 
     return {
-        title: 'Compiler Error',
+        title: tr.errorDefaultTitle,
         description: errorMsg,
-        suggestions: ['Check your code syntax', 'Review the error message', 'Try simplifying your code'],
-        rawMessage: errorMsg
+        suggestions: tr.errorDefaultSuggestions,
+        rawMessage: errorMsg,
     };
+}
+
+function renderErrorBox({ title, description, suggestions, rawMessage }, contextKey) {
+    const tr = i18n();
+    const suggestionHtml = (suggestions || [])
+        .map(s => `<li class="suggestion-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><path d="M17.66 11.34A8 8 0 0 0 4 9.83a8 8 0 0 0 14.17 7.66"></path></svg> ${s}</li>`)
+        .join('');
+
+    const contextTitle = contextKey === 'loadingExample' ? tr.errorLoadingExample : tr.errorWhatsWrong;
+
+    return `
+<div class="error-header">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="error-icon">
+    <circle cx="12" cy="12" r="10"></circle>
+    <line x1="15" y1="9" x2="9" y2="15"></line>
+    <line x1="9" y1="9" x2="15" y2="15"></line>
+  </svg>
+  <span class="error-title">${title}</span>
+</div>
+<div class="error-description">
+  <strong>${contextTitle}</strong>
+  <p>${description}</p>
+</div>
+<div class="error-suggestions">
+  <strong>${tr.errorHowToFix}</strong>
+  <ul>${suggestionHtml}</ul>
+</div>
+<div class="error-details">
+  <strong>${tr.errorOriginal}</strong>
+  <code class="error-code">${rawMessage}</code>
+</div>`;
 }
 
 let pyodidePromise = null;
@@ -215,7 +338,7 @@ async function ensurePyodide() {
     if (pyodidePromise) return pyodidePromise;
 
     pyodidePromise = (async () => {
-        setStatus('loading pyodide');
+        setStatus('loadingPyodide');
         if (!window.loadPyodide) {
             await new Promise((resolve, reject) => {
                 const script = document.createElement('script');
@@ -230,17 +353,17 @@ async function ensurePyodide() {
             indexURL: `https://cdn.jsdelivr.net/pyodide/${PYODIDE_VERSION}/full/`,
         });
 
-        setStatus('loading micropip');
+        setStatus('loadingMicropip');
         await pyodide.loadPackage('micropip');
 
         const wheelUrl = new URL(`${VLAAMSCODEX_WHEEL_PATH}?v=${encodeURIComponent(VLAAMSCODEX_WHEEL_CACHE_BUST)}`, window.location.href).toString();
 
-        setStatus(`installing vlaamscodex ${VLAAMSCODEX_VERSION}`);
+        setStatus('installing', VLAAMSCODEX_VERSION);
         try {
             await pyodide.runPythonAsync(`
 import micropip
 await micropip.install(${JSON.stringify(wheelUrl)})
-        `.trim());
+            `.trim());
         } catch {
             await pyodide.runPythonAsync(`
 import micropip
@@ -255,7 +378,6 @@ await micropip.install("vlaamscodex==${VLAAMSCODEX_VERSION}")
     return pyodidePromise;
 }
 
-// Override the runPlats function to catch compiler errors better
 async function runPlats(code) {
     const pyodide = await ensurePyodide();
     const escaped = JSON.stringify(code);
@@ -285,7 +407,7 @@ except Exception as e:
     `.trim());
 
     if (!result || typeof result !== 'string') {
-        return '(no output)';
+        return i18n().outputNoOutput;
     }
 
     if (result.includes('COMPILER_ERROR:')) {
@@ -293,50 +415,50 @@ except Exception as e:
         throw new Error(errorMsg);
     }
 
-    return result || '(no output)';
+    return result || i18n().outputNoOutput;
 }
 
 async function handleRun() {
+    const tr = i18n();
     const code = elements.editor?.value ?? '';
     if (!code.trim()) {
-        setOutput('Please enter some code to run.');
+        setOutputText(tr.outputNoCode);
         return;
     }
 
-    elements.output.innerHTML = '';
+    setOutputHtml('');
     try {
-        elements.runBtn.disabled = true;
+        if (elements.runBtn) elements.runBtn.disabled = true;
         setStatus('running');
         const out = await runPlats(code);
-        setOutput(out || '(no output)');
+        setOutputText(out || tr.outputNoOutput);
         setStatus('ready');
     } catch (e) {
         setStatus('error');
         const errorInfo = parseCompilerError(e);
-        const suggestionHtml = errorInfo.suggestions.map(s => `<li class="suggestion-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><path d="M17.66 11.34A8 8 0 0 0 0 9.83 14.17L12 14a8 8 0 0 0 0-9.83-14.17l7.66 0.17V11.34z"></path></svg> ${s}</li>`).join('');
-
-        elements.output.innerHTML = `<div class="error-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="error-icon"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg><span class="error-title" style="color: #EF4444; font-weight: 700; font-size: 1.125rem;">${errorInfo.title}</span></div><div class="error-description" style="background: #FFF7ED; padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;"><strong style="color: #2C3E50; display: block; margin-bottom: 0.5rem;">What's wrong:</strong><p style="margin: 0; color: #6B7280;">${errorInfo.description}</p></div><div class="error-suggestions" style="padding: 1.5rem; margin-bottom: 1.5rem;"><strong style="color: #1E40AF; display: block; margin-bottom: 0.75rem;">How to fix it:</strong><ul style="margin: 0; padding-left: 1.5rem; color: #6B7280;">${suggestionHtml}</ul></div><div class="error-details" style="background: #1F2937; padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1rem;"><strong style="color: #9CA3AF; display: block; margin-bottom: 0.5rem;">Original error:</strong><code class="error-code" style="color: #E5E7EB; font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.6; display: block; margin-top: 0.5rem;">${errorInfo.rawMessage}</code></div>`;
+        setOutputHtml(renderErrorBox(errorInfo));
     } finally {
-        elements.runBtn.disabled = false;
+        if (elements.runBtn) elements.runBtn.disabled = false;
     }
 }
 
 function wireUi() {
     if (elements.copyBtn && elements.editor) {
         elements.copyBtn.addEventListener('click', async () => {
+            const tr = i18n();
             try {
                 await navigator.clipboard.writeText(elements.editor.value);
-                elements.copyBtn.textContent = 'Copied!';
-                setTimeout(() => { elements.copyBtn.textContent = 'Copy'; }, 1200);
+                elements.copyBtn.textContent = tr.copied;
+                setTimeout(() => { elements.copyBtn.textContent = tr.copy; }, 1200);
             } catch {
-                elements.copyBtn.textContent = 'Copy failed';
-                setTimeout(() => { elements.copyBtn.textContent = 'Copy'; }, 1200);
+                elements.copyBtn.textContent = tr.copyFailed;
+                setTimeout(() => { elements.copyBtn.textContent = tr.copy; }, 1200);
             }
         });
     }
 
     if (elements.clearBtn) {
-        elements.clearBtn.addEventListener('click', () => setOutput(''));
+        elements.clearBtn.addEventListener('click', () => setOutputText(''));
     }
 
     if (elements.runBtn) {
@@ -344,41 +466,40 @@ function wireUi() {
     }
 }
 
-async function initFromQuery() {
-    const { example } = getQuery();
-    if (!example) {
-        setStatus('idle');
-        return;
-    }
-
-    try {
-        if (elements.editorTitle) elements.editorTitle.textContent = `Code (${example})`;
-        if (elements.hintLine) elements.hintLine.textContent = `Loaded example: ${example}`;
-        const code = await fetchExampleCode(example);
-        if (elements.editor) elements.editor.value = code;
-        elements.output.innerHTML = '<span class="empty-output">Loading...</span>';
-        await handleRun();
-    } catch (e) {
-        setStatus('error');
-        const errorInfo = parseCompilerError(e);
-        const suggestionHtml = errorInfo.suggestions.map(s => `<li class="suggestion-item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><path d="M17.66 11.34A8 8 0 0 0 0 9.83 14.17L12 14a8 8 0 0 0 0-9.83-14.17l7.66 0.17V11.34z"></path></svg> ${s}</li>`).join('');
-        elements.output.innerHTML = `<div class="error-header"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="error-icon"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg><span class="error-title" style="color: #EF4444; font-weight: 700; font-size: 1.125rem;">${errorInfo.title}</span></div><div class="error-description" style="background: #FFF7ED; padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1.5rem;"><strong style="color: #2C3E50; display: block; margin-bottom: 0.5rem;">Error loading example:</strong><p style="margin: 0; color: #6B7280;">${errorInfo.description}</p></div><div class="error-details" style="background: #1F2937; padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 1rem;"><strong style="color: #9CA3AF; display: block; margin-bottom: 0.5rem;">Original error:</strong><code class="error-code" style="color: #E5E7EB; font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.6; display: block; margin-top: 0.5rem;">${errorInfo.rawMessage}</code></div>`;
-    }
-}
-
 wireUi();
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (elements.output && !getQuery().example) {
-        elements.output.innerHTML = '<span class="empty-output">Run some code to see output here...</span>';
+    const tr = i18n();
+    if (elements.hintLine) elements.hintLine.textContent = tr.hintDefault;
+    if (elements.output) elements.output.innerHTML = `<span class="empty-output">${tr.outputEmpty}</span>`;
+    setStatus('idle');
+
+    const languageSelect = document.getElementById('languageSelect');
+    if (languageSelect) {
+        languageSelect.addEventListener('change', () => {
+            const t2 = i18n();
+            if (elements.hintLine) elements.hintLine.textContent = t2.hintDefault;
+            if (elements.output && elements.output.querySelector('.empty-output')) {
+                elements.output.innerHTML = `<span class="empty-output">${t2.outputEmpty}</span>`;
+            }
+            setStatus('idle');
+        });
     }
 
     const { example } = getQuery();
     if (example) {
-        elements.hintLine.textContent = 'Examples directory removed. Type code directly in editor.';
-        elements.hintLine.style.background = '#F59E0B';
-        elements.hintLine.style.color = 'white';
+        try {
+            const code = getExampleCode(example);
+            if (elements.editorTitle) elements.editorTitle.textContent = `Code (${example})`;
+            if (elements.hintLine) elements.hintLine.textContent = tr.hintLoadedExample(example);
+            if (elements.editor) elements.editor.value = code;
+            setOutputHtml(`<span class="empty-output">${tr.outputLoading}</span>`);
+            handleRun();
+        } catch (e) {
+            setStatus('error');
+            const errorInfo = parseCompilerError(e);
+            setOutputHtml(renderErrorBox(errorInfo, 'loadingExample'));
+        }
     }
-
-    initFromQuery();
 });
+

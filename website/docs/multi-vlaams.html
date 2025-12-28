@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vlaams Codex Multi-Vlaams Dialects - Use Platskript commands in multiple Flemish dialects.">
+    <title>Multi-Vlaams Dialects - Vlaams Codex</title>
+
+    <link rel="canonical" href="https://vlaamscodex.dev/docs/multi-vlaams">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+
+    <style>
+        .docs-container {
+            max-width: 1000px;
+            margin: 6rem auto 3rem;
+            padding: 0 1.5rem;
+        }
+
+        .breadcrumbs {
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .breadcrumbs a {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            padding: 3.5rem 2rem;
+            border-radius: var(--radius-xl);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0 0 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            margin: 0 auto;
+            max-width: 700px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .doc-section {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-section h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 1rem;
+            color: var(--text-primary);
+        }
+
+        .doc-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .doc-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin: 0 0 1rem;
+        }
+
+        .doc-section ul {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin: 0 0 1rem;
+            padding-left: 1.25rem;
+        }
+
+        .doc-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-section code {
+            background: var(--bg-secondary);
+            padding: 0.125rem 0.375rem;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--primary-color);
+        }
+
+        .doc-section pre {
+            background: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.8;
+            color: #E5E7EB;
+        }
+
+        .doc-section pre code {
+            background: transparent;
+            padding: 0;
+            color: #E5E7EB;
+        }
+
+        .alias-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .alias-table th,
+        .alias-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .alias-table th {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingScreen" class="loading-screen" style="opacity: 0 !important; visibility: hidden !important;">
+        <img src="../icon.png" alt="Vlaams Codex Logo" class="loading-logo">
+        <p class="loading-text" data-lang="tagline">'t Es simpel, 't es plansen, 't es Vlaams!</p>
+    </div>
+
+    <header class="site-header">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <a href="/" class="logo">
+                    <img src="../icon.png" alt="Vlaams Codex Logo" class="logo-img">
+                    <span class="logo-text">Vlaams Codex</span>
+                </a>
+            </div>
+
+            <div class="nav-center">
+                <ul class="nav-menu">
+                    <li><a href="/#features" data-lang="features">Features</a></li>
+                    <li><a href="/#install" data-lang="install">Install</a></li>
+                    <li><a href="index.html" class="active" data-lang="docs">Docs</a></li>
+
+                    <li><a href="/playground/" data-lang="playground">Playground</a></li>
+                    <li><a href="/#community" data-lang="community">Community</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="language-switcher">
+                    <select id="languageSelect">
+                        <option value="en">English</option>
+                        <option value="vl">Vlaams</option>
+                    </select>
+                </div>
+                <a href="/#installation" class="cta-button" data-lang="getStarted">Get Started</a>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="docs-container">
+        <div class="breadcrumbs" data-lang-block="en">
+            <a href="/">Home</a> /
+            <a href="index.html">Docs</a> /
+            <span>Multi-Vlaams Dialects</span>
+        </div>
+        <div class="breadcrumbs" data-lang-block="vl" hidden>
+            <a href="/">Home</a> /
+            <a href="index.html">Docs</a> /
+            <span>Multi-Vlaams dialecten</span>
+        </div>
+
+        <div class="hero">
+            <h1 data-lang-block="en">Multi-Vlaams Dialects</h1>
+            <h1 data-lang-block="vl" hidden>Multi-Vlaams dialecten</h1>
+
+            <p data-lang-block="en">
+                Vlaams Codex supports multiple Flemish dialect command aliases. Pick the dialect that feels natural to you and keep coding the same way.
+            </p>
+            <p data-lang-block="vl" hidden>
+                Vlaams Codex ondersteunt meerdere Vlaamse dialect-aliassen voor commando’s. Kies wat voor u het meest natuurlijk aanvoelt en programmeer gewoon verder.
+            </p>
+        </div>
+
+        <div class="doc-section">
+            <h2 data-lang-block="en">Supported dialects</h2>
+            <h2 data-lang-block="vl" hidden>Ondersteunde dialecten</h2>
+
+            <ul data-lang-block="en">
+                <li><strong>Standard</strong> (base dialect)</li>
+                <li><strong>West-Vlaams</strong></li>
+                <li><strong>Antwerps</strong></li>
+                <li><strong>Limburgs</strong></li>
+                <li><strong>Brussels</strong></li>
+                <li><strong>Genks</strong></li>
+                <li><strong>Standard +</strong> (extended standard)</li>
+            </ul>
+            <ul data-lang-block="vl" hidden>
+                <li><strong>Standard</strong> (basisdialect)</li>
+                <li><strong>West-Vlaams</strong></li>
+                <li><strong>Antwerps</strong></li>
+                <li><strong>Limburgs</strong></li>
+                <li><strong>Brussels</strong></li>
+                <li><strong>Genks</strong></li>
+                <li><strong>Standard +</strong> (uitgebreid standaard)</li>
+            </ul>
+        </div>
+
+        <div class="doc-section">
+            <h2 data-lang-block="en">Command aliases</h2>
+            <h2 data-lang-block="vl" hidden>Commando-aliassen</h2>
+
+            <p data-lang-block="en">The CLI is called <code>plats</code>. The first word after <code>plats</code> can be written in different dialects.</p>
+            <p data-lang-block="vl" hidden>De CLI heet <code>plats</code>. Het eerste woord na <code>plats</code> kunt ge schrijven in verschillende dialecten.</p>
+
+            <table class="alias-table">
+                <thead>
+                    <tr>
+                        <th data-lang-block="en">Action</th>
+                        <th data-lang-block="vl" hidden>Actie</th>
+                        <th>Standard</th>
+                        <th>West-Vlaams</th>
+                        <th>Antwerps</th>
+                        <th>Limburgs</th>
+                        <th>Brussels</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-lang-block="en"><strong>Run program</strong></td>
+                        <td data-lang-block="vl" hidden><strong>Programma runnen</strong></td>
+                        <td><code>run</code></td>
+                        <td><code>voertuut</code></td>
+                        <td><code>doet</code></td>
+                        <td><code>gaon</code></td>
+                        <td><code>doeda</code></td>
+                    </tr>
+                    <tr>
+                        <td data-lang-block="en"><strong>Interactive REPL</strong></td>
+                        <td data-lang-block="vl" hidden><strong>Interactieve REPL</strong></td>
+                        <td><code>repl</code></td>
+                        <td><code>proboir</code></td>
+                        <td><code>smos</code></td>
+                        <td><code>efkes</code></td>
+                        <td><code>praot</code></td>
+                    </tr>
+                    <tr>
+                        <td data-lang-block="en"><strong>Browse examples</strong></td>
+                        <td data-lang-block="vl" hidden><strong>Voorbeelden bekijken</strong></td>
+                        <td><code>examples</code></td>
+                        <td><code>tuuntnekeer</code></td>
+                        <td><code>toondada</code></td>
+                        <td><code>loatskien</code></td>
+                        <td><code>toontmansen</code></td>
+                    </tr>
+                    <tr>
+                        <td data-lang-block="en"><strong>Check syntax</strong></td>
+                        <td data-lang-block="vl" hidden><strong>Syntax checken</strong></td>
+                        <td><code>check</code></td>
+                        <td><code>zijdezekers</code></td>
+                        <td><code>istdagoe</code></td>
+                        <td><code>kloptda</code></td>
+                        <td><code>isdagoe</code></td>
+                    </tr>
+                    <tr>
+                        <td data-lang-block="en"><strong>New project</strong></td>
+                        <td data-lang-block="vl" hidden><strong>Nieuw project</strong></td>
+                        <td><code>init</code></td>
+                        <td><code>allehop</code></td>
+                        <td><code>awel</code></td>
+                        <td><code>allei</code></td>
+                        <td><code>maakaan</code></td>
+                    </tr>
+                    <tr>
+                        <td data-lang-block="en"><strong>Fortune</strong></td>
+                        <td data-lang-block="vl" hidden><strong>Spreuk</strong></td>
+                        <td><code>fortune</code></td>
+                        <td><code>zegt</code></td>
+                        <td><code>watteda</code></td>
+                        <td><code>wiste</code></td>
+                        <td><code>spreuk</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 data-lang-block="en">Examples</h3>
+            <h3 data-lang-block="vl" hidden>Voorbeelden</h3>
+
+            <div data-lang-block="en">
+                <pre><code>plats run hello.plats
+plats voertuut hello.plats
+plats doet hello.plats
+plats gaon hello.plats
+plats doeda hello.plats</code></pre>
+            </div>
+            <div data-lang-block="vl" hidden>
+                <pre><code>plats run hello.plats
+plats voertuut hello.plats
+plats doet hello.plats
+plats gaon hello.plats
+plats doeda hello.plats</code></pre>
+            </div>
+        </div>
+
+        <div class="doc-section">
+            <h2 data-lang-block="en">Notes</h2>
+            <h2 data-lang-block="vl" hidden>Opmerkingen</h2>
+
+            <p data-lang-block="en">Dialect aliases only change the command words. Your <code>.plats</code> code stays the same.</p>
+            <p data-lang-block="vl" hidden>Dialect-aliassen veranderen enkel de commando-woorden. Uw <code>.plats</code>-code blijft hetzelfde.</p>
+
+            <p data-lang-block="en">If you prefer, you can always stick to Standard. Nothing is required.</p>
+            <p data-lang-block="vl" hidden>Als ge wilt, kunt ge altijd Standard blijven gebruiken. Niks is verplicht.</p>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/language-switcher.js"></script>
+</body>
+</html>
+
