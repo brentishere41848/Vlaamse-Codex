@@ -1,0 +1,112 @@
+name: Ensure Latest Tag Release
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  ensure-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch tags
+        run: git fetch --tags --force
+
+      - name: Determine latest semver tag
+        id: tag
+        run: |
+          python - <<'PY' > tag.txt
+          import re, subprocess
+          tags = subprocess.check_output(["git", "tag", "--list", "v*.*.*"], text=True).split()
+          tags = [t for t in tags if re.match(r"^v\\d+\\.\\d+\\.\\d+$", t)]
+          def key(t):
+            a,b,c = map(int, t[1:].split("."))
+            return (a,b,c)
+          tags.sort(key=key)
+          if not tags:
+            raise SystemExit("Geen semver tags gevonden.")
+          print(tags[-1])
+          PY
+          echo "tag_name=$(cat tag.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Create or update release for latest tag
+        uses: actions/github-script@v7
+        env:
+          TAG_NAME: ${{ steps.tag.outputs.tag_name }}
+        with:
+          script: |
+            const fs = require("fs");
+
+            function escapeRegExp(s) {
+              return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            }
+
+            function extractChangelogSection(changelog, version) {
+              const headerRe = new RegExp(`^## \\[${escapeRegExp(version)}\\][^\\n]*$`, "m");
+              const startMatch = changelog.match(headerRe);
+              if (!startMatch || startMatch.index == null) return null;
+
+              const start = startMatch.index;
+              const afterStart = changelog.slice(start + startMatch[0].length);
+              const nextHeaderRe = /^## \\[/m;
+              const next = afterStart.match(nextHeaderRe);
+              const end = next && next.index != null ? start + startMatch[0].length + next.index : changelog.length;
+              return changelog.slice(start, end).trim();
+            }
+
+            const tag = process.env.TAG_NAME || "";
+            if (!tag) {
+              core.setFailed("TAG_NAME ontbreekt.");
+              return;
+            }
+            const version = tag.startsWith("v") ? tag.slice(1) : tag;
+
+            const changelog = fs.readFileSync("CHANGELOG.md", "utf8");
+            const body = extractChangelogSection(changelog, version);
+            if (!body) {
+              core.setFailed(`Kon geen CHANGELOG sectie vinden voor versie ${version} (tag: ${tag}).`);
+              return;
+            }
+
+            const { owner, repo } = context.repo;
+
+            let release = null;
+            try {
+              const existing = await github.rest.repos.getReleaseByTag({ owner, repo, tag });
+              release = existing.data;
+            } catch (e) {
+              if (e.status !== 404) throw e;
+            }
+
+            if (release) {
+              await github.rest.repos.updateRelease({
+                owner,
+                repo,
+                release_id: release.id,
+                name: tag,
+                body,
+                draft: false,
+                prerelease: false
+              });
+              core.info(`Release ${tag} bijgewerkt.`);
+              return;
+            }
+
+            await github.rest.repos.createRelease({
+              owner,
+              repo,
+              tag_name: tag,
+              name: tag,
+              body,
+              draft: false,
+              prerelease: false
+            });
+            core.info(`Release ${tag} aangemaakt.`);
+
