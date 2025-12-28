@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn Platskript - Interactive tutorials from easy to advanced. Master Vlaams Codex programming language.">
+    <title>Learn Plats - Vlaams Codex</title>
+
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+
+    <style>
+        .learn-container > *:not(.learn-header) {
+            display: none !important;
+        }
+
+        .learn-header {
+            display: none !important;
+        }
+
+        .learn-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 1.5rem 3rem;
+        }
+
+        .learn-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .learn-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .learn-header p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .section-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-tab {
+            padding: 1rem 2rem;
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-tab:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .section-tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .section-tab .badge {
+            background: var(--secondary-color);
+            color: var(--bg-dark);
+        }
+
+        .section-content {
+            display: none;
+        }
+
+        .section-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .lesson-card {
+            background: white;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .lesson-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .lesson-card.completed {
+            border-color: #27C93F;
+        }
+
+        .lesson-card.completed::after {
+            content: '✓';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #27C93F;
+            color: white;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .lesson-number {
+            display: inline-block;
+            background: var(--bg-secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .lesson-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .lesson-description {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .lesson-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .lesson-tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            color: var(--text-secondary);
+        }
+
+        .lesson-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .lesson-modal.active {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        .lesson-modal-content {
+            background: white;
+            border-radius: var(--radius-xl);
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .lesson-modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--bg-secondary);
+            border: none;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .lesson-modal-close:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .lesson-modal-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .lesson-section {
+            margin-bottom: 2rem;
+        }
+
+        .lesson-section h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .lesson-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .lesson-section pre {
+            background: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.8;
+            color: #E5E7EB;
+        }
+
+        .lesson-section code {
+            background: var(--bg-secondary);
+            padding: 0.125rem 0.375rem;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--primary-color);
+        }
+
+        .lesson-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .lesson-nav-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--border-color);
+            background: white;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .lesson-nav-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .lesson-nav-btn.primary {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .lesson-nav-btn.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .lesson-challenge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            margin: 2rem 0;
+        }
+
+        .lesson-challenge h4 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .lesson-challenge p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .difficulty-badge.easy {
+            background: #27C93F;
+            color: white;
+        }
+
+        .difficulty-badge.medium {
+            background: #FFA500;
+            color: white;
+        }
+
+        .difficulty-badge.hard {
+            background: #EF4444;
+            color: white;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27C93F 0%, #20C0A6 100%);
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .section-tabs {
+                flex-direction: column;
+            }
+
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .learn-modal {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingScreen" class="loading-screen">
+        <img src="../icon.png" alt="Vlaams Codex Logo" class="loading-logo">
+        <p class="loading-text">'t Es simpel, 't es plansen, 't es Vlaams!</p>
+    </div>
+
+    <header class="site-header">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <a href="/" class="logo">
+                    <img src="../icon.png" alt="Vlaams Codex Logo" class="logo-img">
+                    <span class="logo-text">Vlaams Codex</span>
+                </a>
+            </div>
+
+            <div class="nav-center">
+                <ul class="nav-menu">
+                    <li><a href="/#features">Features</a></li>
+                    <li><a href="/#install">Install</a></li>
+                    <li><a href="docs/">Docs</a></li>
+
+                    <li><a href="playground/">Playground</a></li>
+                    <li><a href="/#community">Community</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="language-switcher">
+                    <select id="languageSelect">
+                        <option value="en">English</option>
+                        <option value="vl">Vlaams</option>
+                    </select>
+                </div>
+                <a href="/#installation" class="cta-button">Get Started</a>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="learn-container">
+        <div class="learn-header">
+            <h1>Learn Plats</h1>
+            <p>Master Platskript step by step, from basics to advanced concepts. Start with easy lessons and work your way up!</p>
+        </div>
+
+        <div class="progress-text" id="progressText">0 lessons completed</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+
+        <div class="section-tabs">
+            <button class="section-tab active" data-section="easy">
+                <span>Easy Mode</span>
+                <span class="badge">22 Lessons</span>
+            </button>
+            <button class="section-tab" data-section="medium">
+                <span>Medium Mode</span>
+                <span class="badge">12 Lessons</span>
+            </button>
+            <button class="section-tab" data-section="hard">
+                <span>Hard Mode</span>
+                <span class="badge">5 Lessons</span>
+            </button>
+        </div>
+
+        <div class="section-content active" id="section-easy">
+            <div class="lessons-grid" id="easy-lessons"></div>
+        </div>
+
+        <div class="section-content" id="section-medium">
+            <div class="lessons-grid" id="medium-lessons"></div>
+        </div>
+
+        <div class="section-content" id="section-hard">
+            <div class="lessons-grid" id="hard-lessons"></div>
+        </div>
+    </div>
+
+    <div class="lesson-modal" id="lessonModal">
+        <div class="lesson-modal-content">
+            <button class="lesson-modal-close" id="modalClose">×</button>
+            <div id="lessonContent"></div>
+            <div class="lesson-nav">
+                <button class="lesson-nav-btn" id="prevLesson">Previous</button>
+                <span id="lessonCounter">1 / 22</span>
+                <button class="lesson-nav-btn primary" id="nextLesson">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/language-switcher.js"></script>
+    <script src="learn.js"></script>
+</body>
+</html>

@@ -177,7 +177,7 @@
     </style>
 </head>
 <body>
-    <div id="loadingScreen" class="loading-screen">
+    <div id="loadingScreen" class="loading-screen" style="opacity: 0 !important; visibility: hidden !important;">
         <img src="../icon.png" alt="Vlaams Codex Logo" class="loading-logo">
         <p class="loading-text">'t Es simpel, 't es plansen, 't es Vlaams!</p>
     </div>
@@ -194,9 +194,10 @@
             <div class="nav-center">
                 <ul class="nav-menu">
                     <li><a href="/#features">Features</a></li>
-                    <li><a href="/#installation">Install</a></li>
+                    <li><a href="/#install">Install</a></li>
                     <li><a href="index.html" class="active">Docs</a></li>
-                    <li><a href="/examples/">Examples</a></li>
+
+                    <li><a href="/playground/">Playground</a></li>
                     <li><a href="/#community">Community</a></li>
                 </ul>
             </div>
@@ -205,7 +206,7 @@
                 <div class="language-switcher">
                     <select id="languageSelect">
                         <option value="en">English</option>
-                        <option value="vl">🇧🇪 Vlaams</option>
+                        <option value="vl">Vlaams</option>
                     </select>
                 </div>
                 <a href="/#installation" class="cta-button">Get Started</a>

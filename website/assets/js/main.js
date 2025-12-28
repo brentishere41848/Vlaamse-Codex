@@ -183,6 +183,22 @@
         });
     }
 
+    function initLoadingScreen() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (!loadingScreen) return;
+    }
+
+    function showLoadingScreen(callback) {
+        const loadingScreen = document.getElementById('loadingScreen');
+        if (!loadingScreen) return;
+
+        loadingScreen.classList.add('active');
+        setTimeout(() => {
+            loadingScreen.classList.remove('active');
+            if (callback) callback();
+        }, 800);
+    }
+
     function showToast(message, type = 'success') {
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
@@ -198,7 +214,8 @@
         initAccordion,
         initTabs,
         initModal,
-        showToast
+        showToast,
+        showLoadingScreen
     };
 
     if (typeof module !== 'undefined' && module.exports) {

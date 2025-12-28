@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vlaams Codex Playground - Try Platskript in your browser.">
+    <title>Playground - Vlaams Codex</title>
+
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+
+    <style>
+        .playground-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 6rem;
+            padding: 0 1.5rem 3rem;
+            min-height: calc(100vh - 6rem);
+        }
+
+        .playground-panel {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .panel-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .panel-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .panel-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #editor {
+            flex: 1;
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            border: none;
+            resize: none;
+            outline: none;
+            background: white;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        #output {
+            flex: 1;
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            background: var(--bg-dark);
+            color: #E5E7EB;
+            overflow-y: auto;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .playground-controls {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .hint-line {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            font-size: 0.875rem;
+            text-align: center;
+        }
+
+        .run-btn {
+            flex: 1;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .run-btn:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .run-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .icon-btn {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.875rem;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 1024px) {
+            .playground-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        .empty-output {
+            color: #9CA3AF;
+            font-style: italic;
+        }
+
+        .error-header {
+            padding: 1rem;
+            background: #FEF2F2;
+            border-left: 4px solid #EF4444;
+            border-radius: var(--radius-sm);
+            margin-bottom: 1.5rem;
+        }
+
+        .error-title {
+            color: #EF4444;
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        .error-description {
+            background: #FFF7ED;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+        }
+
+        .error-description strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .error-description p {
+            margin: 0;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .error-suggestions {
+            background: #EFF6FF;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+        }
+
+        .error-suggestions strong {
+            color: #1E40AF;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .error-suggestions ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .error-suggestions li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .error-suggestions li svg {
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .error-details {
+            background: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+        }
+
+        .error-details strong {
+            color: #9CA3AF;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .error-code {
+            color: #E5E7EB;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingScreen" class="loading-screen" style="opacity: 0 !important; visibility: hidden !important;">
+        <img src="../icon.png" alt="Vlaams Codex Logo" class="loading-logo">
+        <p class="loading-text">'t Es simpel, 't es plansen, 't es Vlaams!</p>
+    </div>
+
+    <header class="site-header">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <a href="/" class="logo">
+                    <img src="../icon.png" alt="Vlaams Codex Logo" class="logo-img">
+                    <span class="logo-text">Vlaams Codex</span>
+                </a>
+            </div>
+
+            <div class="nav-center">
+                <ul class="nav-menu">
+                    <li><a href="/#features">Features</a></li>
+                    <li><a href="/#install">Install</a></li>
+                    <li><a href="../docs/">Docs</a></li>
+
+                    <li><a href="../playground/" class="active">Playground</a></li>
+                    <li><a href="/#community">Community</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="language-switcher">
+                    <select id="languageSelect">
+                        <option value="en">English</option>
+                        <option value="vl">Vlaams</option>
+                    </select>
+                </div>
+                <a href="/#installation" class="cta-button">Get Started</a>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div id="hintLine" class="hint-line">Play your first Platskript code in the browser!</div>
+
+    <main class="playground-container">
+        <div class="playground-panel">
+            <div class="panel-header">
+                <span class="panel-title" id="editorTitle">Code Editor</span>
+                <span id="runtimeStatus" class="badge">Runtime: idle</span>
+            </div>
+            <div class="panel-content">
+                <textarea id="editor" spellcheck="false" placeholder="# coding: vlaamsplats
+plan doe
+  klap tekst gdag aan weeireld amen
+gedaan"></textarea>
+            </div>
+            <div class="playground-controls">
+                <button id="runBtn" class="run-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 10 21 12 3 5 19 5 12 14 5 14 19 12 5 9 19 12 5 3"></polygon><polygon points="12 16 11 16 9 9 8 9 11 10.66 16 12 16 10 12.24 17 12 15 5.34 17 12 9 13 8 12 6 12 5 3 12 16 5 7 9 11 9 9 11 12 21"></polygon></svg> Run Code</button>
+                <button id="copyBtn" class="icon-btn">Copy</button>
+                <button id="clearBtn" class="icon-btn">Clear Output</button>
+            </div>
+        </div>
+
+        <div class="playground-panel">
+            <div class="panel-header">
+                <span class="panel-title">Output</span>
+                <span class="badge secondary">Live Preview</span>
+            </div>
+            <div class="panel-content">
+                <div id="output"><span class="empty-output">Output will appear here...</span></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/language-switcher.js"></script>
+    <script src="playground.js"></script>
+</body>
+</html>

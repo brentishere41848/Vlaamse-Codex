@@ -6,6 +6,8 @@
             features: 'Features',
             install: 'Install',
             docs: 'Docs',
+            learn: 'Learn',
+            playground: 'Playground',
             examples: 'Examples',
             community: 'Community',
             getStarted: 'Get Started',
@@ -33,6 +35,7 @@
             easyInstallation: 'Easy Installation',
             easyInstallationDescription: 'One-line installation with pip. Supports pipx for isolated environments and development mode for contributors.',
             installNow: 'Install Now →',
+            startLearning: 'Start Learning',
             quickStart: 'Quick Start',
             quickStartSubtitle: 'Get started with Vlaams Codex in seconds',
             install: 'Install',
@@ -62,6 +65,8 @@
             features: 'Features',
             install: 'Installeer',
             docs: 'Docs',
+            learn: 'Leer',
+            playground: 'Speelterrein',
             examples: 'Voorbeelden',
             community: 'Gemeenschap',
             getStarted: 'Start Nu',
@@ -89,6 +94,7 @@
             easyInstallation: 'Makkelijke Installatie',
             easyInstallationDescription: 'Installatie met één regel via pip. Ondersteunt pipx voor geïsoleerde omgevingen en ontwikkelingsmodus voor bijdragers.',
             installNow: 'Installeer Nu →',
+            startLearning: 'Start Leren',
             quickStart: 'Snel Start',
             quickStartSubtitle: 'Begin in seconden me Vlaams Codex',
             install: 'Installeer',
@@ -146,30 +152,59 @@
     function applyLanguage(language) {
         const trans = translations[language];
 
-        document.querySelectorAll('[data-lang]').forEach(element => {
-            const key = element.getAttribute('data-lang');
-            if (trans[key]) {
-                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                    element.placeholder = trans[key];
-                } else {
-                    element.textContent = trans[key];
+        if (window.VlaamsCodex && window.VlaamsCodex.showLoadingScreen) {
+            window.VlaamsCodex.showLoadingScreen(() => {
+                document.querySelectorAll('[data-lang]').forEach(element => {
+                    const key = element.getAttribute('data-lang');
+                    if (trans[key]) {
+                        if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                            element.placeholder = trans[key];
+                        } else {
+                            element.textContent = trans[key];
+                        }
+                    }
+                });
+
+                document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
+                    const key = element.getAttribute('data-lang-placeholder');
+                    if (trans[key]) {
+                        element.setAttribute('placeholder', trans[key]);
+                    }
+                });
+
+                document.documentElement.lang = language === 'vl' ? 'nl' : 'en';
+
+                const urlParams = new URLSearchParams(window.location.search);
+                urlParams.set('lang', language);
+                const newUrl = window.location.pathname + '?' + urlParams.toString();
+                window.history.replaceState({}, '', newUrl);
+            });
+        } else {
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                const key = element.getAttribute('data-lang');
+                if (trans[key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = trans[key];
+                    } else {
+                        element.textContent = trans[key];
+                    }
                 }
-            }
-        });
+            });
 
-        document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
-            const key = element.getAttribute('data-lang-placeholder');
-            if (trans[key]) {
-                element.setAttribute('placeholder', trans[key]);
-            }
-        });
+            document.querySelectorAll('[data-lang-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-lang-placeholder');
+                if (trans[key]) {
+                    element.setAttribute('placeholder', trans[key]);
+                }
+            });
 
-        document.documentElement.lang = language === 'vl' ? 'nl' : 'en';
+            document.documentElement.lang = language === 'vl' ? 'nl' : 'en';
 
-        const urlParams = new URLSearchParams(window.location.search);
-        urlParams.set('lang', language);
-        const newUrl = window.location.pathname + '?' + urlParams.toString();
-        window.history.replaceState({}, '', newUrl);
+            const urlParams = new URLSearchParams(window.location.search);
+            urlParams.set('lang', language);
+            const newUrl = window.location.pathname + '?' + urlParams.toString();
+            window.history.replaceState({}, '', newUrl);
+        }
     }
 
     function switchLanguage(language) {

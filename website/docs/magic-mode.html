@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vlaams Codex Magic Mode - Run .plats files directly with Python. No compilation step needed!">
+    <title>Magic Mode - Vlaams Codex</title>
+
+    <link rel="canonical" href="https://vlaamscodex.dev/docs/magic-mode">
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="apple-touch-icon" href="../icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+
+    <style>
+        .docs-container {
+            max-width: 900px;
+            margin: 6rem auto 3rem;
+            padding: 0 1.5rem;
+        }
+
+        .breadcrumbs {
+            margin-bottom: 2rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .breadcrumbs a {
+            color: var(--primary-color);
+        }
+
+        .magic-hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border-radius: var(--radius-xl);
+            margin-bottom: 3rem;
+            color: var(--bg-dark);
+        }
+
+        .magic-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--bg-dark);
+        }
+
+        .magic-hero p {
+            font-size: 1.25rem;
+            color: rgba(0, 0, 0, 0.8);
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .magic-badge {
+            display: inline-block;
+            background: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            box-shadow: var(--shadow-md);
+            margin-top: 1rem;
+        }
+
+        .doc-section {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .doc-section h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .doc-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .doc-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .doc-section ol,
+        .doc-section ul {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .doc-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .doc-section pre {
+            background: var(--bg-dark);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            line-height: 1.8;
+            color: #E5E7EB;
+        }
+
+        .doc-section code {
+            background: var(--bg-secondary);
+            padding: 0.125rem 0.375rem;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--primary-color);
+        }
+
+        .doc-section pre code {
+            background: transparent;
+            padding: 0;
+            color: #E5E7EB;
+        }
+
+        .warning-box {
+            background: #FEF2F2;
+            border-left: 4px solid #EF4444;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+        }
+
+        .warning-box h4 {
+            color: #EF4444;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box p {
+            color: #B91C1C;
+            margin: 0;
+        }
+
+        .info-box {
+            background: #EFF6FF;
+            border-left: 4px solid #3B82F6;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            margin: 2rem 0;
+        }
+
+        .info-box h4 {
+            color: #1E40AF;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box p {
+            color: #1E3A8A;
+            margin: 0;
+        }
+
+        .feature-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-icon-svg {
+            width: 40px;
+            height: 40px;
+            display: block;
+            margin: 0 auto 1rem;
+        }
+
+        .warning-icon {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        .info-icon {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            .magic-hero h1 {
+                font-size: 2rem;
+            }
+
+            .magic-hero p {
+                font-size: 1rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingScreen" class="loading-screen">
+        <img src="../icon.png" alt="Vlaams Codex Logo" class="loading-logo">
+        <p class="loading-text">'t Es simpel, 't es plansen, 't es Vlaams!</p>
+    </div>
+
+    <header class="site-header">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <a href="/" class="logo">
+                    <img src="../icon.png" alt="Vlaams Codex Logo" class="logo-img">
+                    <span class="logo-text">Vlaams Codex</span>
+                </a>
+            </div>
+
+            <div class="nav-center">
+                <ul class="nav-menu">
+                    <li><a href="/#features">Features</a></li>
+                    <li><a href="/#install">Install</a></li>
+                    <li><a href="index.html" class="active">Docs</a></li>
+
+                    <li><a href="/playground/">Playground</a></li>
+                    <li><a href="/#community">Community</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="language-switcher">
+                    <select id="languageSelect">
+                        <option value="en">English</option>
+                        <option value="vl">Vlaams</option>
+                    </select>
+                </div>
+                <a href="/#installation" class="cta-button">Get Started</a>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="docs-container">
+        <div class="breadcrumbs">
+            <a href="/">Home</a> /
+            <a href="index.html">Docs</a> /
+            <span>Magic Mode</span>
+        </div>
+
+        <div class="magic-hero">
+            <h1><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5l-10 5 10 10-10-10z"></path><circle cx="12" cy="8" r="3" fill="currentColor" stroke="none"></circle><path d="M9.5 11.5a.5.5 0 0 1 .707.293l3-3a.5.5 0 0 1 .707.293l-3 3a.5.5 0 0 1-.707-.293l-3 3a.5.5 0 0 1-.707.293l3-3a.5.5 0 0 1 .707-.293z"></path></svg> Magic Mode</h1>
+            <p>Run .plats files directly with Python - no compilation step needed!</p>
+            <div class="magic-badge">It Just Works!</div>
+        </div>
+
+        <div class="doc-section">
+            <h2>What is Magic Mode?</h2>
+            <p>Magic Mode allows you to execute <code>.plats</code> files directly using Python's standard interpreter, just like running a <code>.py</code> file. No need to use the <code>plats run</code> command or compile your code first!</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="feature-icon-svg"><path d="M12 2L2 7l10 5l-10 5 10 10-10-10z"></path></svg> Direct Execution</h4>
+                    <p>Run .plats files just like .py files</p>
+                </div>
+                <div class="feature-card">
+                    <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="feature-icon-svg"><polygon points="13 2 3 13 9 22 9 22 15 11 13 6 11 13 6 3 13 2 11 13 2 11 2 5 13 6 11 13 9 12 7 12 7 12 7 12 9 11 14 11 14 13 11 14 13 12 14 11 14 13 14 17 12 17 11 12 11 12 11"></polygon></svg> No Compilation</h4>
+                    <p>Skip to build step entirely</p>
+                </div>
+                <div class="feature-card">
+                    <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="feature-icon-svg"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="3" fill="currentColor" stroke="none"></circle></svg> Zero Config</h4>
+                    <p>Just add one line to your file</p>
+                </div>
+                <div class="feature-card">
+                    <h4><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="feature-icon-svg"><path d="M12 2L2 7l10 5l-10 5 10 10-10-10z"></path><circle cx="12" cy="17" r="3" fill="currentColor" stroke="none"></circle><path d="M12 12v-1.5l5-2v5l-5 2v-5h3a3 3 0 0 1-3-3v-2h-2v3a3 3 0 0 1-3 3v1h2v-2h2v1a3 3 0 0 1 3-3v1.5h-2.5v2a1 1 0 0 1-1-1v-2h2a1 1 0 0 1 1-1v2h2a1 1 0 0 1 1-1v-2h-2v2a1 1 0 0 1-1 1v1.5h2.5v2a1 1 0 0 1-1 1h2v-1.5z"></path></svg> Seamless Integration</h4>
+                    <p>Works with all Python tools</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ No Compilation</h4>
+                    <p>Skip the build step entirely</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎯 Zero Config</h4>
+                    <p>Just add one line to your file</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔧 Seamless Integration</h4>
+                    <p>Works with all Python tools</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="doc-section">
+            <h2>How It Works</h2>
+            <p>Magic Mode leverages Python's PEP 263 encoding declaration and site-packages <code>.pth</code> file mechanism to automatically transpile and execute Platskript code.</p>
+
+            <ol>
+                <li>Python detects <code># coding: vlaamsplats</code> (PEP 263) in your file and requests the corresponding codec</li>
+                <li>During normal startup, Python's <code>site</code> module processes <code>.pth</code> files in site-packages</li>
+                <li>VlaamsCodex installs <code>vlaamscodex_autoload.pth</code> which registers the custom codec</li>
+                <li>The codec decodes UTF-8 bytes, strips the encoding declaration, transpiles Platskript to Python</li>
+                <li>Python executes the generated Python code transparently</li>
+            </ol>
+        </div>
+
+        <div class="doc-section">
+            <h2>Getting Started</h2>
+
+            <h3>Step 1: Install Vlaams Codex</h3>
+            <pre><code>pip install vlaamscodex</code></pre>
+
+            <h3>Step 2: Create a .plats File</h3>
+            <pre><code># coding: vlaamsplats
+plan doe
+  klap tekst gdag aan weeireld amen
+gedaan</code></pre>
+
+            <h3>Step 3: Run It Directly!</h3>
+            <pre><code>python hello.plats</code></pre>
+
+            <p>That's it! No need for <code>plats run</code> or any build step. Python handles everything automatically.</p>
+        </div>
+
+        <div class="doc-section">
+            <h2>Advanced Usage</h2>
+
+            <h3>Using with Shebang</h3>
+            <p>You can also use Magic Mode with shebang for executable .plats files:</p>
+            <pre><code>#!/usr/bin/env python
+# coding: vlaamsplats
+
+plan doe
+  klap tekst gdag aan weeireld amen
+gedaan</code></pre>
+
+            <pre><code>chmod +x hello.plats
+./hello.plats</code></pre>
+
+            <h3>Integration with Python Tools</h3>
+            <p>Magic Mode works seamlessly with:</p>
+            <ul>
+                <li><strong>Python debugger (pdb)</strong>: <code>python -m pdb script.plats</code></li>
+                <li><strong>Profiling</strong>: <code>python -m cProfile script.plats</code></li>
+                <li><strong>Code coverage</strong>: <code>python -m coverage run script.plats</code></li>
+                <li><strong>Any Python tool</strong> that accepts a .py file!</li>
+            </ul>
+        </div>
+
+        <div class="doc-section">
+            <h2>Limitations</h2>
+
+            <div class="warning-box">
+                <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="warning-icon"><path d="M12 2L12 4m0 0 6 0 0 1.5 0 12.5 1.5l-6.5 6.5 0 6.5-6.5z"></path><path d="M12 8v.01"></path></svg> Important: Python Flags</h4>
+                <p>Magic Mode does not work with these Python flags because they disable site module:</p>
+                <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                    <li><code>-S</code> or <code>--no-site</code> - Disables site module</li>
+                    <li><code>-I</code> or <code>--isolated</code> - Isolated mode restricts site-packages</li>
+                </ul>
+            </div>
+
+            <h3>Fallback</h3>
+            <p>When Magic Mode is unavailable, you can always use the standard command:</p>
+            <pre><code>plats run script.plats</code></pre>
+
+            <p>This will compile and execute your Platskript code normally.</p>
+        </div>
+
+        <div class="doc-section">
+            <h2>Troubleshooting</h2>
+
+            <div class="info-box">
+                <h4><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="info-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="2" x2="12" y2="12"></line></svg> Codec Not Found</h4>
+                <p>If you get "codec not found: vlaamscodex", make sure vlaamscodex is properly installed:</p>
+                <pre style="margin: 1rem 0;"><code>pip install --force-reinstall vlaamscodex</code></pre>
+            </div>
+
+            <h3>Common Issues</h3>
+            <ul>
+                <li><strong>ImportError</strong>: Reinstall with <code>pip install --force-reinstall vlaamscodex</code></li>
+                <li><strong>Using -S flag</strong>: Remove the <code>-S</code> flag from your Python command</li>
+                <li><strong>Virtual environments</strong>: Install vlaamscodex inside your virtual environment</li>
+            </ul>
+        </div>
+
+        <div class="doc-section">
+            <h2>Examples</h2>
+
+            <h3>Simple Hello World</h3>
+            <pre><code># coding: vlaamsplats
+plan doe
+  klap tekst gdag aan weeireld amen
+gedaan</code></pre>
+
+            <h3>Using Functions</h3>
+            <pre><code># coding: vlaamsplats
+plan doe
+  maak funksie groet met naam doe
+    klap tekst gdag plakt spatie plakt da naam amen
+  gedaan
+
+  roep groet met da Piet amen
+gedaan</code></pre>
+
+            <h3>More Complex Program</h3>
+            <pre><code># coding: vlaamsplats
+plan doe
+  zet namen op lijst tekst Jan tekst Piet tekst Anna amen
+  voor elke naam in da namen doe
+    klap tekst gdag plakt spatie plakt da naam amen
+  gedaan
+gedaan</code></pre>
+        </div>
+
+        <div class="doc-section">
+            <h2>Need Help?</h2>
+            <p>If you encounter any issues with Magic Mode:</p>
+            <ul>
+                <li>Check the <a href="https://github.com/brentishere41848/Vlaams-Codex/issues">GitHub Issues</a></li>
+                <li>Read the <a href="index.html#language-spec">Language Specification</a></li>
+                <li>Join the community on <a href="https://github.com/brentishere41848/Vlaams-Codex">GitHub</a></li>
+            </ul>
+
+            <div style="margin-top: 2rem;">
+                <a href="/playground/" class="cta-button primary">Try in Playground →</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/language-switcher.js"></script>
+</body>
+</html>

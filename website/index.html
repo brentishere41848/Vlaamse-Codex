@@ -8,18 +8,18 @@
     <meta name="author" content="Vlaams Codex Team">
     <meta name="theme-color" content="#000000">
     
-    <title>Vlaams Codex - Multi-Vlaams Editie 🇧🇪</title>
+    <title>Vlaams Codex - Multi-Vlaams Editie</title>
     
     <link rel="canonical" href="https://vlaamscodex.dev/">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="icon.png">
-    <meta property="og:title" content="Vlaams Codex - Multi-Vlaams Editie 🇧🇪">
+    <meta property="og:title" content="Vlaams Codex - Multi-Vlaams Editie">
     <meta property="og:description" content="'t Es simpel, 't es plansen, 't es Vlaams! A programming language using Flemish dialect keywords.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vlaamscodex.dev/">
     <meta property="og:image" content="https://vlaamscodex.dev/assets/images/vlaamscodex.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Vlaams Codex - Multi-Vlaams Editie 🇧🇪">
+    <meta name="twitter:title" content="Vlaams Codex - Multi-Vlaams Editie">
     <meta name="twitter:description" content="'t Es simpel, 't es plansen, 't es Vlaams!">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="assets/css/components.css">
 </head>
 <body>
-    <div id="loadingScreen" class="loading-screen">
+    <div id="loadingScreen" class="loading-screen" style="opacity: 0 !important; visibility: hidden !important;">
         <img src="icon.png" alt="Vlaams Codex Logo" class="loading-logo">
         <p class="loading-text">'t Es simpel, 't es plansen, 't es Vlaams!</p>
     </div>
@@ -45,12 +45,13 @@
                 </a>
             </div>
             
-            <div class="nav-center">
+<div class="nav-center">
                 <ul class="nav-menu">
                     <li><a href="#features" data-lang="features">Features</a></li>
-                    <li><a href="#installation" data-lang="install">Install</a></li>
+                    <li><a href="#install" data-lang="install">Install</a></li>
                     <li><a href="docs/" data-lang="docs">Docs</a></li>
-                    <li><a href="examples/" data-lang="examples">Examples</a></li>
+
+                    <li><a href="playground/" data-lang="playground">Playground</a></li>
                     <li><a href="#community" data-lang="community">Community</a></li>
                 </ul>
             </div>
@@ -59,7 +60,7 @@
                 <div class="language-switcher">
                     <select id="languageSelect">
                         <option value="en">English</option>
-                        <option value="vl">🇧🇪 Vlaams</option>
+                        <option value="vl">Vlaams</option>
                     </select>
                 </div>
                 <a href="#installation" class="cta-button" data-lang="getStarted">Get Started</a>
@@ -96,7 +97,7 @@
                     </p>
                     
                     <div class="hero-ctas">
-                        <a href="#installation" class="cta-button primary" data-lang="installNow">
+                        <a href="#install" class="cta-button primary" data-lang="installNow">
                             Install Now
                             <span class="arrow">→</span>
                         </a>
@@ -147,6 +148,37 @@ gedaan</code></pre>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section class="learn-section" style="display: none;">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Learn Platskript</h2>
+                    <p class="section-subtitle">Master Vlaams Codex step by step with interactive tutorials</p>
+                </div>
+
+                <div class="learn-cards">
+                    <div class="learn-card">
+                        <div class="learn-icon">📚</div>
+                        <h3 class="learn-card-title">22 Easy Lessons</h3>
+                        <p class="learn-card-description">Start with basics like variables, functions, and loops. Perfect for beginners!</p>
+                    </div>
+
+                    <div class="learn-card">
+                        <div class="learn-icon">⚡</div>
+                        <h3 class="learn-card-title">12 Medium Lessons</h3>
+                        <p class="learn-card-description">Learn advanced concepts like dictionaries, error handling, and more.</p>
+                    </div>
+
+                    <div class="learn-card">
+                        <div class="learn-icon">🚀</div>
+                        <h3 class="learn-card-title">5 Hard Lessons</h3>
+                        <p class="learn-card-description">Master recursion, generators, decorators, and other advanced topics.</p>
+                    </div>
+                </div>
+
+
             </div>
         </section>
 
@@ -274,7 +306,7 @@ gedaan</code></pre>
             </div>
         </section>
 
-        <section class="quick-start-section" id="installation">
+        <section class="quick-start-section" id="install">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title" data-lang="quickStart">Quick Start</h2>
@@ -298,7 +330,7 @@ npm install vlaamscodex</code></pre>
                         <div class="step-number">2</div>
                         <div class="step-content">
                             <h3 class="step-title" data-lang="runFirstProgram">Run Your First Program</h3>
-                            <pre class="step-code"><code class="language-bash">plats run examples/hello.plats</code></pre>
+                            <pre class="step-code"><code class="language-bash">plats run hello.plats</code></pre>
                         </div>
                     </div>
                     
@@ -306,7 +338,7 @@ npm install vlaamscodex</code></pre>
                         <div class="step-number">3</div>
                         <div class="step-content">
                             <h3 class="step-title" data-lang="orUseMagicMode">Or Use Magic Mode</h3>
-                            <pre class="step-code"><code class="language-bash">python examples/hello.plats</code></pre>
+                            <pre class="step-code"><code class="language-bash">python hello.plats</code></pre>
                         </div>
                     </div>
                 </div>
@@ -428,75 +460,6 @@ pip install -e ".[dev]"</code></pre>
             </div>
         </section>
 
-        <section class="examples-section">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title" data-lang="exploreExamples">Explore Examples</h2>
-                    <p class="section-subtitle" data-lang="exploreExamplesSubtitle">Learn by doing with ready-to-run examples</p>
-                </div>
-                
-                <div class="examples-grid">
-                    <div class="example-card">
-                        <div class="example-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" role="img">
-                                <path d="M7 10h10a4 4 0 0 1 0 8H9l-4 3v-3a4 4 0 0 1 2-8z"></path>
-                                <path d="M9 13h6"></path>
-                            </svg>
-                        </div>
-                        <h3>Hello World</h3>
-                        <p>The classic "gdag aan weeireld" example</p>
-                        <a href="examples/hello.html" class="example-link">View Example →</a>
-                    </div>
-                    
-                    <div class="example-card">
-                        <div class="example-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" role="img">
-                                <rect x="6" y="3" width="12" height="18" rx="2"></rect>
-                                <rect x="8.5" y="5.5" width="7" height="3" rx="0.8"></rect>
-                                <path d="M9 11h2M13 11h2M9 14h2M13 14h2M9 17h2M13 17h2"></path>
-                            </svg>
-                        </div>
-                        <h3>Calculator</h3>
-                        <p>Basic arithmetic operations</p>
-                        <a href="examples/calculator.html" class="example-link">View Example →</a>
-                    </div>
-                    
-                    <div class="example-card">
-                        <div class="example-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" role="img">
-                                <path d="M6 17c4-8 8-8 12 0"></path>
-                                <path d="M6 7h6"></path>
-                                <path d="M12 7l-6 10"></path>
-                                <path d="M12 17h6"></path>
-                            </svg>
-                        </div>
-                        <h3>Fibonacci</h3>
-                        <p>Recursive function example</p>
-                        <a href="examples/fibonacci.html" class="example-link">View Example →</a>
-                    </div>
-                    
-                    <div class="example-card">
-                        <div class="example-icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" role="img">
-                                <rect x="5" y="5" width="14" height="14" rx="2"></rect>
-                                <path d="M9 9h.01M15 15h.01"></path>
-                                <path d="M15 9h.01M9 15h.01"></path>
-                                <path d="M12 12h.01"></path>
-                            </svg>
-                        </div>
-                        <h3>Fortune Teller</h3>
-                        <p>Random Flemish proverbs</p>
-                        <a href="examples/fortune.html" class="example-link">View Example →</a>
-                    </div>
-                </div>
-                
-                <div class="examples-cta">
-                    <a href="examples/" class="cta-button secondary" data-lang="viewAllExamples">
-                        View All Examples →
-                    </a>
-                </div>
-            </div>
-        </section>
 
         <section class="community-section" id="community">
             <div class="container">
@@ -586,7 +549,6 @@ pip install -e ".[dev]"</code></pre>
                     <div class="footer-column">
                         <h4>Resources</h4>
                         <ul>
-                            <li><a href="examples/">Examples</a></li>
                             <li><a href="https://github.com/brentishere41848/Vlaams-Codex">GitHub</a></li>
                             <li><a href="https://pypi.org/project/vlaamscodex/">PyPI</a></li>
                             <li><a href="https://github.com/brentishere41848/Vlaams-Codex/issues">Issues</a></li>
