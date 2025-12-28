@@ -20,6 +20,7 @@
     "onLanguage:platskript",
     "onCommand:vlaamscodex.runFile",
     "onCommand:vlaamscodex.runSelection",
+    "onCommand:vlaamscodex.debugFile",
     "onCommand:vlaamscodex.showPython",
     "onCommand:vlaamscodex.buildPython",
     "onCommand:vlaamscodex.help",
@@ -63,6 +64,10 @@
       {
         "command": "vlaamscodex.runSelection",
         "title": "VlaamsCodex: Run Selection as Plats"
+      },
+      {
+        "command": "vlaamscodex.debugFile",
+        "title": "VlaamsCodex: Debug Plats File"
       },
       {
         "command": "vlaamscodex.showPython",
@@ -121,6 +126,11 @@
           "group": "navigation@1"
         },
         {
+          "command": "vlaamscodex.debugFile",
+          "when": "editorLangId == 'platskript'",
+          "group": "navigation@1.5"
+        },
+        {
           "command": "vlaamscodex.showPython",
           "when": "editorLangId == 'platskript'",
           "group": "navigation@2"
@@ -136,6 +146,11 @@
           "command": "vlaamscodex.runFile",
           "when": "resourceExtname == '.plats'",
           "group": "navigation@1"
+        },
+        {
+          "command": "vlaamscodex.debugFile",
+          "when": "resourceExtname == '.plats'",
+          "group": "navigation@1.5"
         },
         {
           "command": "vlaamscodex.showPython",

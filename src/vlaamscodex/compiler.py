@@ -117,8 +117,13 @@ def _parse_expr(tokens: list[str]) -> str:
     return " ".join(parts) if parts else "None"
 
 
-def compile_plats(plats_src: str) -> str:
-    """Compile Platskript source to Python source."""
+def compile_plats(plats_src: str, *, preserve_line_numbers: bool = False) -> str:
+    """Compile Platskript source to Python source.
+
+    If preserve_line_numbers=True, each input line produces exactly one output
+    line (possibly blank) so that line numbers match between `.plats` and the
+    generated Python source. This is useful for debugging.
+    """
     py_lines: list[str] = []
     indent = 0
     stack: list[str] = []
@@ -129,10 +134,14 @@ def compile_plats(plats_src: str) -> str:
     for raw in plats_src.splitlines():
         line = raw.strip()
         if not line:
+            if preserve_line_numbers:
+                emit("")
             continue
 
         # Skip coding cookie if present (the codec will remove it too, but this is safe).
         if line.startswith("#") and "coding" in line:
+            if preserve_line_numbers:
+                emit("")
             continue
 
         tokens = line.split()
@@ -144,11 +153,15 @@ def compile_plats(plats_src: str) -> str:
             kind = stack.pop()
             if kind in {"funksie"}:
                 indent -= 1
+            if preserve_line_numbers:
+                emit("")
             continue
 
         # start program (no indent; just a marker)
         if tokens[:2] == ["plan", "doe"]:
             stack.append("plan")
+            if preserve_line_numbers:
+                emit("")
             continue
 
         # function start: maak funksie NAME met ... doe
@@ -170,6 +183,8 @@ def compile_plats(plats_src: str) -> str:
         tokens = tokens[:-1]
 
         if not tokens:
+            if preserve_line_numbers:
+                emit("")
             continue
 
         if tokens[0] == "klap":
@@ -206,4 +221,3 @@ def compile_plats(plats_src: str) -> str:
         raise ValueError(f"internal error: indent={indent}")
 
     return "\n".join(py_lines) + "\n"
-

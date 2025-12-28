@@ -266,25 +266,25 @@ def _read_plats(path: Path) -> str:
     return "\n".join(lines)
 
 
-def cmd_run(path: Path) -> int:
+def cmd_run(path: Path, *, preserve_line_numbers: bool = False) -> int:
     plats_src = _read_plats(path)
-    py_src = compile_plats(plats_src)
+    py_src = compile_plats(plats_src, preserve_line_numbers=preserve_line_numbers)
     codeobj = compile(py_src, str(path), "exec")
     exec(codeobj, {})
     return 0
 
 
-def cmd_build(path: Path, out: Path) -> int:
+def cmd_build(path: Path, out: Path, *, preserve_line_numbers: bool = False) -> int:
     plats_src = _read_plats(path)
-    py_src = compile_plats(plats_src)
+    py_src = compile_plats(plats_src, preserve_line_numbers=preserve_line_numbers)
     out.write_text(py_src, encoding="utf-8")
     print(f"Wrote: {out}")
     return 0
 
 
-def cmd_show_python(path: Path) -> int:
+def cmd_show_python(path: Path, *, preserve_line_numbers: bool = False) -> int:
     plats_src = _read_plats(path)
-    py_src = compile_plats(plats_src)
+    py_src = compile_plats(plats_src, preserve_line_numbers=preserve_line_numbers)
     print(py_src)
     return 0
 
@@ -549,13 +549,28 @@ def main(argv: list[str] | None = None) -> int:
     # English commands
     p_run = sub.add_parser("run", help="Run a Platskript program", aliases=["loop"])
     p_run.add_argument("path", type=Path, help="Path to .plats file")
+    p_run.add_argument(
+        "--preserve-lines",
+        action="store_true",
+        help="Preserve source line numbers in generated Python (useful for debugging)",
+    )
 
     p_build = sub.add_parser("build", help="Compile to Python source file", aliases=["bouw"])
     p_build.add_argument("path", type=Path, help="Path to .plats file")
     p_build.add_argument("--out", type=Path, required=True, help="Output .py file")
+    p_build.add_argument(
+        "--preserve-lines",
+        action="store_true",
+        help="Preserve source line numbers in generated Python (useful for debugging)",
+    )
 
     p_show = sub.add_parser("show-python", help="Display generated Python code", aliases=["toon"])
     p_show.add_argument("path", type=Path, help="Path to .plats file")
+    p_show.add_argument(
+        "--preserve-lines",
+        action="store_true",
+        help="Preserve source line numbers in generated Python (useful for debugging)",
+    )
 
     # REPL command (Multi-Vlaams!)
     sub.add_parser("repl", help="Start interactive REPL (proboir/smos/efkes/klansen)")
@@ -584,11 +599,11 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
 
     if args.cmd in ("run", "loop"):
-        return cmd_run(args.path)
+        return cmd_run(args.path, preserve_line_numbers=args.preserve_lines)
     if args.cmd in ("build", "bouw"):
-        return cmd_build(args.path, args.out)
+        return cmd_build(args.path, args.out, preserve_line_numbers=args.preserve_lines)
     if args.cmd in ("show-python", "toon"):
-        return cmd_show_python(args.path)
+        return cmd_show_python(args.path, preserve_line_numbers=args.preserve_lines)
     if args.cmd == "repl":
         dialect = detect_dialect(original_cmd)
         return cmd_repl(dialect=dialect)

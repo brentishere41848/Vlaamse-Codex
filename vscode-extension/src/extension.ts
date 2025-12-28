@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { spawn, spawnSync } from "node:child_process";
 import { promises as fs } from "node:fs";
+import { createHash } from "node:crypto";
 import * as os from "node:os";
 import * as path from "node:path";
 
@@ -360,6 +361,96 @@ async function cmdRunSelection(context: vscode.ExtensionContext, channel: vscode
   }
 }
 
+function stableHash(text: string): string {
+  return createHash("sha1").update(text).digest("hex").slice(0, 10);
+}
+
+function getCompiledDebugPath(context: vscode.ExtensionContext, platsPath: string): string {
+  const storageRoot = context.globalStorageUri.fsPath;
+  const fileName = path.basename(platsPath).replace(/[^a-zA-Z0-9._-]/g, "_");
+  const h = stableHash(platsPath);
+  return path.join(storageRoot, "compiled", `${fileName}.${h}.py`);
+}
+
+async function ensurePythonDebugger(): Promise<boolean> {
+  const pyExt = vscode.extensions.getExtension("ms-python.python");
+  if (pyExt) return true;
+
+  const choice = await vscode.window.showErrorMessage(
+    "Python extension is required for debugging. Install 'Python' (ms-python.python) now?",
+    "Install",
+    "Cancel",
+  );
+  if (choice !== "Install") return false;
+  await vscode.commands.executeCommand("workbench.extensions.installExtension", "ms-python.python");
+  void vscode.window.showInformationMessage("Python extension installed. Please reload VS Code to enable debugging.");
+  return false;
+}
+
+async function cmdDebugFile(context: vscode.ExtensionContext, channel: vscode.OutputChannel, uri?: vscode.Uri): Promise<void> {
+  const ok = await ensurePythonDebugger();
+  if (!ok) return;
+
+  const fileUri = await ensurePlatsFileUri(uri);
+  await saveIfDirty(fileUri);
+
+  const platsFilePath = fileUri.fsPath;
+  const cwd = getWorkingDirectoryForFile(platsFilePath);
+
+  const cli = await resolveCli(context, channel);
+
+  const compiledPath = getCompiledDebugPath(context, platsFilePath);
+  await fs.mkdir(path.dirname(compiledPath), { recursive: true });
+
+  const result = spawnSync(cli.command, [...cli.baseArgs, "show-python", "--preserve-lines", platsFilePath], {
+    cwd,
+    encoding: "utf8",
+  });
+  if (result.error || result.status !== 0) {
+    channel.show(true);
+    appendChannelHeader(channel, `Debug Plats File: ${path.basename(platsFilePath)}`);
+    channel.appendLine(`Command: ${cli.displayName} show-python --preserve-lines ${platsFilePath}`);
+    channel.appendLine(String(result.stderr || result.error || "Unknown error"));
+    void vscode.window.showErrorMessage("Failed to compile Plats for debugging. See Output: VlaamsCodex.");
+    return;
+  }
+
+  await fs.writeFile(compiledPath, String(result.stdout || ""), { encoding: "utf8" });
+
+  // Mirror existing breakpoints from .plats -> compiled .py (same line numbers).
+  const existing = vscode.debug.breakpoints.filter((b): b is vscode.SourceBreakpoint => b instanceof vscode.SourceBreakpoint);
+  const platsBreakpoints = existing.filter((b) => b.location.uri.toString() === fileUri.toString());
+
+  const compiledUri = vscode.Uri.file(compiledPath);
+  const mirrored = platsBreakpoints.map(
+    (b) => new vscode.SourceBreakpoint(new vscode.Location(compiledUri, b.location.range), b.enabled, b.condition, b.hitCondition, b.logMessage),
+  );
+
+  // Add mirrored breakpoints for the debug session; remove them afterwards.
+  vscode.debug.addBreakpoints(mirrored);
+  const dispose = vscode.debug.onDidTerminateDebugSession(() => {
+    vscode.debug.removeBreakpoints(mirrored);
+    dispose.dispose();
+  });
+
+  const debugConfig: vscode.DebugConfiguration = {
+    name: `Debug Plats: ${path.basename(platsFilePath)}`,
+    type: "python",
+    request: "launch",
+    program: compiledPath,
+    cwd,
+    console: "integratedTerminal",
+    justMyCode: true,
+  };
+
+  const started = await vscode.debug.startDebugging(undefined, debugConfig);
+  if (!started) {
+    vscode.debug.removeBreakpoints(mirrored);
+    dispose.dispose();
+    void vscode.window.showErrorMessage("Failed to start Python debugger.");
+  }
+}
+
 async function cmdShowPython(context: vscode.ExtensionContext, channel: vscode.OutputChannel, uri?: vscode.Uri): Promise<void> {
   const fileUri = await ensurePlatsFileUri(uri);
   await saveIfDirty(fileUri);
@@ -557,6 +648,7 @@ export function activate(context: vscode.ExtensionContext): void {
     channel,
     vscode.commands.registerCommand("vlaamscodex.runFile", (uri?: vscode.Uri) => cmdRunFile(context, channel, uri)),
     vscode.commands.registerCommand("vlaamscodex.runSelection", () => cmdRunSelection(context, channel)),
+    vscode.commands.registerCommand("vlaamscodex.debugFile", (uri?: vscode.Uri) => cmdDebugFile(context, channel, uri)),
     vscode.commands.registerCommand("vlaamscodex.showPython", (uri?: vscode.Uri) => cmdShowPython(context, channel, uri)),
     vscode.commands.registerCommand("vlaamscodex.buildPython", (uri?: vscode.Uri) => cmdBuildPython(context, channel, uri)),
     vscode.commands.registerCommand("vlaamscodex.help", () => cmdHelp(context, channel)),
