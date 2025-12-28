@@ -1,0 +1,10 @@
+# Allow all web crawlers to access the site
+User-agent: *
+Allow: /
+
+# Disallow certain paths if needed
+Disallow: /assets/
+Disallow: /.github/
+
+# Sitemap
+Sitemap: https://vlaamscodex.dev/sitemap.xml
