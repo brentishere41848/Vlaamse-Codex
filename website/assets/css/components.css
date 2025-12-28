@@ -39,7 +39,7 @@
 
 .card.highlight {
     border-color: var(--primary-color);
-    background: rgba(218, 41, 28, 0.05);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .card.compact {
@@ -93,7 +93,7 @@
 }
 
 .btn.ghost:hover:not(:disabled) {
-    background: rgba(218, 41, 28, 0.05);
+    background: rgba(0, 0, 0, 0.05);
     border-color: var(--primary-color);
 }
 
@@ -173,8 +173,8 @@
 }
 
 .callout.error {
-    background: rgba(255, 95, 86, 0.05);
-    border-color: #FF5F56;
+    background: rgba(0, 0, 0, 0.05);
+    border-color: #000000;
 }
 
 .callout-title {
@@ -242,7 +242,7 @@
 }
 
 .progress-bar.error {
-    background: #FF5F56;
+    background: #000000;
 }
 
 .spinner {
@@ -475,7 +475,7 @@
 }
 
 .toast.error {
-    background: #FF5F56;
+    background: #000000;
 }
 
 .toast.warning {
@@ -528,7 +528,7 @@
 .search-box input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.1);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 .search-box::before {

@@ -1,7 +1,7 @@
 :root {
-    --primary-color: #DA291C;
-    --primary-dark: #B31F15;
-    --primary-light: #FF6B5B;
+    --primary-color: #000000;
+    --primary-dark: #111111;
+    --primary-light: #333333;
     --secondary-color: #FFD700;
     --secondary-dark: #FFA500;
     --accent-color: #2C3E50;
@@ -210,7 +210,7 @@ button, select {
     left: 0;
     right: 0;
     height: 100%;
-    background: radial-gradient(circle at 20% 50%, rgba(218, 41, 28, 0.05) 0%, transparent 50%);
+    background: radial-gradient(circle at 20% 50%, rgba(0, 0, 0, 0.05) 0%, transparent 50%);
     pointer-events: none;
 }
 
@@ -372,7 +372,7 @@ button, select {
 }
 
 .window-controls .control.red {
-    background: #FF5F56;
+    background: #000000;
 }
 
 .window-controls .control.yellow {
@@ -472,8 +472,21 @@ button, select {
 }
 
 .feature-icon {
-    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
     margin-bottom: 1rem;
+}
+
+.feature-icon svg {
+    width: 3rem;
+    height: 3rem;
+    stroke: #000000;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .feature-title {
@@ -574,7 +587,7 @@ button, select {
 
 .option-card.recommended {
     border-color: var(--primary-color);
-    background: rgba(218, 41, 28, 0.05);
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .option-badge {
@@ -677,8 +690,21 @@ button, select {
 }
 
 .example-icon {
-    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
     margin-bottom: 1rem;
+}
+
+.example-icon svg {
+    width: 3rem;
+    height: 3rem;
+    stroke: #000000;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .example-card h3 {
@@ -732,8 +758,21 @@ button, select {
 }
 
 .community-icon {
-    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
     margin-bottom: 1rem;
+}
+
+.community-icon svg {
+    width: 3rem;
+    height: 3rem;
+    stroke: #000000;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .community-card h3 {
