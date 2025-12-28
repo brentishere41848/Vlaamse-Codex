@@ -1,0 +1,49 @@
+{
+  "name": "vlaamscodex",
+  "version": "0.2.0",
+  "description": "Platskript transpiler toolchain (Multi-Vlaams dialect) packaged for npm as a thin wrapper around the Python implementation.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anubissbe/Vlaamse-Codex.git"
+  },
+  "homepage": "https://github.com/anubissbe/Vlaamse-Codex#readme",
+  "bugs": {
+    "url": "https://github.com/anubissbe/Vlaamse-Codex/issues"
+  },
+  "keywords": [
+    "platskript",
+    "vlaams",
+    "flemish",
+    "transpiler",
+    "compiler",
+    "dsl",
+    "python"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "bin": {
+    "plats": "bin/plats.js",
+    "vlaamscodex": "bin/plats.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "src/vlaamscodex/**/*.py",
+    "data/",
+    "pyproject.toml",
+    "setup.py",
+    "MANIFEST.in",
+    "vlaamscodex_build_backend.py",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "dependencies": {
+    "vlaamscodex": "^0.2.0"
+  }
+}

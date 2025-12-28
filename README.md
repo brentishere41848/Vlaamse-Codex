@@ -127,6 +127,30 @@ Example output:
 
 ## Installation
 
+### Option 0: npm / npx (Node.js users)
+
+Requires **Python 3.10+** to be installed (because the compiler is implemented in Python).
+
+Global install (adds `plats` and `vlaamscodex` to your PATH):
+
+```bash
+npm install -g vlaamscodex
+plats version
+```
+
+Run without installing globally:
+
+```bash
+npx vlaamscodex --help
+npx plats version
+```
+
+### Option 0b: Chocolatey (Windows)
+
+Requires **Python 3.10+**.
+
+This repo includes a Chocolatey package skeleton in `chocolatey/` (build/pack separately). See `chocolatey/README.md`.
+
 ### Option A: pip (Recommended)
 
 ```bash

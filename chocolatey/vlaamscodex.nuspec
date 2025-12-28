@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>vlaamscodex</id>
+    <version>0.2.0</version>
+    <title>VlaamsCodex (Platskript CLI)</title>
+    <authors>VlaamsCodex contributors</authors>
+    <projectUrl>https://github.com/anubissbe/Vlaamse-Codex</projectUrl>
+    <packageSourceUrl>https://github.com/anubissbe/Vlaamse-Codex</packageSourceUrl>
+    <licenseUrl>https://github.com/anubissbe/Vlaamse-Codex/blob/main/LICENSE</licenseUrl>
+    <bugTrackerUrl>https://github.com/anubissbe/Vlaamse-Codex/issues</bugTrackerUrl>
+    <tags>platskript vlaams flemish transpiler compiler python</tags>
+    <summary>Platskript transpiler toolchain (Multi-Vlaams dialect) that compiles to Python.</summary>
+    <description>
+VlaamsCodex is a transpiler toolchain for Platskript (.plats), a parody programming language
+that uses Flemish dialect keywords and compiles to Python.
+
+This Chocolatey package installs the `plats` / `vlaamscodex` CLI wrappers and a local virtualenv
+containing the Python implementation.
+    </description>
+
+    <dependencies>
+      <dependency id="python3" version="[3.10,4.0)" />
+    </dependencies>
+  </metadata>
+</package>
+

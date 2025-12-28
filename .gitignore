@@ -1,4 +1,5 @@
 .venv/
+.vlaamscodex-venv/
 __pycache__/
 *.pyc
 .pytest_cache/
@@ -11,6 +12,9 @@ dist/
 *.egg-info/
 *.vsix
 vscode-extension/out/
+chocolatey/*.nupkg
+chocolatey/tools/*.whl
+chocolatey/tools/venv/
 
 .DS_Store
 Thumbs.db

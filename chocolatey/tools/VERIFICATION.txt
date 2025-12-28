@@ -1,0 +1,12 @@
+VlaamsCodex Chocolatey package verification
+
+This package installs VlaamsCodex from the Python wheel embedded in this Chocolatey package:
+  vlaamscodex-<version>-py3-none-any.whl
+
+To reproduce the wheel for a given git tag:
+  1) Check out the matching source tag (example: v0.2.0)
+  2) Build the wheel:
+       python -m pip install -U build
+       python -m build --wheel
+  3) Compare the generated wheel to the one shipped in this Chocolatey package.
+
