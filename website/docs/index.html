@@ -179,7 +179,7 @@
 <body>
     <div id="loadingScreen" class="loading-screen" style="opacity: 0 !important; visibility: hidden !important;">
         <img src="../icon.png" alt="Vlaams Codex Logo" class="loading-logo">
-        <p class="loading-text">'t Es simpel, 't es plansen, 't es Vlaams!</p>
+        <p class="loading-text" data-lang="tagline">'t Es simpel, 't es plansen, 't es Vlaams!</p>
     </div>
     
     <header class="site-header">
@@ -193,12 +193,12 @@
             
             <div class="nav-center">
                 <ul class="nav-menu">
-                    <li><a href="/#features">Features</a></li>
-                    <li><a href="/#install">Install</a></li>
-                    <li><a href="index.html" class="active">Docs</a></li>
+                    <li><a href="/#features" data-lang="features">Features</a></li>
+                    <li><a href="/#install" data-lang="install">Install</a></li>
+                    <li><a href="index.html" class="active" data-lang="docs">Docs</a></li>
 
-                    <li><a href="/playground/">Playground</a></li>
-                    <li><a href="/#community">Community</a></li>
+                    <li><a href="/playground/" data-lang="playground">Playground</a></li>
+                    <li><a href="/#community" data-lang="community">Community</a></li>
                 </ul>
             </div>
             
@@ -209,7 +209,7 @@
                         <option value="vl">Vlaams</option>
                     </select>
                 </div>
-                <a href="/#installation" class="cta-button">Get Started</a>
+                <a href="/#installation" class="cta-button" data-lang="getStarted">Get Started</a>
                 <button class="mobile-menu-toggle" aria-label="Toggle menu">
                     <span></span>
                     <span></span>
@@ -220,16 +220,21 @@
     </header>
 
     <main class="container" style="padding-top: 6rem;">
-        <div class="docs-breadcrumb">
+        <div class="docs-breadcrumb" data-lang-block="en">
             <a href="/">Home</a>
             <span class="docs-breadcrumb-separator">/</span>
             <span>Documentation</span>
+        </div>
+        <div class="docs-breadcrumb" data-lang-block="vl" hidden>
+            <a href="/">Home</a>
+            <span class="docs-breadcrumb-separator">/</span>
+            <span>Documentatie</span>
         </div>
         
         <div class="docs-layout">
             <aside class="docs-sidebar">
                 <nav>
-                    <ul class="docs-nav">
+                    <ul class="docs-nav" data-lang-block="en">
                         <li><a href="#getting-started" class="active">Getting Started</a></li>
                         <li><a href="#installation">Installation</a></li>
                         <li><a href="#language-spec">Language Specification</a></li>
@@ -237,124 +242,248 @@
                         <li><a href="#multi-vlaams">Multi-Vlaams Dialects</a></li>
                         <li><a href="#magic-mode">Magic Mode</a></li>
                     </ul>
+                    <ul class="docs-nav" data-lang-block="vl" hidden>
+                        <li><a href="#getting-started" class="active">Aan de slag</a></li>
+                        <li><a href="#installation">Installatie</a></li>
+                        <li><a href="#language-spec">Taal-specificatie</a></li>
+                        <li><a href="#cli-reference">CLI referentie</a></li>
+                        <li><a href="#multi-vlaams">Multi-Vlaams dialecten</a></li>
+                        <li><a href="#magic-mode">Magic Mode</a></li>
+                    </ul>
                 </nav>
             </aside>
             
             <div class="docs-content">
-                <h1>Documentation</h1>
-                <p>Welcome to the Vlaams Codex documentation! Here you'll find everything you need to get started with Platskript, from installation to advanced features.</p>
+                <div data-lang-block="en">
+                    <h1>Documentation</h1>
+                    <p>Welcome to the Vlaams Codex documentation! Here you'll find everything you need to get started with Platskript, from installation to advanced features.</p>
+                </div>
+                <div data-lang-block="vl" hidden>
+                    <h1>Documentatie</h1>
+                    <p>Welkom bij de Vlaams Codex documentatie. Hier vindt ge alles om te beginnen met Platskript, van installatie tot geavanceerde features.</p>
+                </div>
                 
                 <section id="getting-started">
-                    <h2>Getting Started</h2>
-                    <p>Vlaams Codex is a transpiler toolchain for <strong>Platskript</strong> (<code>.plats</code>), a programming language that uses Flemish dialect keywords. It compiles Platskript source code to Python and executes it.</p>
-                    
-                    <div class="docs-card">
-                        <h3>Quick Install</h3>
-                        <pre><code>pip install vlaamscodex</code></pre>
-                        <p>That's it! You're ready to write your first Platskript program.</p>
+                    <div data-lang-block="en">
+                        <h2>Getting Started</h2>
+                        <p>Vlaams Codex is a transpiler toolchain for <strong>Platskript</strong> (<code>.plats</code>), a programming language that uses Flemish dialect keywords. It compiles Platskript source code to Python and executes it.</p>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h2>Aan de slag</h2>
+                        <p>Vlaams Codex is een transpiler toolchain voor <strong>Platskript</strong> (<code>.plats</code>): een programmeertaal met Vlaamse dialect-keywords. Vlaams Codex compileert uw Platskript naar Python en voert het uit.</p>
                     </div>
                     
                     <div class="docs-card">
-                        <h3>Your First Program</h3>
-                        <p>Create a file called <code>hello.plats</code>:</p>
+                        <div data-lang-block="en">
+                            <h3>Quick Install</h3>
+                            <pre><code>pip install vlaamscodex</code></pre>
+                            <p>That's it! You're ready to write your first Platskript program.</p>
+                        </div>
+                        <div data-lang-block="vl" hidden>
+                            <h3>Snel installeren</h3>
+                            <pre><code>pip install vlaamscodex</code></pre>
+                            <p>Da’s het. Ge zijt klaar om uw eerste Platskript-programma te schrijven.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="docs-card">
+                        <div data-lang-block="en">
+                            <h3>Your First Program</h3>
+                            <p>Create a file called <code>hello.plats</code>:</p>
+                        </div>
+                        <div data-lang-block="vl" hidden>
+                            <h3>Uw eerste programma</h3>
+                            <p>Maak een bestand <code>hello.plats</code>:</p>
+                        </div>
                         <pre><code># coding: vlaamsplats
 plan doe
   klap tekst gdag aan weeireld amen
 gedaan</code></pre>
-                        <p>Run it:</p>
+                        <div data-lang-block="en"><p>Run it:</p></div>
+                        <div data-lang-block="vl" hidden><p>Voer het uit:</p></div>
                         <pre><code>plats run hello.plats</code></pre>
-                        <p>Output:</p>
+                        <div data-lang-block="en"><p>Output:</p></div>
+                        <div data-lang-block="vl" hidden><p>Output:</p></div>
                         <pre><code>gdag aan weeireld</code></pre>
                     </div>
                 </section>
                 
                 <section id="installation">
-                    <h2>Installation</h2>
-                    <p>There are several ways to install Vlaams Codex depending on your needs:</p>
+                    <div data-lang-block="en">
+                        <h2>Installation</h2>
+                        <p>There are several ways to install Vlaams Codex depending on your needs:</p>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h2>Installatie</h2>
+                        <p>Er zijn meerdere manieren om Vlaams Codex te installeren, afhankelijk van wat ge nodig hebt:</p>
+                    </div>
                     
-                    <h3>Option A: pip (Recommended)</h3>
+                    <div data-lang-block="en"><h3>Option A: pip (Recommended)</h3></div>
+                    <div data-lang-block="vl" hidden><h3>Optie A: pip (aanbevolen)</h3></div>
                     <pre><code>pip install vlaamscodex</code></pre>
-                    <p>Standard installation that works with your existing Python environment.</p>
+                    <div data-lang-block="en"><p>Standard installation that works with your existing Python environment.</p></div>
+                    <div data-lang-block="vl" hidden><p>Standaardinstallatie die werkt met uw bestaande Python-omgeving.</p></div>
                     
-                    <h3>Option B: pipx (Isolated)</h3>
+                    <div data-lang-block="en"><h3>Option B: pipx (Isolated)</h3></div>
+                    <div data-lang-block="vl" hidden><h3>Optie B: pipx (geïsoleerd)</h3></div>
                     <pre><code>pipx install vlaamscodex</code></pre>
-                    <p>Perfect for end users. Keeps dependencies isolated from your system Python.</p>
+                    <div data-lang-block="en"><p>Perfect for end users. Keeps dependencies isolated from your system Python.</p></div>
+                    <div data-lang-block="vl" hidden><p>Perfect voor eindgebruikers. Houdt afhankelijkheden geïsoleerd van uw systeem-Python.</p></div>
                     
-                    <h3>Option C: Development Mode</h3>
+                    <div data-lang-block="en"><h3>Option C: Development Mode</h3></div>
+                    <div data-lang-block="vl" hidden><h3>Optie C: development mode</h3></div>
                     <pre><code>git clone https://github.com/brentishere41848/Vlaams-Codex.git
 cd Vlaams-Codex
 pip install -e ".[dev]"</code></pre>
-                    <p>For contributors. Includes test suite and development tools.</p>
+                    <div data-lang-block="en"><p>For contributors. Includes test suite and development tools.</p></div>
+                    <div data-lang-block="vl" hidden><p>Voor bijdragers. Inclusief testsuite en ontwikkeltools.</p></div>
 
-                    <h3>Option D: npm</h3>
+                    <div data-lang-block="en"><h3>Option D: npm</h3></div>
+                    <div data-lang-block="vl" hidden><h3>Optie D: npm</h3></div>
                     <pre><code>npm install vlaamscodex</code></pre>
-                    <p>Install for JavaScript/Node.js projects. Available now on npm!</p>
+                    <div data-lang-block="en"><p>Install for JavaScript/Node.js projects. Available now on npm!</p></div>
+                    <div data-lang-block="vl" hidden><p>Installeren voor JavaScript/Node.js-projecten. Nu beschikbaar op npm.</p></div>
                     
-                    <h3>VS Code Extension</h3>
-                    <p>For the best development experience, install the Vlaams Codex VS Code extension:</p>
-                    <ol>
-                        <li>Open VS Code</li>
-                        <li>Go to Extensions (Ctrl+Shift+X)</li>
-                        <li>Search for "Vlaams Codex"</li>
-                        <li>Click Install</li>
-                    </ol>
+                    <div data-lang-block="en">
+                        <h3>VS Code Extension</h3>
+                        <p>For the best development experience, install the Vlaams Codex VS Code extension:</p>
+                        <ol>
+                            <li>Open VS Code</li>
+                            <li>Go to Extensions (Ctrl+Shift+X)</li>
+                            <li>Search for "Vlaams Codex"</li>
+                            <li>Click Install</li>
+                        </ol>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h3>VS Code-extensie</h3>
+                        <p>Voor de beste developer experience installeert ge de Vlaams Codex VS Code-extensie:</p>
+                        <ol>
+                            <li>Open VS Code</li>
+                            <li>Ga naar Extensions (Ctrl+Shift+X)</li>
+                            <li>Zoek op “Vlaams Codex”</li>
+                            <li>Klik op Install</li>
+                        </ol>
+                    </div>
                 </section>
                 
                 <section id="language-spec">
-                    <h2>Language Specification</h2>
-                    <p>Platskript is a simple, dialect-based programming language. Here's a quick overview:</p>
+                    <div data-lang-block="en">
+                        <h2>Language Specification</h2>
+                        <p>Platskript is a simple, dialect-based programming language. Here's a quick overview:</p>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h2>Taal-specificatie</h2>
+                        <p>Platskript is een simpele, dialect-gebaseerde programmeertaal. Hieronder een korte uitleg.</p>
+                    </div>
                     
-                    <h3>Program Structure</h3>
-                    <p>Programs are wrapped in <code>plan doe ... gedaan</code>. Statements terminate with <code>amen</code>.</p>
+                    <div data-lang-block="en">
+                        <h3>Program Structure</h3>
+                        <p>Programs are wrapped in <code>plan doe ... gedaan</code>. Statements terminate with <code>amen</code>.</p>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h3>Programmastructuur</h3>
+                        <p>Programma’s zitten in <code>plan doe ... gedaan</code>. Elke statement eindigt met <code>amen</code>.</p>
+                    </div>
                     
-                    <h3>Statements</h3>
+                    <div data-lang-block="en"><h3>Statements</h3></div>
+                    <div data-lang-block="vl" hidden><h3>Statements</h3></div>
                     <table style="width: 100%; border-collapse: collapse; margin-bottom: 1.5rem;">
                         <thead>
                             <tr style="border-bottom: 2px solid var(--border-color);">
-                                <th style="text-align: left; padding: 0.75rem; background: var(--bg-secondary);">Syntax</th>
-                                <th style="text-align: left; padding: 0.75rem; background: var(--bg-secondary);">Description</th>
+                                <th style="text-align: left; padding: 0.75rem; background: var(--bg-secondary);">
+                                    <span data-lang-block="en">Syntax</span>
+                                    <span data-lang-block="vl" hidden>Syntax</span>
+                                </th>
+                                <th style="text-align: left; padding: 0.75rem; background: var(--bg-secondary);">
+                                    <span data-lang-block="en">Description</span>
+                                    <span data-lang-block="vl" hidden>Uitleg</span>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr style="border-bottom: 1px solid var(--border-color);">
                                 <td style="padding: 0.75rem;"><code>zet &lt;var&gt; op &lt;expr&gt; amen</code></td>
-                                <td style="padding: 0.75rem;">Variable assignment</td>
+                                <td style="padding: 0.75rem;">
+                                    <span data-lang-block="en">Variable assignment</span>
+                                    <span data-lang-block="vl" hidden>Variabele toekenning</span>
+                                </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border-color);">
                                 <td style="padding: 0.75rem;"><code>klap &lt;expr&gt; amen</code></td>
-                                <td style="padding: 0.75rem;">Print expression</td>
+                                <td style="padding: 0.75rem;">
+                                    <span data-lang-block="en">Print expression</span>
+                                    <span data-lang-block="vl" hidden>Print een expressie</span>
+                                </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border-color);">
                                 <td style="padding: 0.75rem;"><code>maak funksie &lt;name&gt; met &lt;params...&gt; doe ... gedaan</code></td>
-                                <td style="padding: 0.75rem;">Function definition</td>
+                                <td style="padding: 0.75rem;">
+                                    <span data-lang-block="en">Function definition</span>
+                                    <span data-lang-block="vl" hidden>Functie-definitie</span>
+                                </td>
                             </tr>
                             <tr style="border-bottom: 1px solid var(--border-color);">
                                 <td style="padding: 0.75rem;"><code>roep &lt;name&gt; met &lt;args...&gt; amen</code></td>
-                                <td style="padding: 0.75rem;">Function call</td>
+                                <td style="padding: 0.75rem;">
+                                    <span data-lang-block="en">Function call</span>
+                                    <span data-lang-block="vl" hidden>Functie oproepen</span>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="padding: 0.75rem;"><code>geeftterug &lt;expr&gt; amen</code></td>
-                                <td style="padding: 0.75rem;">Return statement</td>
+                                <td style="padding: 0.75rem;">
+                                    <span data-lang-block="en">Return statement</span>
+                                    <span data-lang-block="vl" hidden>Return statement</span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                     
-                    <h3>Expressions</h3>
+                    <div data-lang-block="en"><h3>Expressions</h3></div>
+                    <div data-lang-block="vl" hidden><h3>Expressies</h3></div>
                     <ul>
-                        <li><code>tekst &lt;words...&gt;</code> - String literal (words joined by spaces)</li>
-                        <li><code>getal &lt;digits&gt;</code> - Numeric literal</li>
-                        <li><code>da &lt;name&gt;</code> - Variable reference</li>
-                        <li><code>spatie</code> - Space character literal</li>
-                        <li><code>plakt</code> - String concatenation operator</li>
+                        <li>
+                            <code>tekst &lt;words...&gt;</code>
+                            <span data-lang-block="en"> - String literal (words joined by spaces)</span>
+                            <span data-lang-block="vl" hidden> - Tekst literal (woorden aan elkaar met spaties)</span>
+                        </li>
+                        <li>
+                            <code>getal &lt;digits&gt;</code>
+                            <span data-lang-block="en"> - Numeric literal</span>
+                            <span data-lang-block="vl" hidden> - Getal literal</span>
+                        </li>
+                        <li>
+                            <code>da &lt;name&gt;</code>
+                            <span data-lang-block="en"> - Variable reference</span>
+                            <span data-lang-block="vl" hidden> - Variabele referentie</span>
+                        </li>
+                        <li>
+                            <code>spatie</code>
+                            <span data-lang-block="en"> - Space character literal</span>
+                            <span data-lang-block="vl" hidden> - Spatie character</span>
+                        </li>
+                        <li>
+                            <code>plakt</code>
+                            <span data-lang-block="en"> - String concatenation operator</span>
+                            <span data-lang-block="vl" hidden> - Tekst samenplakken operator</span>
+                        </li>
                     </ul>
                 </section>
                 
                 <section id="cli-reference">
-                    <h2>CLI Reference</h2>
-                    <p>Vlaams Codex provides a command-line interface called <code>plats</code> with support for multiple Flemish dialects.</p>
+                    <div data-lang-block="en">
+                        <h2>CLI Reference</h2>
+                        <p>Vlaams Codex provides a command-line interface called <code>plats</code> with support for multiple Flemish dialects.</p>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h2>CLI referentie</h2>
+                        <p>Vlaams Codex heeft een command-line interface: <code>plats</code>, met support voor meerdere Vlaamse dialecten.</p>
+                    </div>
                     
-                    <h3>Available Commands</h3>
-                    <pre><code>plats run &lt;file.plats&gt;      # Run a Platskript program
+                    <div data-lang-block="en"><h3>Available Commands</h3></div>
+                    <div data-lang-block="vl" hidden><h3>Beschikbare commando’s</h3></div>
+                    <div data-lang-block="en">
+                        <pre><code>plats run &lt;file.plats&gt;      # Run a Platskript program
 plats show-python &lt;file&gt;   # Display generated Python code
 plats build &lt;file.plats&gt;     # Compile to a Python file
 plats repl                      # Interactive REPL
@@ -362,75 +491,148 @@ plats examples                  # Browse built-in examples
 plats check &lt;file.plats&gt;     # Check syntax
 plats init &lt;name&gt;            # Create a new project
 plats fortune                   # Random Flemish proverb</code></pre>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <pre><code>plats run &lt;file.plats&gt;      # Run een Platskript-programma
+plats show-python &lt;file&gt;   # Toon de gegenereerde Python-code
+plats build &lt;file.plats&gt;     # Compileer naar een Python file
+plats repl                      # Interactieve REPL
+plats examples                  # Bekijk ingebouwde voorbeelden
+plats check &lt;file.plats&gt;     # Check de syntax
+plats init &lt;name&gt;            # Maak een nieuw project
+plats fortune                   # Willekeurige Vlaamse spreuk</code></pre>
+                    </div>
                     
-                    <h3>Dialect Aliases</h3>
-                    <p>Every command works in 7 Flemish dialects! For example, to run a program:</p>
+                    <div data-lang-block="en">
+                        <h3>Dialect Aliases</h3>
+                        <p>Every command works in 7 Flemish dialects! For example, to run a program:</p>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h3>Dialect-aliassen</h3>
+                        <p>Elk commando werkt in 7 Vlaamse dialecten. Bijvoorbeeld om een programma te runnen:</p>
+                    </div>
                     <pre><code>plats run script.plats        # Standard
 plats voertuut script.plats    # West-Vlaams
 plats doet script.plats        # Antwerps
 plats gaon script.plats        # Limburgs
 plats doeda script.plats       # Brussels</code></pre>
                     
-                    <p>See the <a href="multi-vlaams.html">Multi-Vlaams Dialects</a> page for a complete list of aliases.</p>
+                    <div data-lang-block="en"><p>See the <a href="multi-vlaams.html">Multi-Vlaams Dialects</a> page for a complete list of aliases.</p></div>
+                    <div data-lang-block="vl" hidden><p>Zie de pagina <a href="multi-vlaams.html">Multi-Vlaams dialecten</a> voor een volledige lijst met aliassen.</p></div>
                 </section>
                 
                 <section id="multi-vlaams">
-                    <h2>Multi-Vlaams Dialects</h2>
-                    <p>Vlaams Codex v0.2.0 introduces full support for 7 Flemish dialects with 80+ command aliases. Use whichever dialect feels most natural to you!</p>
+                    <div data-lang-block="en">
+                        <h2>Multi-Vlaams Dialects</h2>
+                        <p>Vlaams Codex v0.2.0 introduces full support for 7 Flemish dialects with 80+ command aliases. Use whichever dialect feels most natural to you!</p>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h2>Multi-Vlaams dialecten</h2>
+                        <p>Vlaams Codex ondersteunt 7 Vlaamse dialecten met 80+ commando-aliassen. Gebruik wat voor u het meest natuurlijk aanvoelt.</p>
+                    </div>
                     
-                    <h3>Supported Dialects</h3>
+                    <div data-lang-block="en"><h3>Supported Dialects</h3></div>
+                    <div data-lang-block="vl" hidden><h3>Ondersteunde dialecten</h3></div>
                     <ul>
-                        <li><strong>Standard</strong> - The base dialect</li>
-                        <li><strong>West-Vlaams</strong> - The classic West Flemish dialect</li>
-                        <li><strong>Antwerps</strong> - Antwerp dialect</li>
-                        <li><strong>Limburgs</strong> - Limburg dialect</li>
-                        <li><strong>Brussels</strong> - Brussels dialect</li>
-                        <li><strong>Genks</strong> - Genk dialect</li>
-                        <li><strong>Standard +</strong> - Extended standard dialect</li>
+                        <li><strong>Standard</strong> <span data-lang-block="en">- The base dialect</span><span data-lang-block="vl" hidden>- Basisdialect</span></li>
+                        <li><strong>West-Vlaams</strong> <span data-lang-block="en">- The classic West Flemish dialect</span><span data-lang-block="vl" hidden>- Klassiek West-Vlaams</span></li>
+                        <li><strong>Antwerps</strong> <span data-lang-block="en">- Antwerp dialect</span><span data-lang-block="vl" hidden>- Antwerps dialect</span></li>
+                        <li><strong>Limburgs</strong> <span data-lang-block="en">- Limburg dialect</span><span data-lang-block="vl" hidden>- Limburgs dialect</span></li>
+                        <li><strong>Brussels</strong> <span data-lang-block="en">- Brussels dialect</span><span data-lang-block="vl" hidden>- Brussels dialect</span></li>
+                        <li><strong>Genks</strong> <span data-lang-block="en">- Genk dialect</span><span data-lang-block="vl" hidden>- Genks dialect</span></li>
+                        <li><strong>Standard +</strong> <span data-lang-block="en">- Extended standard dialect</span><span data-lang-block="vl" hidden>- Uitgebreid standaard</span></li>
                     </ul>
                     
-                    <h3>Error Messages</h3>
-                    <p>Error messages also come in your dialect:</p>
+                    <div data-lang-block="en">
+                        <h3>Error Messages</h3>
+                        <p>Error messages also come in your dialect:</p>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h3>Foutmeldingen</h3>
+                        <p>Foutmeldingen komen ook in uw dialect:</p>
+                    </div>
                     <pre><code>Manneke, gij zijt 'amen' vergeten op lijn 5!  (Antwerps)
 Jansen, ge zijt 'amen' vergeten op lijn 5!    (West-Vlaams)</code></pre>
                     
-                    <p>For a complete list of dialect commands, see the <a href="multi-vlaams.html">Multi-Vlaams Dialects</a> documentation.</p>
+                    <div data-lang-block="en"><p>For a complete list of dialect commands, see the <a href="multi-vlaams.html">Multi-Vlaams Dialects</a> documentation.</p></div>
+                    <div data-lang-block="vl" hidden><p>Voor de volledige lijst met dialectcommando’s: zie <a href="multi-vlaams.html">Multi-Vlaams dialecten</a>.</p></div>
                 </section>
                 
                 <section id="magic-mode">
-                    <h2>Magic Mode</h2>
-                    <p>Magic Mode allows you to run <code>.plats</code> files directly with Python using custom source encoding. No compilation step needed!</p>
+                    <div data-lang-block="en">
+                        <h2>Magic Mode</h2>
+                        <p>Magic Mode allows you to run <code>.plats</code> files directly with Python using custom source encoding. No compilation step needed!</p>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h2>Magic Mode</h2>
+                        <p>Magic Mode laat u <code>.plats</code>-bestanden rechtstreeks uitvoeren met Python via custom source encoding. Geen compilatie nodig.</p>
+                    </div>
                     
-                    <h3>How It Works</h3>
-                    <ol>
-                        <li>Python detects <code># coding: vlaamsplats</code> (PEP 263) and requests the corresponding codec</li>
-                        <li>During normal startup, Python's <code>site</code> module processes <code>.pth</code> files in site-packages</li>
-                        <li>VlaamsCodex installs <code>vlaamscodex_autoload.pth</code> containing the codec registration</li>
-                        <li>The codec decodes UTF-8 bytes, strips the encoding declaration, transpiles Platskript to Python</li>
-                        <li>Python executes the generated code transparently</li>
-                    </ol>
+                    <div data-lang-block="en"><h3>How It Works</h3></div>
+                    <div data-lang-block="vl" hidden><h3>Hoe werkt dat?</h3></div>
+                    <div data-lang-block="en">
+                        <ol>
+                            <li>Python detects <code># coding: vlaamsplats</code> (PEP 263) and requests the corresponding codec</li>
+                            <li>During normal startup, Python's <code>site</code> module processes <code>.pth</code> files in site-packages</li>
+                            <li>VlaamsCodex installs <code>vlaamscodex_autoload.pth</code> containing the codec registration</li>
+                            <li>The codec decodes UTF-8 bytes, strips the encoding declaration, transpiles Platskript to Python</li>
+                            <li>Python executes the generated code transparently</li>
+                        </ol>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <ol>
+                            <li>Python ziet <code># coding: vlaamsplats</code> (PEP 263) en vraagt de juiste codec op</li>
+                            <li>Bij normaal opstarten verwerkt Python z’n <code>site</code>-module de <code>.pth</code>-files in site-packages</li>
+                            <li>VlaamsCodex installeert <code>vlaamscodex_autoload.pth</code> dat de codec registreert</li>
+                            <li>De codec decodeert UTF-8 bytes, haalt de encoding-regel weg en transpilt Platskript naar Python</li>
+                            <li>Python voert de gegenereerde code transparant uit</li>
+                        </ol>
+                    </div>
                     
-                    <h3>Usage</h3>
-                    <p>Create a file with the encoding header:</p>
+                    <div data-lang-block="en">
+                        <h3>Usage</h3>
+                        <p>Create a file with the encoding header:</p>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h3>Gebruik</h3>
+                        <p>Maak een bestand met de encoding header:</p>
+                    </div>
                     <pre><code># coding: vlaamsplats
 plan doe
   klap tekst hallo amen
 gedaan</code></pre>
                     
-                    <p>Run it directly with Python:</p>
-                    <pre><code>python hello.plats</code></p>
+                    <div data-lang-block="en"><p>Run it directly with Python:</p></div>
+                    <div data-lang-block="vl" hidden><p>Voer het rechtstreeks uit met Python:</p></div>
+                    <pre><code>python hello.plats</code></pre>
                     
-                    <h3>Limitations</h3>
-                    <ul>
-                        <li><strong>python -S</strong>: Disables <code>site</code> module, preventing <code>.pth</code> hook execution</li>
-                        <li><strong>python -I</strong>: Isolated mode restricts site-packages access</li>
-                        <li><strong>Fallback</strong>: Use <code>plats run script.plats</code> when magic mode is unavailable</li>
-                    </ul>
+                    <div data-lang-block="en"><h3>Limitations</h3></div>
+                    <div data-lang-block="vl" hidden><h3>Beperkingen</h3></div>
+                    <div data-lang-block="en">
+                        <ul>
+                            <li><strong>python -S</strong>: Disables <code>site</code> module, preventing <code>.pth</code> hook execution</li>
+                            <li><strong>python -I</strong>: Isolated mode restricts site-packages access</li>
+                            <li><strong>Fallback</strong>: Use <code>plats run script.plats</code> when magic mode is unavailable</li>
+                        </ul>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <ul>
+                            <li><strong>python -S</strong>: schakelt de <code>site</code>-module uit, waardoor de <code>.pth</code>-hook niet draait</li>
+                            <li><strong>python -I</strong>: isolated mode beperkt toegang tot site-packages</li>
+                            <li><strong>Fallback</strong>: gebruik <code>plats run script.plats</code> als Magic Mode niet beschikbaar is</li>
+                        </ul>
+                    </div>
                 </section>
                 
                 <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
-                    <h3>Need Help?</h3>
-                    <p>If you encounter any issues or have questions:</p>
+                    <div data-lang-block="en">
+                        <h3>Need Help?</h3>
+                        <p>If you encounter any issues or have questions:</p>
+                    </div>
+                    <div data-lang-block="vl" hidden>
+                        <h3>Hulp nodig?</h3>
+                        <p>Als ge issues tegenkomt of vragen hebt:</p>
+                    </div>
                     <ul>
                         <li>Check the <a href="https://github.com/brentishere41848/Vlaams-Codex/issues">GitHub Issues</a></li>
                         <li>Read the <a href="https://github.com/brentishere41848/Vlaams-Codex/blob/main/CONTRIBUTING.md">Contributing Guidelines</a></li>
