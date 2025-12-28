@@ -33,14 +33,14 @@ jobs:
 
           changelog = Path("CHANGELOG.md").read_text(encoding="utf-8")
 
-          header = re.compile(rf"^## \\[{re.escape(version)}\\] - .*$", re.M)
+          header = re.compile(rf"^## \[{re.escape(version)}\] - .*$", re.M)
           m = header.search(changelog)
           if not m:
               raise SystemExit(f"Could not find section for version {version} in CHANGELOG.md")
 
           start = m.start()
           rest = changelog[m.end():]
-          next_header = re.search(r"^## \\[\\d+\\.\\d+\\.\\d+\\] - ", rest, flags=re.M)
+          next_header = re.search(r"^## \[\d+\.\d+\.\d+\] - ", rest, flags=re.M)
           end = m.end() + (next_header.start() if next_header else len(rest))
 
           section = changelog[start:end].strip() + "\n"
