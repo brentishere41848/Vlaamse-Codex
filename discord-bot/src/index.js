@@ -3,12 +3,16 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  ActionRowBuilder,
+  ChannelType,
   Client,
   GatewayIntentBits,
   PermissionFlagsBits,
   REST,
   Routes,
-  SlashCommandBuilder
+  SlashCommandBuilder,
+  StringSelectMenuBuilder,
+  StringSelectMenuOptionBuilder
 } from "discord.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -19,6 +23,8 @@ dotenv.config({ path: path.join(PROJECT_ROOT, ".env") });
 const STATE_PATH = path.join(__dirname, "state.json");
 const FIXED_CHANGELOG_CHANNEL_ID = "1454574317873397771";
 const FIXED_LINKS_CHANNEL_ID = "1454579611848544550";
+const SUPPORT_PANEL_CHANNEL_ID = "1454576632676352114";
+const SUPPORT_TICKETS_CATEGORY_ID = "1454699113567227955";
 const X_LINK = "https://x.com/vlaamscodex";
 
 const FIXED_LINKS = [
@@ -104,7 +110,11 @@ async function loadState() {
         ? state.lastReleaseId
         : fallback.lastReleaseId,
     channelId: FIXED_CHANGELOG_CHANNEL_ID,
-    mentionEveryone: typeof state.mentionEveryone === "boolean" ? state.mentionEveryone : fallback.mentionEveryone
+    mentionEveryone: typeof state.mentionEveryone === "boolean" ? state.mentionEveryone : fallback.mentionEveryone,
+    supportPanelMessageId:
+      typeof state.supportPanelMessageId === "string" && state.supportPanelMessageId.trim()
+        ? state.supportPanelMessageId.trim()
+        : null
   };
 
   await writeJsonAtomic(STATE_PATH, merged);
@@ -217,6 +227,48 @@ function formatStuurlinksMessage() {
     "En nu: goa gij wa plansen of wa? ’t Es tijd da ge iets schoons in mekaar steekt."
   ];
   return lines.join("\n");
+}
+
+function formatSupportPanelText() {
+  return [
+    "Awel, support nodig? Da’s gene schande ze.",
+    "Kies hieronder wa voor soort miserie da ge hebt en ik maak u ne ticket aan.",
+    "",
+    "Regels van ’t kot:",
+    "- Zet direct wa context: wa probeert ge, wa lukt er nie, en wa staat er in de error.",
+    "- Screenshots moogt ge smijten, ma nie overdrijven hé.",
+    "- Blijf efkes beleefd, we bijten nie (meestal).",
+    "",
+    "Kies nen soort en ’t komt in orde."
+  ].join("\n");
+}
+
+function supportTypeSelectRow() {
+  const menu = new StringSelectMenuBuilder()
+    .setCustomId("support_type_select")
+    .setPlaceholder("Kies uw soort support…")
+    .setMinValues(1)
+    .setMaxValues(1)
+    .addOptions(
+      new StringSelectMenuOptionBuilder()
+        .setLabel("Installatie / Opstart")
+        .setValue("installatie")
+        .setDescription("’t Krijgt nie aan de praat, of ’t start nie op."),
+      new StringSelectMenuOptionBuilder()
+        .setLabel("Bug / Error")
+        .setValue("bug")
+        .setDescription("Da crasht, doet raar, of geeft errors."),
+      new StringSelectMenuOptionBuilder()
+        .setLabel("Idee / Feature")
+        .setValue("idee")
+        .setDescription("Ge hebt nen zotten gedacht of nen goeie feature."),
+      new StringSelectMenuOptionBuilder()
+        .setLabel("Overig / Anders")
+        .setValue("overig")
+        .setDescription("Iets anders: vraagkes, gedoe, of nen rare case.")
+    );
+
+  return new ActionRowBuilder().addComponents(menu);
 }
 
 const DISCORD_TOKEN = requiredEnv("DISCORD_TOKEN");
@@ -351,6 +403,21 @@ async function resolveLinksChannel() {
   return channel;
 }
 
+async function resolveSupportPanelChannel() {
+  const channelId = SUPPORT_PANEL_CHANNEL_ID;
+  let channel = null;
+  try {
+    channel = await client.channels.fetch(channelId);
+  } catch (error) {
+    throw new Error(`Kon support-kanaal ${channelId} niet ophalen: ${String(error?.message || error)}`);
+  }
+  if (!channel) throw new Error(`Support-kanaal niet gevonden: ${channelId}`);
+  if (!channel.isTextBased?.() || typeof channel.send !== "function") {
+    throw new Error(`Support-kanaal is niet text-based of niet postbaar: ${channelId}`);
+  }
+  return channel;
+}
+
 async function postToChangelog(content, { allowEveryone }) {
   let channel = null;
   try {
@@ -388,6 +455,109 @@ async function postToLinksChannel(content) {
     console.error("Discord send fout (links-kanaal):", error);
     return false;
   }
+}
+
+async function ensureSupportPanel() {
+  let channel = null;
+  try {
+    channel = await resolveSupportPanelChannel();
+  } catch (error) {
+    console.error("Support-kanaal fout:", error);
+    return false;
+  }
+
+  const row = supportTypeSelectRow();
+  const payload = { content: formatSupportPanelText(), components: [row], allowedMentions: { parse: [] } };
+
+  if (state.supportPanelMessageId) {
+    try {
+      const existing = await channel.messages.fetch(state.supportPanelMessageId);
+      if (existing) return true;
+    } catch {
+      // ignore -> we will re-post
+    }
+  }
+
+  try {
+    const msg = await channel.send(payload);
+    state.supportPanelMessageId = msg.id;
+    await saveState(state);
+    console.log(`Support panel gepost in ${SUPPORT_PANEL_CHANNEL_ID} (message ${msg.id}).`);
+    return true;
+  } catch (error) {
+    console.error("Support panel post fout:", error);
+    return false;
+  }
+}
+
+function slugifyTicketType(value) {
+  const v = String(value || "").toLowerCase().trim();
+  if (v === "installatie") return "install";
+  if (v === "bug") return "bug";
+  if (v === "idee") return "idee";
+  return "overig";
+}
+
+async function findExistingTicketChannel(guild, userId) {
+  try {
+    const channels = await guild.channels.fetch();
+    for (const [, ch] of channels) {
+      if (!ch) continue;
+      if (ch.type !== ChannelType.GuildText) continue;
+      if (String(ch.parentId || "") !== SUPPORT_TICKETS_CATEGORY_ID) continue;
+      const topic = String(ch.topic || "");
+      if (topic.includes(`ticket-owner:${userId}`)) return ch;
+    }
+  } catch (error) {
+    console.error("Ticket search fout:", error);
+  }
+  return null;
+}
+
+async function createTicketChannel({ guild, user, typeValue }) {
+  const typeSlug = slugifyTicketType(typeValue);
+  const userId = user.id;
+  const shortId = userId.slice(-4);
+  const name = `ticket-${typeSlug}-${shortId}`;
+
+  const existing = await findExistingTicketChannel(guild, userId);
+  if (existing) return { channel: existing, already: true };
+
+  const overwrites = [
+    { id: guild.id, deny: [PermissionFlagsBits.ViewChannel] },
+    {
+      id: userId,
+      allow: [
+        PermissionFlagsBits.ViewChannel,
+        PermissionFlagsBits.SendMessages,
+        PermissionFlagsBits.ReadMessageHistory,
+        PermissionFlagsBits.AttachFiles,
+        PermissionFlagsBits.EmbedLinks,
+        PermissionFlagsBits.AddReactions
+      ]
+    },
+    {
+      id: client.user.id,
+      allow: [
+        PermissionFlagsBits.ViewChannel,
+        PermissionFlagsBits.SendMessages,
+        PermissionFlagsBits.ReadMessageHistory,
+        PermissionFlagsBits.ManageChannels,
+        PermissionFlagsBits.ManageMessages
+      ]
+    }
+  ];
+
+  const topic = `ticket-owner:${userId} type:${typeSlug} created:${new Date().toISOString()}`;
+  const channel = await guild.channels.create({
+    name,
+    type: ChannelType.GuildText,
+    parent: SUPPORT_TICKETS_CATEGORY_ID,
+    topic,
+    permissionOverwrites: overwrites
+  });
+
+  return { channel, already: false };
 }
 
 async function checkForNewRelease({ forcePost }) {
@@ -470,6 +640,7 @@ client.on("ready", async () => {
   );
 
   await deployGuildCommandsOnStart();
+  await ensureSupportPanel();
 
   const first = await checkForNewRelease({ forcePost: false });
   if (!first.ok) console.error("Init check fout:", first.error || first.reason || "onbekend");
@@ -481,14 +652,60 @@ client.on("ready", async () => {
 });
 
 client.on("interactionCreate", async (interaction) => {
+  if (interaction.isStringSelectMenu?.() && interaction.customId === "support_type_select") {
+    try {
+      if (!interaction.guild) {
+        await interaction.reply({ content: "Da kan nie in DM’s, ze.", ephemeral: true, allowedMentions: { parse: [] } });
+        return;
+      }
+
+      await interaction.deferReply({ ephemeral: true, allowedMentions: { parse: [] } });
+      const typeValue = interaction.values?.[0] || "overig";
+      const created = await createTicketChannel({
+        guild: interaction.guild,
+        user: interaction.user,
+        typeValue
+      });
+
+      const channel = created.channel;
+      if (!created.already) {
+        const greet = [
+          "Awel, voilà se: uw ticket is open.",
+          "Zet hier is schoon in ’t plat wa er scheelt en plak de errors erbij (copy/paste).",
+          "Als ge screenshots hebt: smijt ze erin.",
+          "",
+          `Soort: **${slugifyTicketType(typeValue)}**`
+        ].join("\n");
+        await channel.send({ content: greet, allowedMentions: { parse: [] } }).catch(() => {});
+      }
+
+      await interaction.editReply({
+        content: created.already
+          ? `Ge had al nen ticket open: <#${channel.id}>`
+          : `Ticket aangemaakt: <#${channel.id}>`,
+        allowedMentions: { parse: [] }
+      });
+    } catch (error) {
+      console.error("Support select fout:", error);
+      if (interaction.deferred || interaction.replied) {
+        await interaction.editReply({ content: "Da ging mis, zie logs.", allowedMentions: { parse: [] } }).catch(() => {});
+      } else {
+        await interaction.reply({ content: "Da ging mis, zie logs.", ephemeral: true, allowedMentions: { parse: [] } }).catch(() => {});
+      }
+    }
+    return;
+  }
+
   if (!interaction.isChatInputCommand()) return;
 
   try {
     const isAdmin = Boolean(interaction.memberPermissions?.has?.(PermissionFlagsBits.ManageGuild));
 
     if (interaction.commandName === "ping") {
+      const apiMs = Math.max(0, Date.now() - interaction.createdTimestamp);
+      const wsMs = Math.round(client.ws.ping);
       await interaction.reply({
-        content: "Pong!",
+        content: `Pong! (API: ${apiMs}ms | WS: ${wsMs}ms)`,
         ephemeral: true,
         allowedMentions: { parse: [] }
       });
