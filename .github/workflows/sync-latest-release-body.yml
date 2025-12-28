@@ -20,21 +20,25 @@ jobs:
           script: |
             const fs = require("fs");
 
-            function escapeRegExp(s) {
-              return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-            }
+            function extractChangelogSection(changelogText, version) {
+              const lines = String(changelogText || "").split(/\r?\n/);
+              const headerPrefix = `## [${version}]`;
 
-            function extractChangelogSection(changelog, version) {
-              const headerRe = new RegExp(`^## \\[${escapeRegExp(version)}\\][^\\n]*$`, "m");
-              const startMatch = changelog.match(headerRe);
-              if (!startMatch || startMatch.index == null) return null;
+              let start = -1;
+              for (let i = 0; i < lines.length; i++) {
+                if (lines[i].startsWith(headerPrefix)) {
+                  start = i;
+                  break;
+                }
+              }
+              if (start === -1) return null;
 
-              const start = startMatch.index;
-              const afterStart = changelog.slice(start + startMatch[0].length);
-              const nextHeaderRe = /^## \[/m;
-              const next = afterStart.match(nextHeaderRe);
-              const end = next && next.index != null ? start + startMatch[0].length + next.index : changelog.length;
-              return changelog.slice(start, end).trim();
+              const out = [];
+              for (let i = start; i < lines.length; i++) {
+                if (i !== start && lines[i].startsWith("## [")) break;
+                out.push(lines[i]);
+              }
+              return out.join("\n").trim();
             }
 
             const { owner, repo } = context.repo;
@@ -58,4 +62,3 @@ jobs:
             });
 
             core.info(`Release ${tag} bijgewerkt met CHANGELOG sectie ${version}.`);
-
