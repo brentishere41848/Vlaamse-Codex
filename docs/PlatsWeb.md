@@ -2,9 +2,9 @@
 
 PlatsWeb laat u één `.plats` bestand bouwen naar statische web output:
 
-- `dist/index.html`
-- `dist/app.js`
-- `dist/app.css`
+- `dist/index.plats` (browser‑klaar, geserveerd als `text/html`)
+- `dist/page.plats` (uw broncode)
+- `dist/vercel.json` (headers/rewrites zodat `.plats` op Vercel werkt als `.html`)
 
 ## 5‑min quickstart
 
@@ -21,6 +21,13 @@ PYTHONPATH=src python -m vlaamscodex.cli dev examples/hello-web
 ```
 
 Open daarna de URL die in de terminal verschijnt (default `http://127.0.0.1:5173/`).
+
+## Hosting: `.plats` als `.html` vervangen
+
+Browsers begrijpen geen Plats DSL rechtstreeks; daarom bouwt PlatsWeb naar HTML/JS/CSS, maar met de extensie `.plats`.
+Om dit op een echte host als webpagina te laten renderen, moet de server `.plats` als `text/html` serveren.
+
+Voor Vercel staat dit al klaar in `dist/vercel.json`. Deploy gewoon uw `dist/` folder.
 
 ## SFC structuur
 
@@ -90,4 +97,3 @@ Helpers:
 - Interpolatie ondersteunt enkel `{{ identifier }}` (geen expressions).
 - Script DSL is line-based transpile (geen volledige parser).
 - Geen routing / SSR / bundlers.
-

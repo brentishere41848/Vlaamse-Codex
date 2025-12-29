@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import http.server
+import json
 import os
 import queue
 import socketserver
@@ -50,6 +51,23 @@ def build_dir(dir_path: Path, out_dir: Path | None = None, dev: bool = False) ->
     (out_dir / "index.plats").write_text(_make_inline_html(out.index_html, out.app_js, out.app_css), encoding="utf-8")
     # Also emit the original Plats source into dist so dist contains actual Plats too.
     (out_dir / entry.name).write_text(src, encoding="utf-8")
+    # Hosting helper: allow .plats to behave like .html on common static hosts (Vercel).
+    (out_dir / "vercel.json").write_text(
+        json.dumps(
+            {
+                "headers": [
+                    {
+                        "source": r"/(.*)\.plats",
+                        "headers": [{"key": "Content-Type", "value": "text/html; charset=utf-8"}],
+                    }
+                ],
+                "rewrites": [{"source": "/", "destination": "/index.plats"}],
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
     # Clean up older outputs if present.
     for legacy in ("index.html", "app.js", "app.css"):
         p = out_dir / legacy
