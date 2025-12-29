@@ -26,6 +26,8 @@ from pathlib import Path
 
 from .compiler import compile_plats
 from . import __version__
+from .platsweb.builder import build_dir as platsweb_build_dir, dev_dir as platsweb_dev_dir
+from .platsweb.errors import PlatsWebParseError
 from .repl import run_repl, detect_dialect, REPL_ALIASES
 from .fortune import print_fortune, detect_fortune_dialect, FORTUNE_ALIASES
 from .init import create_project, detect_init_dialect, print_init_help, INIT_ALIASES
@@ -279,11 +281,43 @@ def cmd_run(path: Path) -> int:
 
 
 def cmd_build(path: Path, out: Path) -> int:
+    if path.is_dir():
+        try:
+            dist = platsweb_build_dir(path, out_dir=None, dev=False)
+            print(f"Wrote: {dist / 'index.html'}")
+            print(f"Wrote: {dist / 'app.js'}")
+            print(f"Wrote: {dist / 'app.css'}")
+            return 0
+        except PlatsWebParseError as e:
+            try:
+                entry = (path / "page.plats") if (path / "page.plats").exists() else next(path.glob("*.plats"))
+                src = entry.read_text(encoding="utf-8")
+                print(e.format(src, path=str(entry)), file=sys.stderr)
+            except Exception:
+                print(f"{path}: error: {e.message}", file=sys.stderr)
+            return 1
+
     plats_src = _read_plats(path)
     py_src = compile_plats(plats_src)
     out.write_text(py_src, encoding="utf-8")
     print(f"Wrote: {out}")
     return 0
+
+
+def cmd_dev(path: Path, host: str = "127.0.0.1", port: int = 5173) -> int:
+    if not path.is_dir():
+        print("dev expects a directory (example: plats dev examples/hello-web)", file=sys.stderr)
+        return 2
+    try:
+        return platsweb_dev_dir(path, host=host, port=port)
+    except PlatsWebParseError as e:
+        try:
+            entry = (path / "page.plats") if (path / "page.plats").exists() else next(path.glob("*.plats"))
+            src = entry.read_text(encoding="utf-8")
+            print(e.format(src, path=str(entry)), file=sys.stderr)
+        except Exception:
+            print(f"{path}: error: {e.message}", file=sys.stderr)
+        return 1
 
 
 def cmd_show_python(path: Path) -> int:
@@ -303,8 +337,10 @@ that uses Flemish dialect keywords and compiles to Python.
 
 COMMANDS (English):
   plats run <file.plats>                Run a Platskript program
-  plats build <file.plats> --out <file> Compile to Python source file
+  plats build <file.plats> [--out <file>]  Compile to Python source file (default: <file>.py)
+  plats build <dir>                     Build PlatsWeb (dist/index.html + app.js + app.css)
   plats show-python <file.plats>        Display generated Python code
+  plats dev <dir>                       PlatsWeb dev server (watch + live reload)
   plats vraag "<vraag>" --dialect <id>  Vraag iets (antwoord in dialect packs)
   plats dialecten                       List dialect packs
   plats help                            Show this help message
@@ -582,9 +618,14 @@ def main(argv: list[str] | None = None) -> int:
     p_run = sub.add_parser("run", help="Run a Platskript program", aliases=["loop"])
     p_run.add_argument("path", type=Path, help="Path to .plats file")
 
-    p_build = sub.add_parser("build", help="Compile to Python source file", aliases=["bouw"])
-    p_build.add_argument("path", type=Path, help="Path to .plats file")
-    p_build.add_argument("--out", type=Path, required=True, help="Output .py file")
+    p_build = sub.add_parser("build", help="Build Python or PlatsWeb", aliases=["bouw"])
+    p_build.add_argument("path", type=Path, help="Path to .plats file OR directory for PlatsWeb")
+    p_build.add_argument("--out", type=Path, required=False, help="Output .py file (only for file builds)")
+
+    p_dev = sub.add_parser("dev", help="PlatsWeb dev server (watch + live reload)")
+    p_dev.add_argument("path", type=Path, help="Path to PlatsWeb directory (contains page.plats)")
+    p_dev.add_argument("--host", default="127.0.0.1", help="Host (default: 127.0.0.1)")
+    p_dev.add_argument("--port", type=int, default=5173, help="Port (default: 5173)")
 
     p_show = sub.add_parser("show-python", help="Display generated Python code", aliases=["toon"])
     p_show.add_argument("path", type=Path, help="Path to .plats file")
@@ -624,9 +665,14 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd in ("run", "loop"):
         return cmd_run(args.path)
     if args.cmd in ("build", "bouw"):
-        return cmd_build(args.path, args.out)
+        if args.path.is_dir():
+            return cmd_build(args.path, Path(""))
+        out = args.out or args.path.with_suffix(".py")
+        return cmd_build(args.path, out)
     if args.cmd in ("show-python", "toon"):
         return cmd_show_python(args.path)
+    if args.cmd == "dev":
+        return cmd_dev(args.path, host=args.host, port=args.port)
     if args.cmd == "repl":
         dialect = detect_dialect(original_cmd)
         return cmd_repl(dialect=dialect)

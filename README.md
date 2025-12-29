@@ -33,6 +33,30 @@ gdag aan weeireld
 
 ---
 
+## PlatsWeb (MVP)
+
+Één `.plats` bestand kan ook als web page/component werken via:
+
+- `pagina { ... }`
+- `script { ... }`
+- `stijl { ... }`
+
+Build het meegeleverde voorbeeld:
+
+```bash
+plats build examples/hello-web
+```
+
+Dev mode (watch + live reload):
+
+```bash
+plats dev examples/hello-web
+```
+
+Meer uitleg: `docs/PlatsWeb.md`
+
+---
+
 ## Multi-Vlaams Dialect Commands 🇧🇪
 
 Every command works in **7 Flemish dialects**! Use whichever feels most natural:
