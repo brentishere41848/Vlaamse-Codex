@@ -48,6 +48,8 @@ def build_dir(dir_path: Path, out_dir: Path | None = None, dev: bool = False) ->
     out_dir.mkdir(parents=True, exist_ok=True)
     # PlatsWeb output is a single-file page: index.plats (served as text/html).
     (out_dir / "index.plats").write_text(_make_inline_html(out.index_html, out.app_js, out.app_css), encoding="utf-8")
+    # Also emit the original Plats source into dist so dist contains actual Plats too.
+    (out_dir / entry.name).write_text(src, encoding="utf-8")
     # Clean up older outputs if present.
     for legacy in ("index.html", "app.js", "app.css"):
         p = out_dir / legacy

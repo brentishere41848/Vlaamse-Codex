@@ -30,6 +30,7 @@ def test_e2e_build_examples_hello_web(tmp_path: Path) -> None:
 
     dist = work / "dist"
     assert (dist / "index.plats").exists()
+    assert (dist / "page.plats").exists()
 
     plats_html = (dist / "index.plats").read_text(encoding="utf-8")
 
