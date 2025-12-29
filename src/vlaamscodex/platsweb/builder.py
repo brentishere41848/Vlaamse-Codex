@@ -135,11 +135,13 @@ def dev_dir(dir_path: Path, host: str = "127.0.0.1", port: int = 5173) -> int:
 
     with _Server((host, port), handler_factory) as httpd:
         url = f"http://{host}:{port}/"
-        print(f"[platsweb] dev server: {url}")
+        if host == "0.0.0.0":
+            print(f"[platsweb] dev server: http://127.0.0.1:{port}/ (bound to 0.0.0.0)")
+        else:
+            print(f"[platsweb] dev server: {url}")
         print(f"[platsweb] watching: {entry}")
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
             return 0
     return 0
-

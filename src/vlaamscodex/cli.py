@@ -21,6 +21,7 @@ Multi-Vlaams Dialect Aliassen:
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -304,10 +305,16 @@ def cmd_build(path: Path, out: Path) -> int:
     return 0
 
 
-def cmd_dev(path: Path, host: str = "127.0.0.1", port: int = 5173) -> int:
+def cmd_dev(path: Path, host: str | None = None, port: int | None = None) -> int:
     if not path.is_dir():
         print("dev expects a directory (example: plats dev examples/hello-web)", file=sys.stderr)
         return 2
+    env_port = os.environ.get("PORT")
+    if port is None:
+        port = int(env_port) if env_port else 5173
+    if host is None:
+        # If we're on a platform that exposes a PORT env var, default bind-all so it works externally.
+        host = "0.0.0.0" if env_port else "127.0.0.1"
     try:
         return platsweb_dev_dir(path, host=host, port=port)
     except PlatsWebParseError as e:
@@ -624,8 +631,8 @@ def main(argv: list[str] | None = None) -> int:
 
     p_dev = sub.add_parser("dev", help="PlatsWeb dev server (watch + live reload)")
     p_dev.add_argument("path", type=Path, help="Path to PlatsWeb directory (contains page.plats)")
-    p_dev.add_argument("--host", default="127.0.0.1", help="Host (default: 127.0.0.1)")
-    p_dev.add_argument("--port", type=int, default=5173, help="Port (default: 5173)")
+    p_dev.add_argument("--host", default=None, help="Host (default: 127.0.0.1; uses 0.0.0.0 if PORT env var is set)")
+    p_dev.add_argument("--port", type=int, default=None, help="Port (default: 5173; uses PORT env var if set)")
 
     p_show = sub.add_parser("show-python", help="Display generated Python code", aliases=["toon"])
     p_show.add_argument("path", type=Path, help="Path to .plats file")
