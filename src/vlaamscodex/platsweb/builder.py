@@ -105,10 +105,12 @@ def dev_dir(dir_path: Path, host: str = "127.0.0.1", port: int = 5173, allow_por
 
     hub = _SSEHub()
 
-    def handler_factory(*args: object, **kwargs: object) -> _Handler:
-        handler = _Handler(*args, directory=str(out_dir), **kwargs)
-        handler.sse_hub = hub
-        return handler
+    # BaseHTTPRequestHandler calls .handle() from __init__, so we must attach the hub
+    # before instantiation (class attribute), not after.
+    handler_cls = type("_PlatsWebHandler", (_Handler,), {"sse_hub": hub})
+
+    def handler_factory(*args: object, **kwargs: object) -> http.server.SimpleHTTPRequestHandler:
+        return handler_cls(*args, directory=str(out_dir), **kwargs)
 
     class _Server(socketserver.ThreadingMixIn, socketserver.TCPServer):
         allow_reuse_address = True
