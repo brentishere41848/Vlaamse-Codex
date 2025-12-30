@@ -137,10 +137,15 @@
 
             if (!res.ok) {
                 let msg = "’t Is hier om zeep. Probeer nog ne keer.";
-                try {
-                    const err = await res.json();
-                    msg = (err && err.error && err.error.message) ? err.error.message : msg;
-                } catch (_) {}
+                const contentType = (res.headers.get('content-type') || '').toLowerCase();
+                if (contentType.includes('application/json')) {
+                    try {
+                        const err = await res.json();
+                        msg = (err && err.error && err.error.message) ? err.error.message : msg;
+                    } catch (_) {}
+                } else if (res.status === 404) {
+                    msg = "Da `/api/chat` bestaat hier ni. Start `python -m vlaamscodex.platvlaams_ai.server` en open `http://127.0.0.1:5174/ai/`.";
+                }
                 assistant.msg.content = msg;
                 await typeIntoMessage(assistant.el, msg);
                 elRetry.style.display = 'inline-flex';
@@ -184,10 +189,15 @@
 
             if (!res.ok) {
                 let msg = "’t Is hier om zeep. Probeer nog ne keer.";
-                try {
-                    const err = await res.json();
-                    msg = (err && err.error && err.error.message) ? err.error.message : msg;
-                } catch (_) {}
+                const contentType = (res.headers.get('content-type') || '').toLowerCase();
+                if (contentType.includes('application/json')) {
+                    try {
+                        const err = await res.json();
+                        msg = (err && err.error && err.error.message) ? err.error.message : msg;
+                    } catch (_) {}
+                } else if (res.status === 404) {
+                    msg = "Da `/api/chat` bestaat hier ni. Start `python -m vlaamscodex.platvlaams_ai.server` en open `http://127.0.0.1:5174/ai/`.";
+                }
                 assistantMsg.content = msg;
                 await typeIntoMessage(assistantEl, msg);
                 elRetry.style.display = 'inline-flex';
