@@ -6,7 +6,7 @@
   - `lang.py`: lichte detectie “nl-ish” vs “other” + injection/language-request checks
   - `prompt.py`: systeemprompt die “Plat Vlaams‑Only” afdwingt
   - `policy.py`: server-side guard + output guard (buffered)
-  - `openai_client.py`: OpenAI-compatible call via stdlib `urllib`
+  - `ollama_client.py`: Ollama call via stdlib `urllib`
   - `server.py`: stdlib webserver (serveert `website/` + `POST /api/chat`)
 
 ## Frontend

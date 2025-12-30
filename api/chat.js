@@ -23,7 +23,7 @@ function injectionRefusalMessage() {
   return "Awel, nee: stop me da foefelen. Zeg ’t gewoon in ’t Vlaams en zonder trukken.";
 }
 function offlineMessage() {
-  return "AI is offline, start uw lokaal model.";
+  return "AI is offline, start uw lokaal model (Ollama).";
 }
 function rateLimitedMessage() {
   return "Rustig, maat. Ge zit aan de limiet. Wacht efkes en probeer opnieuw.";
@@ -175,38 +175,28 @@ async function readJson(req) {
 }
 
 async function callModel(messages) {
-  const baseUrl = (process.env.OPENAI_BASE_URL || "http://localhost:8000/v1").replace(/\/+$/, "");
-  const model = process.env.OPENAI_MODEL || "local-model";
-  const apiKey = process.env.OPENAI_API_KEY || "local";
-  const temperature = parseFloat(process.env.OPENAI_TEMPERATURE || "0.3");
-  const timeoutS = parseFloat(process.env.OPENAI_TIMEOUT_S || "20");
+  const baseUrl = (process.env.OLLAMA_BASE_URL || "http://localhost:11434").replace(/\/+$/, "");
+  const model = process.env.OLLAMA_MODEL || "llama3.1";
+  const timeoutS = parseFloat(process.env.OLLAMA_TIMEOUT_S || "20");
 
   const controller = new AbortController();
   const t = setTimeout(() => controller.abort(), Math.max(1, timeoutS) * 1000);
   try {
-    const res = await fetch(`${baseUrl}/chat/completions`, {
+    const res = await fetch(`${baseUrl}/api/chat`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${apiKey}`,
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model,
-        temperature,
         stream: false,
         messages: [{ role: "system", content: SYSTEM_PROMPT_PLAT_VLAAMS_ONLY }, ...messages],
       }),
       signal: controller.signal,
     });
     const data = await res.json().catch(() => null);
-    if (!res.ok) throw new Error("openai-endpoint-error");
-    if (!data || data.error) throw new Error("openai-endpoint-error");
-    const choice0 = data.choices && data.choices[0];
-    const content = choice0 && choice0.message && choice0.message.content;
+    if (!res.ok) throw new Error("ollama-error");
+    const content = data && data.message && data.message.content;
     if (typeof content === "string" && content.trim()) return content;
-    const text = choice0 && choice0.text;
-    if (typeof text === "string" && text.trim()) return text;
-    throw new Error("openai-endpoint-empty-output");
+    throw new Error("ollama-empty");
   } finally {
     clearTimeout(t);
   }
@@ -293,4 +283,3 @@ module.exports = async (req, res) => {
 
   res.status(200).json({ message: { role: "assistant", content: out }, refused: false });
 };
-

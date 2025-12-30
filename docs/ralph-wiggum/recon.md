@@ -29,6 +29,5 @@
 - **Misbruik**: zonder auth kan `/api/chat` misbruikt worden (spammen / DoS) → rate limit + max input lengte nodig.
 - **Prompt injection**: users proberen “ignore instructions / system prompt” → server-side guard nodig vóór model call.
 - **Taalgarantie**: model kan toch Engels/French teruggeven → output guard nodig (buffer + taalcheck).
-- **Offline lokaal model**: als er geen lokale OpenAI-compatible server draait moet UI dit duidelijk zeggen (geen betaalde fallback).
+- **Offline lokaal model**: als Ollama niet draait moet UI dit duidelijk zeggen (geen betaalde fallback).
 - **XSS**: AI output mag nooit raw HTML in de DOM belanden → escape/safe rendering in de UI.
-

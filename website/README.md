@@ -94,25 +94,20 @@ Then visit: http://localhost:3000
 
 ## 🤖 Plat Vlaams‑Only AI (zonder auth, gratis/local)
 
-De AI‑chat werkt **enkel** met een **OpenAI‑compatible lokaal/self-hosted endpoint**. Geen betaalde fallback.
+De AI‑chat werkt met **Ollama** (gratis/local). Geen betaalde fallback.
 
-### 1) OpenAI-compatible server (aanbevolen)
+### 1) Ollama (aanbevolen)
 
-- Zet env vars (kopieer `.env.example` naar `.env.local` in repo root)
-- Start de VlaamsCodex webserver (serveert `website/` + `POST /api/chat`)
+Start Ollama + zet uw model klaar, bv:
 
 ```bash
-cd ..
-python -m venv .venv
-. .venv/bin/activate
-python -m pip install -e ".[dev]"
-cp .env.example .env.local
-python -m vlaamscodex.platvlaams_ai.server
+ollama serve
+ollama pull llama3.1
 ```
 
-Dan: open `http://127.0.0.1:5174/ai/`
+Op de AI pagina kunt ge in “Instellingen” het model en endpoint zetten (default `http://localhost:11434`).
 
-Als ge geen lokaal model hebt draaien: ge ziet in de chat **“AI is offline, start uw lokaal model.”**
+Als ge geen lokaal model hebt draaien: ge ziet in de chat **“AI is offline, start uw lokaal model (Ollama).”**
 
 ### Vercel (domein-hosting)
 
@@ -121,19 +116,19 @@ De site kan op Vercel draaien via:
 - `website/api/chat.js` (serverless `POST /api/chat`)
 - `website/vercel.json` (forceert Node runtime; hoort in dezelfde root directory)
 
-Als ge nog altijd 404 krijgt op `/api/chat`: check da `vercel.json` mee gedeployed is en da Vercel uw repo root gebruikt (niet “Output Directory = website” als aparte static-only deploy).
+Als ge nog altijd 404 krijgt op `/api/chat`: check da ge Vercel “Root Directory” op `website/` hebt staan en da `website/vercel.json` mee gedeployed is.
 
-Belangrijk: op Vercel werkt `OPENAI_BASE_URL=http://localhost:...` **niet**. Zet `OPENAI_BASE_URL` naar uw eigen OpenAI‑compatible server die publiek bereikbaar is (self-hosted).
+Belangrijk: op Vercel werkt `OLLAMA_BASE_URL=http://localhost:11434` **niet**. Zet `OLLAMA_BASE_URL` naar uw eigen publiek bereikbare Ollama (self-hosted) of gebruik de UI “Instellingen” met een endpoint dat CORS toelaat.
 
 ### 2) (Optioneel) Docker Compose (local LLM)
 
-Er staat een optionele `docker-compose.local-llm.yml` klaar. Dit is **CPU‑vriendelijk maar traag**, GPU is aanbevolen.
+Er staat een optionele `docker-compose.local-llm.yml` klaar (Ollama). Dit is **CPU‑vriendelijk maar traag**, GPU is aanbevolen.
 
 ```bash
 docker compose -f docker-compose.local-llm.yml up -d
 ```
 
-Opmerking: ge moet nog een model beschikbaar maken voor uw OpenAI‑compatible server (zie comments in de compose file) en `OPENAI_MODEL` juist zetten in `.env.local`.
+Opmerking: ge moet nog een model pullen (zie comments in de compose file) en `OLLAMA_MODEL` juist zetten.
 
 ### Building for Production
 

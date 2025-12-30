@@ -1,4 +1,4 @@
-# ADR-001 — Gratis LLM via lokaal OpenAI-compatible endpoint
+# ADR-001 — Gratis LLM via lokaal Ollama endpoint
 
 ## Status
 
@@ -8,14 +8,12 @@ Accepted (30 dec 2025)
 
 We willen een chat‑AI op de website zonder auth, maar **zonder betaalde API**. We moeten:
 - lokaal/self-hosted werken (default)
-- dezelfde request/response vorm gebruiken als OpenAI (“OpenAI-compatible”)
 - harde taalgarantie: **altijd** Plat Vlaams, en **weigeren** op andere talen
 
 ## Decision
 
-1) **Endpoint**: we praten tegen een **OpenAI-compatible** server via:
-- `OPENAI_BASE_URL` + `OPENAI_MODEL` (aanbevolen)
-- `OPENAI_API_KEY` is optioneel (mag leeg/“local”)
+1) **Endpoint**: we praten tegen **Ollama** via:
+- `OLLAMA_BASE_URL` + `OLLAMA_MODEL` (aanbevolen)
 
 2) **Taalgarantie**: we doen **buffer + output check** i.p.v. echte streaming:
 - We halen de volledige modeloutput op (non-stream).
@@ -30,4 +28,3 @@ De UI simuleert streaming (“fake stream”) door de tekst in stukskes te tonen
 - ✅ Hardere garantie dat er geen Engels/Frans “doorlekt”.
 - ✅ Simpeler te testen en te debuggen.
 - ❌ Geen echte token-streaming van het model (maar UX blijft ok door fake streaming).
-

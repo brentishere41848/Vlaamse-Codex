@@ -26,11 +26,10 @@ We voegen een kleine **lokale dev server** toe (Python stdlib), die:
   - Return **weigering in Plat Vlaams**.
   - **Geen** model call.
 
-### Model call (OpenAI‑compatible, non-stream)
+### Model call (Ollama, non-stream)
 
-- Request naar `${OPENAI_BASE_URL}/chat/completions`
-- `model = OPENAI_MODEL`
-- `temperature` laag (0.3 default)
+- Request naar `${OLLAMA_BASE_URL}/api/chat`
+- `model = OLLAMA_MODEL`
 - Systeemprompt dwingt “Plat Vlaams‑Only” af + toonankers (kort).
 
 ### Output guard (taalgarantie)
@@ -43,11 +42,10 @@ We voegen een kleine **lokale dev server** toe (Python stdlib), die:
 
 ## C) Gratis endpoint defaults
 
-- `.env.example` (repo root) met defaults naar localhost:
-  - `OPENAI_BASE_URL=http://localhost:8000/v1`
-  - `OPENAI_MODEL=...`
-  - `OPENAI_API_KEY=` (mag leeg / “local”)
-- Geen betaalde fallback. Als het endpoint niet bereikbaar is: server antwoordt 503 met code `AI_OFFLINE`.
+- `.env.example` (repo root) met defaults naar localhost (Ollama):
+  - `OLLAMA_BASE_URL=http://localhost:11434`
+  - `OLLAMA_MODEL=llama3.1`
+- Geen betaalde fallback. Als Ollama niet bereikbaar is: server antwoordt 503 met code `AI_OFFLINE`.
 
 ## D) Tests
 
@@ -58,4 +56,3 @@ We voegen een kleine **lokale dev server** toe (Python stdlib), die:
   - EN input → Vlaamse weigering (en `call_model` stub wordt niet aangeroepen)
   - NL input → modelpad (met stub) → Vlaams antwoord
   - NL input + stub geeft Engels → output guard → Vlaamse weigering
-

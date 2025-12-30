@@ -10,7 +10,7 @@ from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
 
-from .openai_client import call_openai_chat_completions, load_openai_config_from_env
+from .ollama_client import call_ollama_chat, load_ollama_config_from_env
 from .policy import process_chat
 from .refusal import rate_limited_message
 
@@ -151,10 +151,10 @@ class _Handler(http.server.SimpleHTTPRequestHandler):
             if role in ("user", "assistant", "system") and isinstance(content, str):
                 norm.append({"role": role, "content": content})
 
-        openai_cfg = load_openai_config_from_env()
+        ollama_cfg = load_ollama_config_from_env()
 
         def _call_model(msgs: list[dict[str, str]]) -> str:
-            return call_openai_chat_completions(openai_cfg, msgs)
+            return call_ollama_chat(ollama_cfg, msgs)
 
         result = process_chat(messages=norm, call_model=_call_model, max_input_chars=self.cfg.max_input_chars)
 

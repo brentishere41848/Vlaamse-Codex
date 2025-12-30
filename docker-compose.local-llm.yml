@@ -1,17 +1,14 @@
 services:
-  # OpenAI-compatible server (gratis/local)
+  # Ollama (gratis/local)
   #
-  # Dit is optioneel: er zijn veel alternatieven (vLLM OpenAI server, LM Studio, llama.cpp, ...).
+  # CPU kan, maar is traag; GPU is aanbevolen.
   #
-  # LocalAI is OpenAI-compatible, maar ge moet wél een model configureren.
-  # De simpelste workflow is: zet een GGUF model in `./local-llm/models/` en voeg een LocalAI config toe.
-  # (CPU kan, maar is traag; GPU is aanbevolen.)
-  localai:
-    image: localai/localai:latest-aio-cpu
+  # Na `docker compose up`:
+  #   - `docker exec -it <container> ollama pull llama3.1`
+  #   - Zet `OLLAMA_BASE_URL=http://localhost:11434` en `OLLAMA_MODEL=llama3.1`
+  ollama:
+    image: ollama/ollama:latest
     ports:
-      # Matcht `.env.example`: OPENAI_BASE_URL=http://localhost:8000/v1
-      - "8000:8080"
-    environment:
-      - MODELS_PATH=/models
+      - "11434:11434"
     volumes:
-      - ./local-llm/models:/models
+      - ./local-llm/ollama:/root/.ollama

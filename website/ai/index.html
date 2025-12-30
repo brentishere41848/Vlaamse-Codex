@@ -216,10 +216,36 @@
                 <p class="ai-disclaimer">’t Is Plat Vlaams of ’t is niks.</p>
             </div>
             <div class="ai-actions" style="justify-content:flex-end;">
+                <button class="ai-btn" id="settingsBtn" type="button">Instellingen</button>
                 <button class="ai-btn" id="examplesBtn" type="button">Voorbeelden</button>
                 <button class="ai-btn" id="clearBtn" type="button">Wis</button>
             </div>
         </div>
+
+        <section class="ai-panel" id="settingsPanel" style="display:none; margin-bottom: 1rem;">
+            <div class="ai-messages" style="gap: 0.5rem;">
+                <div class="msg assistant" style="max-width:100%;">
+                    <div class="text">
+                        Ollama endpoint (voor als `/api/chat` ni bestaat op uw host). Default is lokaal.
+                    </div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                    <input id="baseUrlInput" class="ai-input" placeholder="OLLAMA_BASE_URL (bv. http://localhost:11434)" />
+                    <input id="modelInput" class="ai-input" placeholder="OLLAMA_MODEL (bv. llama3.1)" />
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                    <div class="msg assistant" style="max-width:100%; margin:0; display:flex; align-items:center;">
+                        <div class="text">Geen API key nodig.</div>
+                    </div>
+                    <button class="ai-btn primary" id="saveSettingsBtn" type="button">Opslaan</button>
+                </div>
+                <div class="msg assistant" style="max-width:100%;">
+                    <div class="text">
+                        Op een domein: `localhost` werkt enkel als uw Ollama CORS toelaat.
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section class="ai-panel" aria-label="Chat">
             <div class="ai-messages" id="messages"></div>
