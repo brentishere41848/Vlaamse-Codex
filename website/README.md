@@ -120,6 +120,8 @@ De site kan op Vercel draaien via:
 - `vercel.json` rewrites (root → `website/`)
 - `api/chat.py` (serverless `POST /api/chat`)
 
+Als ge nog altijd 404 krijgt op `/api/chat`: check da `vercel.json` mee gedeployed is en da Vercel uw repo root gebruikt (niet “Output Directory = website” als aparte static-only deploy).
+
 Belangrijk: op Vercel werkt `OPENAI_BASE_URL=http://localhost:...` **niet**. Zet `OPENAI_BASE_URL` naar uw eigen OpenAI‑compatible server die publiek bereikbaar is (self-hosted).
 
 ### 2) (Optioneel) Docker Compose (local LLM)

@@ -1,18 +1,15 @@
 {
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/", "destination": "/website/index.html" },
-    { "source": "/ai", "destination": "/website/ai/index.html" },
-    { "source": "/ai/(.*)", "destination": "/website/ai/$1" },
-    { "source": "/docs", "destination": "/website/docs/index.html" },
-    { "source": "/docs/(.*)", "destination": "/website/docs/$1" },
-    { "source": "/playground", "destination": "/website/playground/index.html" },
-    { "source": "/playground/(.*)", "destination": "/website/playground/$1" },
-    { "source": "/assets/(.*)", "destination": "/website/assets/$1" },
-    { "source": "/favicon.png", "destination": "/website/favicon.png" },
-    { "source": "/icon.png", "destination": "/website/icon.png" },
-    { "source": "/robots.txt", "destination": "/website/robots.txt" },
-    { "source": "/404.html", "destination": "/website/404.html" },
-    { "source": "/(.*)", "destination": "/website/$1" }
+  "functions": {
+    "api/chat.py": {
+      "runtime": "python3.12"
+    }
+  },
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "^/$", "dest": "/website/index.html" },
+    { "src": "^/ai$", "dest": "/website/ai/index.html" },
+    { "src": "^/docs$", "dest": "/website/docs/index.html" },
+    { "src": "^/playground$", "dest": "/website/playground/index.html" },
+    { "src": "/(.*)", "dest": "/website/$1" }
   ]
 }
