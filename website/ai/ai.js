@@ -49,6 +49,25 @@
         return { baseUrl, model };
     }
 
+    function baseUrlLooksLocal(baseUrl) {
+        const u = String(baseUrl || '').toLowerCase();
+        return u.includes('localhost') || u.includes('127.0.0.1');
+    }
+
+    function baseUrlIsInsecureFromHttps(baseUrl) {
+        return window.location.protocol === 'https:' && String(baseUrl || '').startsWith('http://');
+    }
+
+    function directOllamaNotPossibleReason(baseUrl) {
+        if (baseUrlIsInsecureFromHttps(baseUrl)) {
+            return "Ge zit op HTTPS, maar uw Ollama endpoint is HTTP. Da wordt geblokkeerd. Pak een HTTPS URL (tunnel/reverse proxy) of gebruik server-side `/api/chat`.";
+        }
+        if (baseUrlLooksLocal(baseUrl) && window.location.hostname !== '127.0.0.1' && window.location.hostname !== 'localhost') {
+            return "Ge zit op een domein, maar uw Ollama staat op `localhost`. Da werkt ni van hier. Zet `OLLAMA_BASE_URL` in Vercel env naar uwe publiek bereikbare Ollama (HTTPS).";
+        }
+        return null;
+    }
+
     function shouldSkipApiChat() {
         return localStorage.getItem('api_chat_missing') === '1';
     }
@@ -338,6 +357,14 @@
                     // Fallback: call Ollama directly from the browser.
                     markApiChatMissing();
                     const { baseUrl, model } = getSettings();
+                    const reason = directOllamaNotPossibleReason(baseUrl);
+                    if (reason) {
+                        assistant.msg.content = reason;
+                        await typeIntoMessage(assistant.el, reason);
+                        elRetry.style.display = 'inline-flex';
+                        setBusy(false);
+                        return;
+                    }
                     const out = await callOllamaDirect({ baseUrl, model, messages: state.lastAttempt.snapshot });
                     assistant.msg.content = out;
                     await typeIntoMessage(assistant.el, out);
@@ -363,6 +390,8 @@
             // As a last resort, try direct Ollama (in case backend is flaky).
             try {
                 const { baseUrl, model } = getSettings();
+                const reason = directOllamaNotPossibleReason(baseUrl);
+                if (reason) throw new Error('direct_ollama_not_possible');
                 const out = await callOllamaDirect({ baseUrl, model, messages: state.lastAttempt.snapshot });
                 assistant.msg.content = out;
                 await typeIntoMessage(assistant.el, out);
