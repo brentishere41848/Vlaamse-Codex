@@ -341,6 +341,8 @@
                         if (code === 'AI_OFFLINE') {
                             try {
                                 const { baseUrl, model } = getSettings();
+                                const reason = directOllamaNotPossibleReason(baseUrl);
+                                if (reason) throw new Error('direct_ollama_not_possible');
                                 const out = await callOllamaDirect({ baseUrl, model, messages: state.lastAttempt.snapshot });
                                 assistant.msg.content = out;
                                 await typeIntoMessage(assistant.el, out);
@@ -460,6 +462,8 @@
                         if (code === 'AI_OFFLINE') {
                             try {
                                 const { baseUrl, model } = getSettings();
+                                const reason = directOllamaNotPossibleReason(baseUrl);
+                                if (reason) throw new Error('direct_ollama_not_possible');
                                 const out = await callOllamaDirect({ baseUrl, model, messages: snapshot });
                                 assistantMsg.content = out;
                                 await typeIntoMessage(assistantEl, out);
