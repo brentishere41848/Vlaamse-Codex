@@ -92,6 +92,38 @@ Then visit: http://localhost:3000
 2. Right-click `index.html`
 3. Select "Open with Live Server"
 
+## 🤖 Plat Vlaams‑Only AI (zonder auth, gratis/local)
+
+De AI‑chat werkt **enkel** met een **OpenAI‑compatible lokaal/self-hosted endpoint**. Geen betaalde fallback.
+
+### 1) OpenAI-compatible server (aanbevolen)
+
+- Zet env vars (kopieer `.env.example` naar `.env.local` in repo root)
+- Start de VlaamsCodex webserver (serveert `website/` + `POST /api/chat`)
+
+```bash
+cd ..
+python -m venv .venv
+. .venv/bin/activate
+python -m pip install -e ".[dev]"
+cp .env.example .env.local
+python -m vlaamscodex.platvlaams_ai.server
+```
+
+Dan: open `http://127.0.0.1:5174/ai/`
+
+Als ge geen lokaal model hebt draaien: ge ziet in de chat **“AI is offline, start uw lokaal model.”**
+
+### 2) (Optioneel) Docker Compose (local LLM)
+
+Er staat een optionele `docker-compose.local-llm.yml` klaar. Dit is **CPU‑vriendelijk maar traag**, GPU is aanbevolen.
+
+```bash
+docker compose -f docker-compose.local-llm.yml up -d
+```
+
+Opmerking: ge moet nog een model beschikbaar maken voor uw OpenAI‑compatible server (zie comments in de compose file) en `OPENAI_MODEL` juist zetten in `.env.local`.
+
 ### Building for Production
 
 The website is already optimized for production. All CSS and JS are minified-ready. If you want to minify further:
