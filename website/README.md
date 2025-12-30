@@ -114,6 +114,14 @@ Dan: open `http://127.0.0.1:5174/ai/`
 
 Als ge geen lokaal model hebt draaien: ge ziet in de chat **“AI is offline, start uw lokaal model.”**
 
+### Vercel (domein-hosting)
+
+De site kan op Vercel draaien via:
+- `vercel.json` rewrites (root → `website/`)
+- `api/chat.py` (serverless `POST /api/chat`)
+
+Belangrijk: op Vercel werkt `OPENAI_BASE_URL=http://localhost:...` **niet**. Zet `OPENAI_BASE_URL` naar uw eigen OpenAI‑compatible server die publiek bereikbaar is (self-hosted).
+
 ### 2) (Optioneel) Docker Compose (local LLM)
 
 Er staat een optionele `docker-compose.local-llm.yml` klaar. Dit is **CPU‑vriendelijk maar traag**, GPU is aanbevolen.
